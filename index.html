@@ -26,6 +26,8 @@
       line-height: 1.5; background: var(--white);
     }
     a { text-decoration: none; }
+
+    /* HEADER */
     .header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       background: rgba(0,31,61,0.97);
@@ -48,7 +50,9 @@
       font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5);
       text-transform: uppercase; letter-spacing: 1.5px; margin-top: 2px;
     }
-    .header-nav { display: flex; align-items: center; gap: 28px; list-style: none; }
+    .header-nav {
+      display: flex; align-items: center; gap: 28px; list-style: none;
+    }
     .header-nav a {
       color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 600;
       transition: color var(--transition); letter-spacing: 0.2px;
@@ -65,11 +69,13 @@
       background: var(--red); color: var(--white);
       padding: 9px 22px; border-radius: 6px;
       font-size: 13px; font-weight: 800; text-transform: uppercase;
-      letter-spacing: 0.5px; transition: all var(--transition);
+      letter-spacing: 0.5px;
+      transition: all var(--transition);
       box-shadow: 0 2px 8px rgba(215,38,56,0.3);
     }
     .header-cta:hover { background: var(--red-hover); transform: translateY(-1px); }
     .header-nmls { color: rgba(255,255,255,0.35); font-size: 10px; }
+
     .hamburger {
       display: none; background: none; border: none; cursor: pointer; padding: 4px;
       flex-direction: column; gap: 5px;
@@ -100,8 +106,11 @@
       .header-phone span { display: none; }
       .hamburger { display: flex; }
     }
+
+    /* HERO */
     .hero {
-      position: relative; padding: 130px 24px 70px;
+      position: relative;
+      padding: 130px 24px 70px;
       background: linear-gradient(170deg, var(--navy-dark) 0%, var(--navy) 50%, #004A8F 100%);
       overflow: hidden; text-align: center;
     }
@@ -117,7 +126,9 @@
       background: linear-gradient(to top, rgba(0,21,43,0.4), transparent);
       pointer-events: none;
     }
-    .hero-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+    .hero-inner {
+      max-width: 860px; margin: 0 auto; position: relative; z-index: 1;
+    }
     .hero-eyebrow {
       display: inline-block;
       background: rgba(0,113,206,0.18);
@@ -138,7 +149,9 @@
       font-size: 18px; line-height: 1.7; color: rgba(255,255,255,0.8);
       max-width: 640px; margin: 0 auto 28px;
     }
-    .hero-trust { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; }
+    .hero-trust {
+      display: flex; justify-content: center; gap: 28px; flex-wrap: wrap;
+    }
     .hero-trust-item {
       display: flex; align-items: center; gap: 10px;
       color: rgba(255,255,255,0.9); font-size: 14px; font-weight: 600;
@@ -153,6 +166,8 @@
       .hero-sub { font-size: 16px; }
       .hero-trust { gap: 16px; }
     }
+
+    /* TOOLS GRID */
     .tools-section { padding: 80px 24px; background: var(--off-white); }
     .tools-inner { max-width: 1140px; margin: 0 auto; }
     .section-header { text-align: center; margin-bottom: 48px; }
@@ -166,7 +181,9 @@
       max-width: 580px; margin: 0 auto;
     }
     .tools-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
     }
     .tool-card {
       background: var(--white);
@@ -178,7 +195,8 @@
     }
     .tool-card.available { cursor: pointer; }
     .tool-card.available:hover {
-      border-color: var(--blue); box-shadow: var(--shadow-lg);
+      border-color: var(--blue);
+      box-shadow: var(--shadow-lg);
       transform: translateY(-4px);
     }
     .tool-card.coming-soon { opacity: 0.75; }
@@ -190,7 +208,8 @@
       margin-bottom: 16px; align-self: flex-start;
     }
     .tool-badge.soon {
-      background: var(--gray-100); color: var(--gray-600); border: 1px solid var(--gray-200);
+      background: var(--gray-100); color: var(--gray-600);
+      border: 1px solid var(--gray-200);
     }
     .tool-badge.popular { background: var(--red); color: var(--white); }
     .tool-icon {
@@ -205,4 +224,404 @@
       font-size: 22px; font-weight: 700; color: var(--navy);
       margin-bottom: 10px; line-height: 1.25; letter-spacing: -0.2px;
     }
-    .tool-
+    .tool-card p {
+      font-size: 15px; color: var(--gray-600);
+      line-height: 1.6; margin-bottom: 20px; flex-grow: 1;
+    }
+    .tool-cta-soon {
+      color: var(--gray-400); font-size: 14px; font-weight: 600; font-style: italic;
+    }
+
+    /* TRUST STRIP */
+    .trust-strip {
+      background: var(--white); padding: 56px 24px;
+      border-top: 1px solid var(--gray-100);
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .trust-strip-inner {
+      max-width: 1040px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+      text-align: center;
+    }
+    .trust-item {
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+    }
+    .trust-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--blue-pale);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .trust-item h4 { font-size: 15px; font-weight: 700; color: var(--navy); }
+    .trust-item p { font-size: 13px; color: var(--gray-600); line-height: 1.5; }
+    @media (max-width: 768px) {
+      .trust-strip-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    }
+
+    /* BUILDER */
+    .builder {
+      padding: 80px 24px; background: var(--navy-dark);
+      position: relative; overflow: hidden;
+    }
+    .builder::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(0,113,206,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .builder-inner {
+      max-width: 900px; margin: 0 auto;
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 200px 1fr;
+      gap: 40px; align-items: center;
+    }
+    .builder-avatar {
+      width: 200px; height: 200px; border-radius: 50%;
+      background: linear-gradient(135deg, #D72638 0%, #8B0000 100%);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 56px; font-weight: 900;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      border: 4px solid rgba(255,255,255,0.9);
+      overflow: hidden;
+    }
+    .builder-avatar img {
+      width: 100%; height: 100%; object-fit: cover; border-radius: 50%;
+    }
+    .builder-text h2 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 28px; font-weight: 700; color: var(--white);
+      margin-bottom: 8px; letter-spacing: -0.2px;
+    }
+    .builder-cred {
+      font-size: 13px; font-weight: 700; color: var(--blue-light);
+      text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 16px;
+    }
+    .builder-message {
+      font-size: 16px; color: rgba(255,255,255,0.8);
+      line-height: 1.7; margin-bottom: 18px;
+    }
+    .builder-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--red); color: var(--white);
+      padding: 12px 24px; border-radius: var(--radius);
+      font-size: 14px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      transition: all var(--transition);
+      box-shadow: 0 4px 14px rgba(215,38,56,0.3);
+    }
+    .builder-cta:hover { background: var(--red-hover); transform: translateY(-1px); }
+    @media (max-width: 768px) {
+      .builder-inner { grid-template-columns: 1fr; text-align: center; gap: 28px; }
+      .builder-avatar { margin: 0 auto; width: 140px; height: 140px; font-size: 40px; }
+    }
+
+    /* BOTTOM CTA */
+    .bottom-cta {
+      padding: 64px 24px; background: var(--navy); text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .bottom-cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(0,113,206,0.1) 0%, transparent 70%);
+    }
+    .bottom-cta-inner { position: relative; z-index: 1; }
+    .bottom-cta h2 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 30px; font-weight: 700; color: var(--white);
+      margin-bottom: 12px; letter-spacing: -0.3px;
+    }
+    .bottom-cta p {
+      color: rgba(255,255,255,0.7); font-size: 16px;
+      margin-bottom: 28px; max-width: 540px;
+      margin-left: auto; margin-right: auto;
+    }
+    .bottom-cta-buttons {
+      display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-block; background: var(--red); color: var(--white);
+      padding: 16px 36px; border-radius: var(--radius);
+      font-size: 15px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      transition: all var(--transition);
+      box-shadow: 0 4px 14px rgba(215,38,56,0.3);
+    }
+    .btn-primary:hover { background: var(--red-hover); transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(77,163,232,0.5);
+      color: var(--white);
+      padding: 14px 28px; border-radius: var(--radius);
+      font-size: 15px; font-weight: 800;
+      transition: all var(--transition);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.15); border-color: var(--blue-light); }
+
+    /* COMPLIANCE */
+    .compliance {
+      background: var(--navy-deeper);
+      padding: 32px 24px; text-align: center;
+    }
+    .compliance-inner { max-width: 800px; margin: 0 auto; }
+    .compliance p {
+      font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.8;
+    }
+    .compliance a { color: var(--blue-light); }
+    .compliance a:hover { text-decoration: underline; }
+    .compliance-ehl {
+      margin-top: 14px;
+      font-size: 11px; color: rgba(255,255,255,0.5);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="https://showmerates.com">
+      <div>
+        <div class="header-logo-text">Show<span>Me</span>Rates</div>
+        <div class="header-logo-sub">Tools</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="#tools">Calculators</a>
+      <a href="#about">About</a>
+      <a href="https://showmerates.com">Main Site</a>
+      <a href="https://showmerates.com/va-loan-resources">Resources</a>
+    </nav>
+    <div class="header-right">
+      <a class="header-phone" href="tel:+18447371455">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.81.36 1.6.68 2.35a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.75.32 1.54.55 2.35.68A2 2 0 0122 16.92z" stroke="#fff" stroke-width="2"/></svg>
+        <span>(844) 737-1455</span>
+      </a>
+      <a class="header-cta" href="https://showmerates.com/#smrFormCard">Get My Rate</a>
+      <span class="header-nmls">NMLS# 1416824</span>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#tools">Calculators</a>
+  <a href="#about">About</a>
+  <a href="https://showmerates.com">Main Site</a>
+  <a href="https://showmerates.com/va-loan-resources">Resources</a>
+  <a href="tel:+18447371455">(844) 737-1455</a>
+</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Free VA Mortgage Tools</div>
+    <h1>Real Numbers.<br><span>No Pressure.</span></h1>
+    <p class="hero-sub">Mortgage calculators built by a USMC Veteran and licensed VA Mortgage Specialist. Every tool gives you accurate answers &mdash; not generic estimates.</p>
+    <div class="hero-trust">
+      <div class="hero-trust-item">
+        <div class="hero-trust-icon">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M12 2L3 7v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V7l-9-5z" stroke="#4DA3E8" stroke-width="2"/></svg>
+        </div>
+        Built by a VA Specialist
+      </div>
+      <div class="hero-trust-item">
+        <div class="hero-trust-icon">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7" stroke="#4DA3E8" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        100% Free &middot; No Signup
+      </div>
+      <div class="hero-trust-item">
+        <div class="hero-trust-icon">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2 12h20" stroke="#4DA3E8" stroke-width="2"/></svg>
+        </div>
+        Veterans Helping Veterans
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tools-section" id="tools">
+  <div class="tools-inner">
+    <div class="section-header">
+      <h2>Calculators &amp; Tools</h2>
+      <p>Tools that actually understand VA loans &mdash; disability exemptions, residual income, IRRRL recoup periods, and the math civilian calculators get wrong.</p>
+    </div>
+    <div class="tools-grid">
+
+      <div class="tool-card coming-soon">
+        <span class="tool-badge popular">Coming Soon &middot; Most Popular</span>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L3 7v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V7l-9-5z" stroke="#0071CE" stroke-width="2"/>
+            <path d="M9 12l2 2 4-4" stroke="#0071CE" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>VA Funding Fee Optimizer</h3>
+        <p>See exactly what your VA funding fee will be &mdash; including disability exemption, first-use vs subsequent-use, and financed vs paid-at-close comparison.</p>
+        <span class="tool-cta-soon">Available soon &rarr;</span>
+      </div>
+
+      <div class="tool-card coming-soon">
+        <span class="tool-badge soon">Coming Soon</span>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M21 12a9 9 0 11-3-6.7M21 4v5h-5" stroke="#0071CE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>VA IRRRL Recoup Calculator</h3>
+        <p>Calculate the true recoup period for your VA Streamline Refinance &mdash; meets VA's official MAP Rule guidelines for accurate compliance.</p>
+        <span class="tool-cta-soon">Available soon &rarr;</span>
+      </div>
+
+      <div class="tool-card coming-soon">
+        <span class="tool-badge soon">Coming Soon</span>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M3 12l9-9 9 9M5 10v10h14V10" stroke="#0071CE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3>Buy vs Rent for Veterans</h3>
+        <p>Built specifically for VA-eligible buyers. $0 down, no PMI &mdash; the math civilian calculators miss when comparing your real options.</p>
+        <span class="tool-cta-soon">Available soon &rarr;</span>
+      </div>
+
+      <div class="tool-card coming-soon">
+        <span class="tool-badge soon">Coming Soon</span>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" stroke="#0071CE" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Discount Point Break-Even</h3>
+        <p>Find out exactly how long it takes for buying down your rate to pay off &mdash; and whether the points are worth it for your specific situation.</p>
+        <span class="tool-cta-soon">Available soon &rarr;</span>
+      </div>
+
+      <div class="tool-card coming-soon">
+        <span class="tool-badge soon">Coming Soon</span>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h.01M15 9h.01M9 13h.01M15 13h.01M9 17h.01M15 17h.01" stroke="#0071CE" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Veteran House Hack ROI</h3>
+        <p>Use your VA loan to buy a 2-4 unit property, live in one, rent the others. See your real cash-on-cash return with VA-specific rules baked in.</p>
+        <span class="tool-cta-soon">Available soon &rarr;</span>
+      </div>
+
+      <div class="tool-card coming-soon">
+        <span class="tool-badge soon">Coming Soon</span>
+        <div class="tool-icon">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M3 9h18M9 21V9M5 5h14a2 2 0 012 2v12a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z" stroke="#0071CE" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>VA Affordability + Residual Income</h3>
+        <p>How much home can you really afford on a VA loan? Includes VA's unique residual income test &mdash; what other calculators don't even check.</p>
+        <span class="tool-cta-soon">Available soon &rarr;</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="trust-strip">
+  <div class="trust-strip-inner">
+    <div class="trust-item">
+      <div class="trust-icon">
+        <svg width="26" height="26" fill="none" viewBox="0 0 24 24"><path d="M12 2L3 7v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V7l-9-5z" stroke="#0071CE" stroke-width="1.5"/><path d="M9 12l2 2 4-4" stroke="#0071CE" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <h4>VA-Accurate Math</h4>
+      <p>Every formula meets VA, TILA, and MAP Rule guidelines</p>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">
+        <svg width="26" height="26" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="#0071CE" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="#0071CE" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <h4>Built by a Specialist</h4>
+      <p>Designed by a licensed VA loan officer, not a software firm</p>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">
+        <svg width="26" height="26" fill="none" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="#0071CE" stroke-width="1.5"/><circle cx="9" cy="7" r="4" stroke="#0071CE" stroke-width="1.5"/></svg>
+      </div>
+      <h4>Free Forever</h4>
+      <p>No signup, no email gate, no upsells. Just useful tools.</p>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">
+        <svg width="26" height="26" fill="none" viewBox="0 0 24 24"><path d="M12 2l2.9 5.8L21 8.8l-4.5 4.4 1.1 6.3L12 16.6l-5.6 2.9 1.1-6.3L3 8.8l6.1-.9L12 2z" stroke="#0071CE" stroke-width="1.5"/></svg>
+      </div>
+      <h4>5-Star Trusted</h4>
+      <p>Backed by 3,500+ Google reviews on the main site</p>
+    </div>
+  </div>
+</section>
+
+<section class="builder" id="about">
+  <div class="builder-inner">
+    <div class="builder-avatar">
+      <img src="https://showmerates.com/wp-content/uploads/2026/05/8cfd7693774e5c80-scaled-1.webp" alt="Terry Roberts USMC Veteran" onerror="this.style.display='none'; this.parentNode.innerHTML='TR';">
+    </div>
+    <div class="builder-text">
+      <h2>Built by a Marine for Veterans</h2>
+      <div class="builder-cred">Terry Roberts &middot; USMC Veteran 1997&ndash;2006 &middot; NMLS# 397987</div>
+      <p class="builder-message">"I built these tools because civilian mortgage calculators consistently get VA loans wrong. They ignore disability exemptions. They miss residual income. They forget you don't need PMI. Veterans deserve answers built for their loan &mdash; not estimates designed for someone else's. Every calculator here is built to the same standard I'd use with my own clients."</p>
+      <a href="https://showmerates.com/#smrFormCard" class="builder-cta">Get My VA Rate Today &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section class="bottom-cta">
+  <div class="bottom-cta-inner">
+    <h2>Ready to See Your Actual VA Rate?</h2>
+    <p>Calculators get you in the ballpark. A real rate quote takes 60 seconds and gives you the actual numbers.</p>
+    <div class="bottom-cta-buttons">
+      <a href="https://showmerates.com/#smrFormCard" class="btn-primary">Get My Rate Quote &rarr;</a>
+      <a href="tel:+18447371455" class="btn-secondary">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.81.36 1.6.68 2.35a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.75.32 1.54.55 2.35.68A2 2 0 0122 16.92z" stroke="#fff" stroke-width="2"/></svg>
+        (844) 737-1455
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="compliance">
+  <div class="compliance-inner">
+    <p>
+      ShowMeRates.com is operated by E Mortgage Capital, Inc., NMLS# 1416824, 3750 S Susan Street, Santa Ana, California 92704.<br>
+      <a href="https://nmlsconsumeraccess.org" target="_blank" rel="noopener">nmlsconsumeraccess.org</a> &middot; Equal Housing Lender &middot; Licensed in 48 states<br>
+      These calculators are for informational and educational purposes only and do not constitute a loan estimate, commitment to lend, or offer of credit. All examples are hypothetical. Actual rates, terms, and costs will vary based on individual qualifications.<br>
+      Not endorsed or sponsored by the Dept. of Veterans Affairs or any government agency.<br>
+      <a href="https://showmerates.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a> &middot; <a href="https://showmerates.com/privacy-policy" target="_blank" rel="noopener">Terms of Use</a> &middot; <a href="https://showmerates.com/licenses" target="_blank" rel="noopener">Licensing</a>
+    </p>
+    <div class="compliance-ehl">
+      <svg width="20" height="18" viewBox="0 0 20 18" fill="none"><path d="M10 0L0 8h3v10h14V8h3L10 0zM7 14v-4h6v4H7z" fill="rgba(255,255,255,0.4)"/></svg>
+      Equal Housing Lender
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var btn = document.getElementById('hamburger');
+  var menu = document.getElementById('mobileMenu');
+  if (btn && menu) {
+    btn.addEventListener('click', function() {
+      btn.classList.toggle('active');
+      menu.classList.toggle('active');
+    });
+    menu.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A') {
+        btn.classList.remove('active');
+        menu.classList.remove('active');
+      }
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
