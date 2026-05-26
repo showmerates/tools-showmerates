@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free 2026 Cost of Waiting to Buy calculator with honest math. Adjustable home price appreciation, rate forecasts, rent paid during the wait, and equity built. VA-specific buyer view from a USMC Veteran LO.">
+  <meta name="keywords" content="cost of waiting calculator, should I buy now or wait, mortgage rates waiting calculator, home price appreciation calculator, buy now vs later 2026">
+  <title>Cost of Waiting to Buy Calculator 2026 | ShowMeRates Tools</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #003057; --navy-dark: #001F3D; --navy-deeper: #00152B;
+      --blue: #0071CE; --blue-light: #4DA3E8; --blue-pale: #E8F2FC;
+      --red: #D72638; --red-hover: #BF1F2E; --red-pale: #FDEAEC;
+      --white: #FFFFFF; --off-white: #F5F7FA;
+      --gray-100: #EEF0F3; --gray-200: #D5D9E0; --gray-400: #9BA3AF; --gray-600: #5A6270; --gray-800: #2D3239;
+      --green: #1B874B; --green-pale: #E8F5EE;
+      --amber: #F5A623; --amber-pale: #FFF6E6;
+      --shadow-sm: 0 1px 3px rgba(0,48,87,0.07);
+      --shadow-md: 0 4px 12px rgba(0,48,87,0.10);
+      --shadow-lg: 0 8px 28px rgba(0,48,87,0.14);
+      --radius: 8px; --radius-lg: 12px; --transition: 0.25s ease;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      font-family: 'Source Sans 3', -apple-system, sans-serif;
+      color: var(--gray-800); -webkit-font-smoothing: antialiased;
+      line-height: 1.5; background: var(--white);
+    }
+    a { text-decoration: none; }
+
+    /* HEADER */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(0,31,61,0.97);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      height: 68px; padding: 0 28px;
+      display: flex; align-items: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1140px; width: 100%; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header-logo-text {
+      font-size: 22px; font-weight: 800; color: var(--white);
+      letter-spacing: -0.5px; line-height: 1;
+    }
+    .header-logo-text span { color: var(--blue-light); }
+    .header-logo-sub {
+      font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5);
+      text-transform: uppercase; letter-spacing: 1.5px; margin-top: 2px;
+    }
+    .header-nav { display: flex; align-items: center; gap: 28px; }
+    .header-nav a {
+      color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 600;
+      transition: color var(--transition); letter-spacing: 0.2px;
+    }
+    .header-nav a:hover { color: var(--white); }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .header-phone {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--white); font-size: 15px; font-weight: 700;
+    }
+    .header-phone:hover { color: var(--blue-light); }
+    .header-cta {
+      background: var(--red); color: var(--white);
+      padding: 9px 22px; border-radius: 6px;
+      font-size: 13px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.5px; transition: all var(--transition);
+      box-shadow: 0 2px 8px rgba(215,38,56,0.3);
+    }
+    .header-cta:hover { background: var(--red-hover); transform: translateY(-1px); }
+    .header-nmls { color: rgba(255,255,255,0.35); font-size: 10px; }
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer; padding: 4px;
+      flex-direction: column; gap: 5px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px; background: #fff;
+      border-radius: 2px; transition: all 0.3s ease;
+    }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .mobile-menu {
+      display: none; position: fixed; top: 60px; left: 0; right: 0; z-index: 999;
+      background: rgba(0,21,43,0.98); padding: 20px 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      flex-direction: column;
+    }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu a {
+      color: rgba(255,255,255,0.85); font-size: 16px; font-weight: 600;
+      padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    @media (max-width: 768px) {
+      .header { padding: 0 16px; height: 60px; }
+      .header-nav, .header-nmls { display: none; }
+      .header-phone span { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+      background: var(--off-white);
+      padding: 92px 24px 16px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .breadcrumb-inner {
+      max-width: 1040px; margin: 0 auto;
+      font-size: 13px; color: var(--gray-600);
+    }
+    .breadcrumb a { color: var(--blue); font-weight: 600; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { color: var(--gray-400); margin: 0 8px; }
+
+    /* HERO */
+    .calc-hero {
+      background: linear-gradient(170deg, var(--navy-dark) 0%, var(--navy) 50%, #004A8F 100%);
+      padding: 48px 24px;
+      position: relative; overflow: hidden;
+      text-align: center;
+    }
+    .calc-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(0,113,206,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .calc-hero-inner { max-width: 760px; margin: 0 auto; position: relative; z-index: 1; }
+    .calc-hero-eyebrow {
+      display: inline-block;
+      background: rgba(0,113,206,0.18);
+      border: 1px solid rgba(77,163,232,0.35);
+      color: var(--blue-light);
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      padding: 6px 14px; border-radius: 100px; margin-bottom: 16px;
+    }
+    .calc-hero h1 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: clamp(28px, 4vw, 38px);
+      font-weight: 900; line-height: 1.2;
+      color: var(--white); letter-spacing: -0.3px;
+      margin-bottom: 14px;
+    }
+    .calc-hero h1 span { color: var(--blue-light); }
+    .calc-hero p {
+      font-size: 16px; line-height: 1.6;
+      color: rgba(255,255,255,0.8);
+      max-width: 580px; margin: 0 auto;
+    }
+
+    /* CALCULATOR */
+    .calc-section { padding: 40px 24px 60px; background: var(--off-white); }
+    .calc-inner { max-width: 960px; margin: 0 auto; }
+    .calc-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md); overflow: hidden;
+    }
+
+    /* FORM */
+    .calc-form { padding: 28px; }
+    .calc-form-section {
+      padding-bottom: 22px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .calc-form-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .calc-section-title {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 16px; font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .calc-section-title .num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px;
+      background: var(--blue-pale); color: var(--blue);
+      border-radius: 50%;
+      font-size: 13px; font-weight: 800;
+      font-family: 'Source Sans 3', sans-serif;
+    }
+    .calc-section-help {
+      font-size: 13px; color: var(--gray-600);
+      margin-bottom: 16px;
+      padding-left: 32px;
+    }
+    .calc-form-row { margin-bottom: 14px; }
+    .calc-form-row:last-child { margin-bottom: 0; }
+    .calc-form-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    }
+    @media (max-width: 600px) {
+      .calc-form-grid { grid-template-columns: 1fr; }
+    }
+    .calc-label {
+      display: block; font-size: 13px; font-weight: 700;
+      color: var(--navy); margin-bottom: 6px;
+    }
+    .calc-label-help {
+      font-size: 11px; font-weight: 400;
+      color: var(--gray-400);
+      margin-left: 6px;
+    }
+    .calc-input-wrap { position: relative; }
+    .calc-input-prefix {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--gray-400); font-weight: 700; font-size: 15px;
+      pointer-events: none;
+    }
+    .calc-input-suffix {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--gray-400); font-weight: 700; font-size: 14px;
+      pointer-events: none;
+    }
+    .calc-input {
+      width: 100%;
+      padding: 11px 14px 11px 30px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 15px; font-weight: 600;
+      color: var(--gray-800);
+      background: var(--white);
+      transition: all var(--transition);
+      outline: none;
+      -moz-appearance: textfield;
+    }
+    .calc-input::-webkit-outer-spin-button,
+    .calc-input::-webkit-inner-spin-button {
+      -webkit-appearance: none; margin: 0;
+    }
+    .calc-input.has-suffix { padding-left: 14px; padding-right: 40px; }
+    .calc-input.no-prefix { padding-left: 14px; }
+    .calc-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(0,113,206,0.12);
+    }
+
+    /* SLIDER (for wait months) */
+    .slider-wrap { padding-top: 4px; }
+    .slider {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      background: var(--gray-200);
+      border-radius: 100px;
+      outline: none;
+    }
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 22px; height: 22px;
+      background: var(--blue);
+      border: 3px solid #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,48,87,0.3);
+    }
+    .slider::-moz-range-thumb {
+      width: 22px; height: 22px;
+      background: var(--blue);
+      border: 3px solid #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,48,87,0.3);
+    }
+    .slider-labels {
+      display: flex; justify-content: space-between;
+      margin-top: 6px;
+      font-size: 10px; color: var(--gray-400); font-weight: 700;
+    }
+    .slider-display {
+      text-align: center;
+      margin-bottom: 8px;
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 28px; font-weight: 900;
+      color: var(--blue);
+      letter-spacing: -0.5px;
+    }
+
+    /* RESULT */
+    .calc-result {
+      padding: 32px 28px;
+      color: var(--white);
+      position: relative; overflow: hidden;
+      transition: background 0.4s ease;
+    }
+    .calc-result.waitcosts {
+      background: linear-gradient(135deg, #6B1E2A 0%, #4A1219 100%);
+    }
+    .calc-result.waitwins {
+      background: linear-gradient(135deg, #155A33 0%, #0F3D24 100%);
+    }
+    .calc-result.neutral {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    }
+    .calc-result::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 20%, rgba(0,113,206,0.18) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .calc-result.waitcosts::before {
+      background: radial-gradient(ellipse at 80% 20%, rgba(215,38,56,0.22) 0%, transparent 60%);
+    }
+    .calc-result.waitwins::before {
+      background: radial-gradient(ellipse at 80% 20%, rgba(27,135,75,0.25) 0%, transparent 60%);
+    }
+    .calc-result-inner { position: relative; z-index: 1; }
+
+    .calc-result-headline {
+      text-align: center;
+      margin-bottom: 24px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .calc-result-status {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 11px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      margin-bottom: 14px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+    }
+    .calc-result.waitcosts .calc-result-status { color: #FF9BA8; border-color: rgba(215,38,56,0.4); background: rgba(215,38,56,0.25); }
+    .calc-result.waitwins .calc-result-status { color: #6EE8A4; border-color: rgba(27,135,75,0.4); background: rgba(27,135,75,0.25); }
+    .calc-result-label {
+      font-size: 12px; font-weight: 700;
+      color: var(--blue-light);
+      text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 6px;
+    }
+    .calc-result.waitcosts .calc-result-label { color: #FF9BA8; }
+    .calc-result.waitwins .calc-result-label { color: #6EE8A4; }
+    .calc-result-amount {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: clamp(36px, 7vw, 56px); font-weight: 900;
+      color: var(--white); line-height: 1.05;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+    .calc-result-amount.waitcosts { color: #FFB585; }
+    .calc-result-amount.waitwins { color: #6EE8A4; }
+    .calc-result-headline-sub {
+      font-size: 15px; color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+      max-width: 600px; margin: 0 auto;
+    }
+    .calc-result-headline-sub strong { color: var(--white); font-weight: 700; }
+
+    .calc-result-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    }
+    @media (max-width: 600px) {
+      .calc-result-stats { grid-template-columns: 1fr; }
+    }
+    .calc-stat-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+    .calc-stat-label {
+      font-size: 11px; color: rgba(255,255,255,0.65);
+      text-transform: uppercase; letter-spacing: 0.8px;
+      font-weight: 700; margin-bottom: 6px;
+    }
+    .calc-stat-value {
+      font-size: 20px; font-weight: 800;
+      color: var(--white);
+      font-family: 'Merriweather', Georgia, serif;
+      line-height: 1.15;
+    }
+    .calc-stat-value.green { color: #6EE8A4; }
+    .calc-stat-value.red { color: #FF9BA8; }
+    .calc-stat-value.amber { color: #FFD27A; }
+
+    /* SIDE-BY-SIDE COMPARISON */
+    .breakdown-section {
+      padding: 28px;
+      background: var(--white);
+      border-top: 1px solid var(--gray-100);
+    }
+    .breakdown-section h3 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .breakdown-section .sub {
+      font-size: 13px; color: var(--gray-600);
+      margin-bottom: 18px;
+    }
+
+    .compare-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 600px) { .compare-grid { grid-template-columns: 1fr; } }
+    .compare-col {
+      padding: 20px;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--gray-100);
+    }
+    .compare-col.now {
+      background: var(--blue-pale);
+      border-color: rgba(0,113,206,0.25);
+    }
+    .compare-col.later {
+      background: var(--off-white);
+    }
+    .compare-col-header {
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+      border-bottom: 1.5px solid rgba(0,0,0,0.08);
+    }
+    .compare-col-title {
+      font-size: 11px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      margin-bottom: 4px;
+    }
+    .compare-col.now .compare-col-title { color: var(--blue); }
+    .compare-col.later .compare-col-title { color: var(--gray-600); }
+    .compare-col-headline {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 17px; font-weight: 700;
+      color: var(--navy);
+    }
+    .compare-rows { display: grid; gap: 8px; }
+    .compare-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-size: 13px;
+    }
+    .compare-row span:first-child { color: var(--gray-600); }
+    .compare-row span:last-child {
+      font-weight: 700;
+      color: var(--gray-800);
+      font-family: 'Merriweather', Georgia, serif;
+    }
+    .compare-row.total {
+      border-top: 1.5px solid rgba(0,0,0,0.1);
+      padding-top: 10px;
+      margin-top: 4px;
+      font-size: 15px;
+    }
+    .compare-row.total span:last-child {
+      font-size: 18px;
+      color: var(--navy);
+    }
+    .compare-row.equity span:last-child { color: var(--green); }
+    .compare-row.cost span:last-child { color: var(--red); }
+
+    /* CHART */
+    .chart-container {
+      background: var(--off-white);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .chart-svg { width: 100%; height: auto; max-height: 280px; display: block; }
+    .chart-legend {
+      display: flex; justify-content: center; gap: 20px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .chart-legend-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600; color: var(--gray-600);
+    }
+    .chart-legend-swatch {
+      width: 14px; height: 4px; border-radius: 2px;
+    }
+
+    /* WARNINGS */
+    .calc-warning {
+      background: var(--amber-pale);
+      border-left: 4px solid var(--amber);
+      padding: 14px 18px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-top: 16px;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .calc-warning.success {
+      background: var(--green-pale);
+      border-left-color: var(--green);
+    }
+    .calc-warning.error {
+      background: var(--red-pale);
+      border-left-color: var(--red);
+    }
+    .calc-warning-icon { flex-shrink: 0; }
+    .calc-warning-text { font-size: 13px; color: var(--gray-800); line-height: 1.5; }
+    .calc-warning-text strong { color: var(--navy); font-weight: 700; }
+    .calc-warning-text a { color: var(--blue); font-weight: 700; }
+
+    /* LEAD CAPTURE */
+    .calc-lead {
+      background: var(--white);
+      padding: 28px;
+      border-top: 1px solid var(--gray-100);
+    }
+    .calc-lead h3 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--navy); margin-bottom: 6px;
+    }
+    .calc-lead p {
+      font-size: 14px; color: var(--gray-600);
+      margin-bottom: 18px;
+    }
+    .calc-lead-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .calc-lead-row.single { grid-template-columns: 1fr; }
+    .calc-lead-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 15px; color: var(--gray-800);
+      background: var(--white);
+      transition: border var(--transition);
+      outline: none;
+    }
+    .calc-lead-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(0,113,206,0.12);
+    }
+    .calc-lead-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 15px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all var(--transition);
+      box-shadow: 0 4px 14px rgba(215,38,56,0.3);
+      margin-top: 12px;
+    }
+    .calc-lead-btn:hover { background: var(--red-hover); transform: translateY(-1px); }
+    .calc-lead-disclaimer {
+      font-size: 11px; color: var(--gray-400);
+      line-height: 1.5; margin-top: 12px;
+    }
+    .calc-lead-disclaimer a { color: var(--blue); }
+    .calc-lead-thanks {
+      display: none;
+      background: var(--green-pale);
+      border: 1.5px solid rgba(27,135,75,0.25);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+    }
+    .calc-lead-thanks.active { display: block; }
+    .calc-lead-thanks h4 {
+      color: var(--green); font-size: 17px; margin-bottom: 6px;
+    }
+    .calc-lead-thanks p {
+      font-size: 14px; color: var(--gray-800); margin: 0;
+    }
+
+    /* EXPLAINER */
+    .explainer-section { padding: 60px 24px; background: var(--white); }
+    .explainer-inner { max-width: 760px; margin: 0 auto; }
+    .explainer-section h2 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 28px; font-weight: 700;
+      color: var(--navy); margin-bottom: 12px; letter-spacing: -0.3px;
+    }
+    .explainer-section .intro {
+      font-size: 17px; color: var(--gray-600);
+      margin-bottom: 32px; line-height: 1.7;
+    }
+    .explainer-section h3 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--navy);
+      margin-top: 32px; margin-bottom: 12px;
+    }
+    .explainer-section p {
+      font-size: 16px; line-height: 1.7;
+      color: var(--gray-800);
+      margin-bottom: 14px;
+    }
+    .scenarios-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+      margin: 20px 0;
+    }
+    @media (max-width: 600px) { .scenarios-grid { grid-template-columns: 1fr; } }
+    .scenario-card {
+      padding: 18px 22px;
+      border-radius: var(--radius);
+    }
+    .scenario-card.buy {
+      background: var(--green-pale);
+      border-left: 4px solid var(--green);
+    }
+    .scenario-card.wait {
+      background: var(--blue-pale);
+      border-left: 4px solid var(--blue);
+    }
+    .scenario-card h4 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 15px; margin-bottom: 8px;
+    }
+    .scenario-card.buy h4 { color: var(--green); }
+    .scenario-card.wait h4 { color: var(--blue); }
+    .scenario-card ul { padding-left: 18px; }
+    .scenario-card li { font-size: 14px; line-height: 1.5; margin-bottom: 4px; color: var(--gray-800); }
+
+    /* BOTTOM CTA */
+    .bottom-cta {
+      padding: 56px 24px; background: var(--navy);
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .bottom-cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(0,113,206,0.1) 0%, transparent 70%);
+    }
+    .bottom-cta-inner { position: relative; z-index: 1; }
+    .bottom-cta h2 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 28px; font-weight: 700;
+      color: var(--white); margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+    .bottom-cta p {
+      color: rgba(255,255,255,0.7); font-size: 16px;
+      margin-bottom: 24px;
+      max-width: 520px; margin-left: auto; margin-right: auto;
+    }
+    .btn-primary {
+      display: inline-block; background: var(--red); color: var(--white);
+      padding: 16px 36px; border-radius: var(--radius);
+      font-size: 15px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      transition: all var(--transition);
+      box-shadow: 0 4px 14px rgba(215,38,56,0.3);
+    }
+    .btn-primary:hover { background: var(--red-hover); transform: translateY(-1px); }
+
+    /* COMPLIANCE */
+    .compliance { background: var(--navy-deeper); padding: 32px 24px; text-align: center; }
+    .compliance-inner { max-width: 800px; margin: 0 auto; }
+    .compliance p { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.8; }
+    .compliance a { color: var(--blue-light); }
+    .compliance a:hover { text-decoration: underline; }
+    .compliance-ehl {
+      margin-top: 14px; font-size: 11px; color: rgba(255,255,255,0.5);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="/">
+      <div>
+        <div class="header-logo-text">Show<span>Me</span>Rates</div>
+        <div class="header-logo-sub">Tools</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/">Calculators</a>
+      <a href="https://showmerates.com">Main Site</a>
+      <a href="https://showmerates.com/va-loan-resources">Resources</a>
+    </nav>
+    <div class="header-right">
+      <a class="header-phone" href="tel:+18447371455">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.81.36 1.6.68 2.35a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.75.32 1.54.55 2.35.68A2 2 0 0122 16.92z" stroke="#fff" stroke-width="2"/></svg>
+        <span>(844) 737-1455</span>
+      </a>
+      <a class="header-cta" href="https://showmerates.com/#smrFormCard">Get My Rate</a>
+      <span class="header-nmls">NMLS# 1416824</span>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/">Calculators</a>
+  <a href="https://showmerates.com">Main Site</a>
+  <a href="https://showmerates.com/va-loan-resources">Resources</a>
+  <a href="tel:+18447371455">(844) 737-1455</a>
+</div>
+
+<!-- BREADCRUMB -->
+<nav class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="/">Tools</a>
+    <span>&rsaquo;</span>
+    Cost of Waiting to Buy
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="calc-hero">
+  <div class="calc-hero-inner">
+    <div class="calc-hero-eyebrow">Cost of Waiting to Buy</div>
+    <h1>Should You Buy Now,<br><span>Or Wait For Better Rates?</span></h1>
+    <p>The honest version of this calculator. Adjustable home price growth, rate forecasts, rent during the wait, and equity built. Includes scenarios where waiting actually wins.</p>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="calc-section">
+  <div class="calc-inner">
+    <div class="calc-card">
+
+      <div class="calc-form">
+
+        <!-- 1. THE HOUSE TODAY -->
+        <div class="calc-form-section">
+          <h2 class="calc-section-title"><span class="num">1</span>The House You'd Buy Today</h2>
+          <p class="calc-section-help">A home you're already considering, plus today's rate quote.</p>
+
+          <div class="calc-form-grid">
+            <div class="calc-form-row">
+              <label class="calc-label" for="homePrice">Home Price Today</label>
+              <div class="calc-input-wrap">
+                <span class="calc-input-prefix">$</span>
+                <input type="number" class="calc-input" id="homePrice" value="400000" min="0" step="1000">
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="currentRate">Today's Rate Quote</label>
+              <div class="calc-input-wrap">
+                <input type="number" class="calc-input has-suffix no-prefix" id="currentRate" value="6.50" min="0" step="0.125">
+                <span class="calc-input-suffix">%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. WAIT SETUP -->
+        <div class="calc-form-section">
+          <h2 class="calc-section-title"><span class="num">2</span>How Long Would You Wait?</h2>
+          <p class="calc-section-help">Drag to set how many months you'd hold off before buying.</p>
+
+          <div class="slider-display"><span id="waitDisplay">12</span> months</div>
+          <input type="range" class="slider" id="waitSlider" min="3" max="36" step="1" value="12">
+          <div class="slider-labels">
+            <span>3 mo</span><span>12 mo</span><span>24 mo</span><span>36 mo</span>
+          </div>
+        </div>
+
+        <!-- 3. ASSUMPTIONS -->
+        <div class="calc-form-section">
+          <h2 class="calc-section-title"><span class="num">3</span>Your Assumptions About The Future</h2>
+          <p class="calc-section-help">No one knows the future. Adjust these to see different scenarios. Defaults reflect current market consensus.</p>
+
+          <div class="calc-form-grid">
+            <div class="calc-form-row">
+              <label class="calc-label" for="appreciationRate">Annual Home Price Change</label>
+              <div class="calc-input-wrap">
+                <input type="number" class="calc-input has-suffix no-prefix" id="appreciationRate" value="2.5" step="0.5">
+                <span class="calc-input-suffix">% / yr</span>
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="rateChange">Rate Change While Waiting <span class="calc-label-help">(negative = lower rate)</span></label>
+              <div class="calc-input-wrap">
+                <input type="number" class="calc-input has-suffix no-prefix" id="rateChange" value="-0.75" step="0.125">
+                <span class="calc-input-suffix">% total</span>
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="monthlyRent">Your Current Monthly Rent</label>
+              <div class="calc-input-wrap">
+                <span class="calc-input-prefix">$</span>
+                <input type="number" class="calc-input" id="monthlyRent" value="2200" min="0" step="50">
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="rentInflation">Annual Rent Inflation</label>
+              <div class="calc-input-wrap">
+                <input type="number" class="calc-input has-suffix no-prefix" id="rentInflation" value="3.5" step="0.5">
+                <span class="calc-input-suffix">% / yr</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- HEADLINE RESULT -->
+      <div class="calc-result waitcosts" id="calcResult">
+        <div class="calc-result-inner">
+          <div class="calc-result-headline">
+            <div class="calc-result-status" id="resultStatus">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M12 2L2 22h20L12 2z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span id="resultStatusText">Waiting Costs You Money</span>
+            </div>
+            <div class="calc-result-label" id="resultLabel">Cost Of Waiting 12 Months</div>
+            <div class="calc-result-amount waitcosts" id="resultAmount">$22,840</div>
+            <p class="calc-result-headline-sub" id="resultSub">Despite a rate drop, you'd be <strong>$22,840 behind</strong> if you wait 12 months. The home appreciation plus rent paid outweigh the lower rate's monthly savings.</p>
+          </div>
+
+          <div class="calc-result-stats">
+            <div class="calc-stat-card">
+              <div class="calc-stat-label">Home Price Later</div>
+              <div class="calc-stat-value" id="statFuturePrice">$410,000</div>
+            </div>
+            <div class="calc-stat-card">
+              <div class="calc-stat-label">Rate Later</div>
+              <div class="calc-stat-value" id="statFutureRate">5.75%</div>
+            </div>
+            <div class="calc-stat-card">
+              <div class="calc-stat-label">Rent Paid During Wait</div>
+              <div class="calc-stat-value red" id="statRentPaid">$27,047</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMPARISON -->
+      <div class="breakdown-section">
+        <h3>Side-By-Side: Buy Now vs Wait</h3>
+        <p class="sub">Both paths assume you eventually buy. The question is which path leaves you better off financially after the wait period.</p>
+
+        <div class="compare-grid">
+          <div class="compare-col now">
+            <div class="compare-col-header">
+              <div class="compare-col-title">Buy Now</div>
+              <div class="compare-col-headline">Today's Price &amp; Rate</div>
+            </div>
+            <div class="compare-rows" id="nowRows"></div>
+          </div>
+          <div class="compare-col later">
+            <div class="compare-col-header">
+              <div class="compare-col-title">Wait <span id="waitTitleMonths">12</span> Months</div>
+              <div class="compare-col-headline">Future Price &amp; Rate</div>
+            </div>
+            <div class="compare-rows" id="laterRows"></div>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 24px;">Net Worth Trajectory</h3>
+        <p class="sub">Cumulative housing-related net worth at the end of the wait period for each path.</p>
+
+        <div class="chart-container">
+          <svg class="chart-svg" id="chartSvg" viewBox="0 0 700 280" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="chart-legend">
+            <div class="chart-legend-item">
+              <div class="chart-legend-swatch" style="background: var(--blue);"></div>
+              <span>Buy Now Path</span>
+            </div>
+            <div class="chart-legend-item">
+              <div class="chart-legend-swatch" style="background: var(--gray-400);"></div>
+              <span>Wait Path</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="warningBox"></div>
+      </div>
+
+      <!-- LEAD CAPTURE -->
+      <div class="calc-lead">
+        <div id="leadForm">
+          <h3>Want this in writing?</h3>
+          <p>Get a personalized PDF with your specific scenario, the math behind the result, and rate quotes that match your timeline &mdash; emailed directly to you. No spam, no obligation.</p>
+          <div class="calc-lead-row">
+            <input type="text" class="calc-lead-input" id="leadFirstName" placeholder="First name">
+            <input type="text" class="calc-lead-input" id="leadLastName" placeholder="Last name">
+          </div>
+          <div class="calc-lead-row single">
+            <input type="email" class="calc-lead-input" id="leadEmail" placeholder="Email address">
+          </div>
+          <div class="calc-lead-row single">
+            <input type="tel" class="calc-lead-input" id="leadPhone" placeholder="Phone (optional)">
+          </div>
+          <button class="calc-lead-btn" id="leadSubmit">Email Me My Report &rarr;</button>
+          <p class="calc-lead-disclaimer">
+            By submitting, you consent to receive emails and calls/texts from our VA loan specialist at E Mortgage Capital, Inc. (NMLS# 1416824) about your VA mortgage inquiry. Consent is not required to purchase. Msg &amp; data rates may apply. Reply STOP to opt out.
+            <a href="https://showmerates.com/privacy-policy" target="_blank">Privacy Policy</a>.
+          </p>
+        </div>
+        <div class="calc-lead-thanks" id="leadThanks">
+          <h4>Thanks! Your report is on the way.</h4>
+          <p>Check your email in the next few minutes. If you don't see it, check your spam folder or call us directly at <a href="tel:+18447371455">(844) 737-1455</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLAINER -->
+<section class="explainer-section">
+  <div class="explainer-inner">
+    <h2>The Honest Math On Waiting</h2>
+    <p class="intro">Most "cost of waiting" calculators are sales tactics dressed up as analysis. They assume aggressive home price growth, no rate drops, and ignore your rent. Of course the answer comes out "buy now!" But the real math is more nuanced &mdash; sometimes waiting genuinely is the right move. This calculator runs both scenarios honestly so you can decide for yourself.</p>
+
+    <h3>The Four Variables That Actually Matter</h3>
+    <p><strong>1. What home prices do during the wait.</strong> If prices rise, you pay more for the same house later. If prices fall (as in some 2025-2026 markets), you save. As of early 2026, the Case-Shiller index shows annual home price appreciation around 1-2% nationally &mdash; far below the 5-8% of the recent boom. Tampa, Phoenix, and other previously hot markets are actually declining. Northeast and Midwest are still appreciating modestly.</p>
+    <p><strong>2. What rates do during the wait.</strong> If rates drop, your monthly payment is lower on the same purchase &mdash; or you can refinance later if you buy now (a VA IRRRL streamline refi makes this easy and cheap). If rates rise, your monthly payment is higher. Nobody can reliably predict this; ignore anyone who claims they can.</p>
+    <p><strong>3. The rent you pay during the wait.</strong> This is the silent killer most calculators ignore. If you wait 12 months at $2,200/mo, you're paying $26,400 to your landlord with zero return. That's the largest single number in the calculation for most people.</p>
+    <p><strong>4. The equity you'd build by buying now.</strong> Every monthly payment on your own mortgage builds principal in your name. Even modest principal paydown over a year ($4,000-$6,000 on a typical loan) plus any appreciation flows to your net worth instead of your landlord's.</p>
+
+    <h3>The VA-Specific Reframe</h3>
+    <p>VA borrowers have an advantage that conventional borrowers don't: the IRRRL. If you buy today at 6.5% and rates drop to 5.5% in 18 months, you can refinance into the lower rate via VA Streamline with minimal closing costs and no appraisal. So the downside of "wrong rate timing" is much smaller for Veterans than for conventional buyers. You're not locked into your purchase rate for 30 years &mdash; you can refresh it almost any time rates make sense.</p>
+    <p>This single fact tilts most "should I wait?" calculations in favor of buying now for VA-eligible buyers, because the rate risk is largely hedged by your refinance option. The home price risk and rent cost remain, but they're already favoring "buy now" in most scenarios.</p>
+
+    <h3>When Waiting Actually Makes Sense</h3>
+    <div class="scenarios-grid">
+      <div class="scenario-card wait">
+        <h4>Wait if any of these are true:</h4>
+        <ul>
+          <li>You're not financially ready (no reserves, unstable income, unresolved credit issues)</li>
+          <li>You're in a market with clearly declining prices and no rebound signs</li>
+          <li>You're planning to PCS or move within 2-3 years</li>
+          <li>Rates have spiked recently and you have strong reason to expect normalization soon</li>
+          <li>Rent in your area is genuinely cheap relative to ownership (rare but exists)</li>
+        </ul>
+      </div>
+      <div class="scenario-card buy">
+        <h4>Buy if any of these are true:</h4>
+        <ul>
+          <li>You're financially stable and planning to stay 5+ years</li>
+          <li>Rent in your area exceeds the carrying cost of ownership</li>
+          <li>Your local market is appreciating or flat (most markets in 2026)</li>
+          <li>You have VA eligibility and can use $0 down to your advantage</li>
+          <li>Your goal is wealth-building rather than rate optimization</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>What This Calculator Doesn't Include</h3>
+    <p>To keep the math focused, we don't model: tax deductibility of mortgage interest (which favors buying), maintenance costs and homeowners insurance during ownership (which favor renting), the opportunity cost of your down payment in alternative investments, or the psychological value of owning your own space. These all matter for the full picture but vary too much by individual to standardize.</p>
+    <p>We also don't model market timing risk in either direction. The future isn't predictable, which is why this calculator lets you adjust every assumption. The smartest way to use it is to run the scenarios you most fear (rates spike, prices crash, you have to move early) and see whether the decision holds up.</p>
+
+    <h3>Real Talk From an LO</h3>
+    <p>The truth most mortgage marketing won't tell you: in normal markets with normal appreciation, the cost of waiting is usually positive but rarely catastrophic. The bigger risk to your financial life isn't getting the timing wrong &mdash; it's spending five years of indecision while your rent goes up, your savings stagnate, and your housing wealth sits at zero. Veterans who buy when they're personally ready and stay put for the long haul almost always come out ahead of those who try to time the market perfectly. Use this calculator to confirm or challenge your gut, not to manufacture urgency.</p>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta">
+  <div class="bottom-cta-inner">
+    <h2>Want Real Rate Quotes To Plug Into This Calculator?</h2>
+    <p>Get a no-obligation VA quote based on your actual credit, income, and target purchase price. Then re-run the math with real numbers instead of assumptions.</p>
+    <a href="https://showmerates.com/#smrFormCard" class="btn-primary">Get My VA Quote &rarr;</a>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section class="compliance">
+  <div class="compliance-inner">
+    <p>
+      ShowMeRates.com is operated by E Mortgage Capital, Inc., NMLS# 1416824, 3750 S Susan Street, Santa Ana, California 92704.<br>
+      <a href="https://nmlsconsumeraccess.org" target="_blank" rel="noopener">nmlsconsumeraccess.org</a> &middot; Equal Housing Lender &middot; Licensed in 48 states<br>
+      This calculator is for informational and educational purposes only and does not constitute a loan estimate, commitment to lend, or offer of credit. Results are projections based on assumptions you enter. Future home prices and interest rates cannot be reliably predicted. Past appreciation does not guarantee future results.<br>
+      Not endorsed or sponsored by the Dept. of Veterans Affairs or any government agency.<br>
+      <a href="https://showmerates.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a> &middot; <a href="https://showmerates.com/privacy-policy" target="_blank" rel="noopener">Terms of Use</a> &middot; <a href="https://showmerates.com/licenses" target="_blank" rel="noopener">Licensing</a>
+    </p>
+    <div class="compliance-ehl">
+      <svg width="20" height="18" viewBox="0 0 20 18" fill="none"><path d="M10 0L0 8h3v10h14V8h3L10 0zM7 14v-4h6v4H7z" fill="rgba(255,255,255,0.4)"/></svg>
+      Equal Housing Lender
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var state = {
+    homePrice: 400000,
+    currentRate: 6.50,
+    waitMonths: 12,
+    appreciationRate: 2.5,
+    rateChange: -0.75,
+    monthlyRent: 2200,
+    rentInflation: 3.5
+  };
+
+  function calcMonthlyPI(principal, annualRatePct, years) {
+    if (annualRatePct <= 0 || years <= 0 || principal <= 0) return 0;
+    var monthlyRate = (annualRatePct / 100) / 12;
+    var n = years * 12;
+    return principal * (monthlyRate * Math.pow(1 + monthlyRate, n)) / (Math.pow(1 + monthlyRate, n) - 1);
+  }
+
+  // Principal paid over n months on a fully-amortizing loan
+  function principalPaidOver(principal, annualRatePct, termYears, monthsElapsed) {
+    if (annualRatePct <= 0 || termYears <= 0 || principal <= 0 || monthsElapsed <= 0) return 0;
+    var monthlyRate = (annualRatePct / 100) / 12;
+    var n = termYears * 12;
+    var payment = principal * (monthlyRate * Math.pow(1 + monthlyRate, n)) / (Math.pow(1 + monthlyRate, n) - 1);
+    var balance = principal;
+    for (var i = 0; i < monthsElapsed && i < n; i++) {
+      var interestThisMonth = balance * monthlyRate;
+      var principalThisMonth = payment - interestThisMonth;
+      balance -= principalThisMonth;
+    }
+    return principal - balance;
+  }
+
+  // Rent paid over n months with annual inflation
+  function rentPaidOver(monthlyRent, annualInflationPct, months) {
+    var total = 0;
+    var currentRent = monthlyRent;
+    var monthlyInflationFactor = Math.pow(1 + annualInflationPct / 100, 1/12);
+    for (var i = 0; i < months; i++) {
+      total += currentRent;
+      currentRent *= monthlyInflationFactor;
+    }
+    return total;
+  }
+
+  function formatCurrency(n) {
+    var abs = Math.abs(n);
+    return (n < 0 ? '-' : '') + '$' + Math.round(abs).toLocaleString('en-US');
+  }
+
+  function calculate() {
+    var waitYears = state.waitMonths / 12;
+    var futurePrice = state.homePrice * Math.pow(1 + state.appreciationRate / 100, waitYears);
+    var futureRate = Math.max(state.currentRate + state.rateChange, 0.5);
+
+    // Buy Now path
+    var nowPI = calcMonthlyPI(state.homePrice, state.currentRate, 30);
+    var nowPrincipalPaid = principalPaidOver(state.homePrice, state.currentRate, 30, state.waitMonths);
+    var nowAppreciationDuringWait = state.homePrice * (Math.pow(1 + state.appreciationRate / 100, waitYears) - 1);
+    var nowEquityBuiltDuringWait = nowPrincipalPaid + nowAppreciationDuringWait;
+
+    // Wait path
+    var laterPI = calcMonthlyPI(futurePrice, futureRate, 30);
+    var rentPaidDuringWait = rentPaidOver(state.monthlyRent, state.rentInflation, state.waitMonths);
+    var laterEquityAtMonth0 = 0; // just bought, no equity yet
+
+    // Net worth delta at end of wait period:
+    // Buy Now path: equity built (principal + appreciation) - opportunity cost of buying
+    // Wait path: zero equity - rent paid
+    // The comparison: what is the net worth difference?
+    //
+    // Simpler framing: cost of waiting = (price increase) + (rent paid) + (lost equity build) - (rate savings)
+    //
+    // Rate savings over wait period if you wait (vs same period as renter, no benefit)
+    // Actually rate savings only kicks in AFTER you buy at lower rate, post-wait
+    //
+    // Cleanest comparison: end-of-wait net worth position
+    // BUY NOW: net worth = home appreciation + principal paid
+    //   (the monthly mortgage payment is comparable to rent; we treat them as equivalent housing costs)
+    //   To be honest: if mortgage payment > rent, that's a "cost" too. Let's model that.
+    var nowEscrowEstimate = state.homePrice * 0.005 / 12 * state.waitMonths; // rough taxes+ins
+    var nowMortgagePaidTotal = nowPI * state.waitMonths;
+    var nowHousingCost = nowMortgagePaidTotal + nowEscrowEstimate;
+    // But of that, principal paid is "savings", so net housing expense = mortgage - principal + escrow
+    var nowNetHousingExpense = (nowMortgagePaidTotal - nowPrincipalPaid) + nowEscrowEstimate;
+
+    // BUY NOW net financial position at end of wait:
+    //   + appreciation
+    //   + principal paid
+    //   - (interest paid + escrow paid)
+    // = equity built - net housing expense
+    var buyNowNetPosition = nowAppreciationDuringWait + nowPrincipalPaid - nowNetHousingExpense;
+
+    // WAIT net financial position at end of wait:
+    //   - rent paid (sunk cost)
+    //   (no equity, no appreciation, no principal — they don't own anything yet)
+    var waitNetPosition = -rentPaidDuringWait;
+
+    // The "cost of waiting" = buyNowNetPosition - waitNetPosition
+    // (how much better off you are by buying now vs waiting)
+    var costOfWaiting = buyNowNetPosition - waitNetPosition;
+
+    // Future monthly payment comparison (after each path)
+    // After Wait path: PI at futurePrice, futureRate
+    // After Buy Now path: PI at homePrice, currentRate (until IRRRL refi opportunity)
+    var monthlyPaymentDiff = nowPI - laterPI; // positive if buy-now payment is higher
+
+    return {
+      futurePrice: futurePrice,
+      futureRate: futureRate,
+      nowPI: nowPI,
+      laterPI: laterPI,
+      nowPrincipalPaid: nowPrincipalPaid,
+      nowAppreciationDuringWait: nowAppreciationDuringWait,
+      rentPaidDuringWait: rentPaidDuringWait,
+      nowNetHousingExpense: nowNetHousingExpense,
+      buyNowNetPosition: buyNowNetPosition,
+      waitNetPosition: waitNetPosition,
+      costOfWaiting: costOfWaiting,
+      monthlyPaymentDiff: monthlyPaymentDiff,
+      priceDelta: futurePrice - state.homePrice
+    };
+  }
+
+  function renderChart(c) {
+    var svg = document.getElementById('chartSvg');
+    var W = 700, H = 280, padL = 60, padR = 30, padT = 20, padB = 40;
+    var plotW = W - padL - padR;
+    var plotH = H - padT - padB;
+
+    var months = state.waitMonths;
+    // Generate buy-now path: net worth = month-by-month accumulating equity (principal + pro-rated appreciation)
+    // Generate wait path: net worth = -accumulating rent
+    var buyNowPoints = [];
+    var waitPoints = [];
+    var monthlyAppreciation = c.nowAppreciationDuringWait / months;
+    var monthlyInflationFactor = Math.pow(1 + state.rentInflation / 100, 1/12);
+    var currentRent = state.monthlyRent;
+    var rentCumulative = 0;
+    var monthlyRate = state.currentRate / 100 / 12;
+    var paymentMonthly = c.nowPI;
+    var balance = state.homePrice;
+    var nowEscrowMonthly = state.homePrice * 0.005 / 12;
+
+    for (var m = 0; m <= months; m++) {
+      // Buy Now: principal paid so far + appreciation pro-rated - net housing expense
+      var prinPaidSoFar = principalPaidOver(state.homePrice, state.currentRate, 30, m);
+      var apprecSoFar = state.homePrice * (Math.pow(1 + state.appreciationRate / 100, m/12) - 1);
+      var mortgagePaidSoFar = paymentMonthly * m;
+      var escrowSoFar = nowEscrowMonthly * m;
+      var netHousingExpense = (mortgagePaidSoFar - prinPaidSoFar) + escrowSoFar;
+      var buyNowNetWorth = prinPaidSoFar + apprecSoFar - netHousingExpense;
+      buyNowPoints.push({ m: m, v: buyNowNetWorth });
+
+      // Wait: accumulating rent (negative)
+      if (m > 0) {
+        rentCumulative += currentRent;
+        currentRent *= monthlyInflationFactor;
+      }
+      waitPoints.push({ m: m, v: -rentCumulative });
+    }
+
+    // Find y range
+    var allVals = buyNowPoints.concat(waitPoints).map(function(p) { return p.v; });
+    var minV = Math.min.apply(null, allVals.concat([0]));
+    var maxV = Math.max.apply(null, allVals.concat([0]));
+    var range = maxV - minV || 1;
+
+    function xCoord(m) { return padL + (m / months) * plotW; }
+    function yCoord(v) { return padT + plotH - ((v - minV) / range) * plotH; }
+
+    // Build chart
+    var svgContent = '';
+
+    // Background
+    svgContent += '<rect x="' + padL + '" y="' + padT + '" width="' + plotW + '" height="' + plotH + '" fill="#FFFFFF" stroke="#EEF0F3"/>';
+
+    // Zero line
+    var zeroY = yCoord(0);
+    svgContent += '<line x1="' + padL + '" y1="' + zeroY + '" x2="' + (W - padR) + '" y2="' + zeroY + '" stroke="#D5D9E0" stroke-width="1" stroke-dasharray="3,3"/>';
+    svgContent += '<text x="' + (padL - 8) + '" y="' + (zeroY + 4) + '" text-anchor="end" font-size="10" fill="#9BA3AF" font-weight="600">$0</text>';
+
+    // Y-axis labels
+    var yMaxLabel = formatCurrency(maxV);
+    var yMinLabel = formatCurrency(minV);
+    svgContent += '<text x="' + (padL - 8) + '" y="' + (padT + 6) + '" text-anchor="end" font-size="10" fill="#5A6270" font-weight="700">' + yMaxLabel + '</text>';
+    svgContent += '<text x="' + (padL - 8) + '" y="' + (padT + plotH) + '" text-anchor="end" font-size="10" fill="#5A6270" font-weight="700">' + yMinLabel + '</text>';
+
+    // X-axis labels
+    var xTicks = [0, Math.floor(months/2), months];
+    xTicks.forEach(function(t) {
+      svgContent += '<text x="' + xCoord(t) + '" y="' + (H - 12) + '" text-anchor="middle" font-size="10" fill="#9BA3AF" font-weight="600">Mo ' + t + '</text>';
+    });
+
+    // Buy Now line (blue)
+    var buyNowPath = buyNowPoints.map(function(p, i) {
+      return (i === 0 ? 'M' : 'L') + xCoord(p.m) + ',' + yCoord(p.v);
+    }).join(' ');
+    svgContent += '<path d="' + buyNowPath + '" stroke="#0071CE" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';
+
+    // Wait line (gray)
+    var waitPath = waitPoints.map(function(p, i) {
+      return (i === 0 ? 'M' : 'L') + xCoord(p.m) + ',' + yCoord(p.v);
+    }).join(' ');
+    svgContent += '<path d="' + waitPath + '" stroke="#9BA3AF" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';
+
+    // End point markers
+    var lastBuy = buyNowPoints[buyNowPoints.length - 1];
+    var lastWait = waitPoints[waitPoints.length - 1];
+    svgContent += '<circle cx="' + xCoord(lastBuy.m) + '" cy="' + yCoord(lastBuy.v) + '" r="5" fill="#0071CE" stroke="#FFFFFF" stroke-width="2"/>';
+    svgContent += '<circle cx="' + xCoord(lastWait.m) + '" cy="' + yCoord(lastWait.v) + '" r="5" fill="#9BA3AF" stroke="#FFFFFF" stroke-width="2"/>';
+
+    // End point labels
+    svgContent += '<text x="' + (xCoord(lastBuy.m) - 8) + '" y="' + (yCoord(lastBuy.v) - 10) + '" text-anchor="end" font-size="11" fill="#0071CE" font-weight="800">' + formatCurrency(lastBuy.v) + '</text>';
+    svgContent += '<text x="' + (xCoord(lastWait.m) - 8) + '" y="' + (yCoord(lastWait.v) + 18) + '" text-anchor="end" font-size="11" fill="#5A6270" font-weight="800">' + formatCurrency(lastWait.v) + '</text>';
+
+    svg.innerHTML = svgContent;
+  }
+
+  function render() {
+    var c = calculate();
+
+    // Headline
+    var resultEl = document.getElementById('calcResult');
+    var statusEl = document.getElementById('resultStatus');
+    var labelEl = document.getElementById('resultLabel');
+    var amountEl = document.getElementById('resultAmount');
+    var subEl = document.getElementById('resultSub');
+
+    if (c.costOfWaiting > 1000) {
+      // Buying now is better
+      resultEl.className = 'calc-result waitcosts';
+      statusEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M12 2L2 22h20L12 2z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Waiting Costs You Money</span>';
+      labelEl.textContent = 'Cost Of Waiting ' + state.waitMonths + ' Months';
+      amountEl.className = 'calc-result-amount waitcosts';
+      amountEl.textContent = formatCurrency(c.costOfWaiting);
+
+      var reasonParts = [];
+      if (c.priceDelta > 0) reasonParts.push('the home costs <strong>' + formatCurrency(c.priceDelta) + ' more</strong>');
+      if (c.priceDelta < 0) reasonParts.push('the home is <strong>' + formatCurrency(Math.abs(c.priceDelta)) + ' cheaper</strong>');
+      reasonParts.push('you\'d pay <strong>' + formatCurrency(c.rentPaidDuringWait) + ' in rent</strong>');
+      if (state.rateChange < 0) reasonParts.push('the rate drop helps but doesn\'t fully offset');
+
+      subEl.innerHTML = 'Over ' + state.waitMonths + ' months: ' + reasonParts.join(', ') + '. The net result is you\'d be <strong>' + formatCurrency(c.costOfWaiting) + ' behind</strong> by waiting.';
+
+    } else if (c.costOfWaiting < -1000) {
+      // Waiting is better
+      resultEl.className = 'calc-result waitwins';
+      statusEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg><span>Waiting Saves You Money</span>';
+      labelEl.textContent = 'Benefit Of Waiting ' + state.waitMonths + ' Months';
+      amountEl.className = 'calc-result-amount waitwins';
+      amountEl.textContent = formatCurrency(Math.abs(c.costOfWaiting));
+
+      subEl.innerHTML = 'Given your assumptions, waiting <strong>' + state.waitMonths + ' months</strong> would leave you <strong>' + formatCurrency(Math.abs(c.costOfWaiting)) + ' ahead</strong>. This usually requires falling home prices, a significant rate drop, or very low rent compared to mortgage costs.';
+
+    } else {
+      // Roughly neutral
+      resultEl.className = 'calc-result neutral';
+      statusEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg><span>Roughly Even</span>';
+      labelEl.textContent = 'Either Path Works';
+      amountEl.className = 'calc-result-amount';
+      amountEl.textContent = '~' + formatCurrency(Math.abs(c.costOfWaiting));
+
+      subEl.innerHTML = 'Your specific assumptions result in nearly identical financial outcomes either way. The decision should come down to non-financial factors: are you personally ready, do you want to stop renting, is this the right home for you?';
+    }
+
+    document.getElementById('statFuturePrice').textContent = formatCurrency(c.futurePrice);
+    document.getElementById('statFutureRate').textContent = c.futureRate.toFixed(3) + '%';
+    document.getElementById('statRentPaid').textContent = formatCurrency(c.rentPaidDuringWait);
+
+    document.getElementById('waitTitleMonths').textContent = state.waitMonths;
+    document.getElementById('waitDisplay').textContent = state.waitMonths;
+
+    // Buy Now column
+    var nowRowsHtml =
+      '<div class="compare-row"><span>Home Price</span><span>' + formatCurrency(state.homePrice) + '</span></div>' +
+      '<div class="compare-row"><span>Interest Rate</span><span>' + state.currentRate.toFixed(3) + '%</span></div>' +
+      '<div class="compare-row"><span>Monthly P&amp;I</span><span>' + formatCurrency(c.nowPI) + '</span></div>' +
+      '<div class="compare-row equity"><span>Equity Built In ' + state.waitMonths + ' Mo</span><span>+' + formatCurrency(c.nowPrincipalPaid + c.nowAppreciationDuringWait) + '</span></div>' +
+      '<div class="compare-row total"><span>Net Position</span><span>' + formatCurrency(c.buyNowNetPosition) + '</span></div>';
+    document.getElementById('nowRows').innerHTML = nowRowsHtml;
+
+    // Wait column
+    var laterRowsHtml =
+      '<div class="compare-row"><span>Future Home Price</span><span>' + formatCurrency(c.futurePrice) + '</span></div>' +
+      '<div class="compare-row"><span>Expected Rate</span><span>' + c.futureRate.toFixed(3) + '%</span></div>' +
+      '<div class="compare-row"><span>Future Monthly P&amp;I</span><span>' + formatCurrency(c.laterPI) + '</span></div>' +
+      '<div class="compare-row cost"><span>Rent Paid While Waiting</span><span>-' + formatCurrency(c.rentPaidDuringWait) + '</span></div>' +
+      '<div class="compare-row total"><span>Net Position</span><span>' + formatCurrency(c.waitNetPosition) + '</span></div>';
+    document.getElementById('laterRows').innerHTML = laterRowsHtml;
+
+    // Chart
+    renderChart(c);
+
+    // Warnings
+    renderWarnings(c);
+  }
+
+  function renderWarnings(c) {
+    var container = document.getElementById('warningBox');
+    container.innerHTML = '';
+    var warnings = [];
+
+    // Rate-drop scenario where buying now still wins
+    if (state.rateChange < -0.5 && c.costOfWaiting > 1000) {
+      warnings.push({
+        type: 'success',
+        html: '<strong>The VA hedge:</strong> Even with a meaningful expected rate drop, waiting still costs you here. The reason: as a VA borrower, if rates do drop after you buy, you can refinance via a VA IRRRL with minimal cost &mdash; capturing the lower rate later without paying rent or losing appreciation now.'
+      });
+    }
+
+    // Rate-spike scenario
+    if (state.rateChange > 0.5) {
+      warnings.push({
+        type: 'warning',
+        html: '<strong>You\'re betting on higher rates.</strong> If rates rise as you\'ve assumed, waiting hurts twice &mdash; the home costs more AND your future payment is higher. If this scenario plays out, you\'d be in significantly worse shape than the headline suggests.'
+      });
+    }
+
+    // Falling prices scenario
+    if (state.appreciationRate < 0 && c.costOfWaiting < 0) {
+      warnings.push({
+        type: 'warning',
+        html: '<strong>You\'re assuming falling prices.</strong> Some markets are seeing modest declines in 2026 (Tampa, parts of the Mountain West). But timing the bottom is notoriously difficult &mdash; markets often rebound before "the bottom" is clear in retrospect. Don\'t bet your housing decision on perfect timing.'
+      });
+    }
+
+    // Very low rent
+    if (state.monthlyRent < c.nowPI * 0.6 && c.costOfWaiting > 0) {
+      warnings.push({
+        type: 'warning',
+        html: '<strong>Your rent is well below the equivalent mortgage payment.</strong> This is one scenario where renting genuinely can build wealth if you invest the difference. Make sure you\'re actually investing it &mdash; not just spending it.'
+      });
+    }
+
+    // Very long wait
+    if (state.waitMonths >= 30) {
+      warnings.push({
+        type: 'warning',
+        html: '<strong>You\'re modeling a long wait.</strong> Predictions become much less reliable beyond 24 months. Use this for directional thinking, not precise planning. Re-run with current data every 6 months.'
+      });
+    }
+
+    if (warnings.length === 0) return;
+    container.innerHTML = warnings.map(function(w) {
+      var color = w.type === 'error' ? '#D72638' : (w.type === 'success' ? '#1B874B' : '#F5A623');
+      return '<div class="calc-warning ' + w.type + '">' +
+        '<div class="calc-warning-icon">' +
+          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 22h20L12 2zM12 9v6M12 18h.01" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+        '</div>' +
+        '<div class="calc-warning-text">' + w.html + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // Input listeners
+  ['homePrice', 'currentRate', 'appreciationRate', 'rateChange', 'monthlyRent', 'rentInflation'].forEach(function(id) {
+    document.getElementById(id).addEventListener('input', function(e) {
+      state[id] = parseFloat(e.target.value) || 0;
+      render();
+    });
+  });
+
+  // Wait slider
+  document.getElementById('waitSlider').addEventListener('input', function(e) {
+    state.waitMonths = parseInt(e.target.value);
+    render();
+  });
+
+  // Lead capture
+  document.getElementById('leadSubmit').addEventListener('click', function() {
+    var firstName = document.getElementById('leadFirstName').value.trim();
+    var lastName = document.getElementById('leadLastName').value.trim();
+    var email = document.getElementById('leadEmail').value.trim();
+    var phone = document.getElementById('leadPhone').value.trim();
+
+    if (!firstName || !email) {
+      alert('Please enter at least your first name and email.');
+      return;
+    }
+
+    var c = calculate();
+    var verdict = c.costOfWaiting > 1000 ? 'Waiting costs ' + formatCurrency(c.costOfWaiting) :
+                  c.costOfWaiting < -1000 ? 'Waiting saves ' + formatCurrency(Math.abs(c.costOfWaiting)) :
+                  'Roughly neutral';
+
+    var subject = 'Cost of Waiting Report Request — ' + firstName + ' ' + lastName;
+    var body =
+      'New Cost of Waiting Calculator lead from tools.showmerates.com:\n\n' +
+      '=== CONTACT ===\n' +
+      'Name: ' + firstName + ' ' + lastName + '\n' +
+      'Email: ' + email + '\n' +
+      'Phone: ' + (phone || '(not provided)') + '\n\n' +
+      '=== SCENARIO ===\n' +
+      'Home Price Today: ' + formatCurrency(state.homePrice) + '\n' +
+      'Today\'s Rate: ' + state.currentRate + '%\n' +
+      'Wait Months: ' + state.waitMonths + '\n' +
+      'Annual Appreciation: ' + state.appreciationRate + '%\n' +
+      'Expected Rate Change: ' + (state.rateChange >= 0 ? '+' : '') + state.rateChange + '%\n' +
+      'Monthly Rent: ' + formatCurrency(state.monthlyRent) + '\n' +
+      'Rent Inflation: ' + state.rentInflation + '%\n\n' +
+      '=== RESULT ===\n' +
+      'Future Home Price: ' + formatCurrency(c.futurePrice) + '\n' +
+      'Future Rate: ' + c.futureRate.toFixed(3) + '%\n' +
+      'Buy Now Net Position: ' + formatCurrency(c.buyNowNetPosition) + '\n' +
+      'Wait Net Position: ' + formatCurrency(c.waitNetPosition) + '\n' +
+      'Rent Paid During Wait: ' + formatCurrency(c.rentPaidDuringWait) + '\n' +
+      'Verdict: ' + verdict + '\n\n' +
+      'Submitted: ' + new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CST';
+
+    var mailtoLink = 'mailto:troberts@emortgagecapital.com?subject=' +
+                     encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailtoLink;
+
+    document.getElementById('leadForm').style.display = 'none';
+    document.getElementById('leadThanks').classList.add('active');
+  });
+
+  // Hamburger
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', function() {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+    });
+  }
+
+  render();
+})();
+</script>
+
+</body>
+</html>
