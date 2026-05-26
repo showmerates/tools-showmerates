@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free 2026 Buy vs Rent calculator built for VA-eligible Veterans. $0 down, no PMI math that civilian calculators get wrong. See your breakeven year and 30-year wealth comparison.">
+  <meta name="keywords" content="VA buy vs rent calculator, buy or rent veteran, VA loan vs renting, veteran homebuyer calculator, rent vs buy with VA loan, no down payment buy vs rent">
+  <title>Buy vs Rent Calculator for Veterans 2026 | ShowMeRates Tools</title>
+  <link rel="icon" type="image/png" href="/show_me_rates_logoo_favicon_transparent.png">
+  <link rel="apple-touch-icon" href="/show_me_rates_logoo_favicon_transparent.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #003057; --navy-dark: #001F3D; --navy-deeper: #00152B;
+      --blue: #0071CE; --blue-light: #4DA3E8; --blue-pale: #E8F2FC;
+      --red: #D72638; --red-hover: #BF1F2E; --red-pale: #FDEAEC;
+      --white: #FFFFFF; --off-white: #F5F7FA;
+      --gray-100: #EEF0F3; --gray-200: #D5D9E0; --gray-400: #9BA3AF; --gray-600: #5A6270; --gray-800: #2D3239;
+      --green: #1B874B; --green-pale: #E8F5EE;
+      --amber: #F5A623; --amber-pale: #FFF6E6;
+      --shadow-sm: 0 1px 3px rgba(0,48,87,0.07);
+      --shadow-md: 0 4px 12px rgba(0,48,87,0.10);
+      --shadow-lg: 0 8px 28px rgba(0,48,87,0.14);
+      --radius: 8px; --radius-lg: 12px; --transition: 0.25s ease;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      font-family: 'Source Sans 3', -apple-system, sans-serif;
+      color: var(--gray-800); -webkit-font-smoothing: antialiased;
+      line-height: 1.5; background: var(--white);
+    }
+    a { text-decoration: none; }
+
+    /* HEADER */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(0,31,61,0.97);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      height: 68px; padding: 0 28px;
+      display: flex; align-items: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1140px; width: 100%; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header-logo-text {
+      font-size: 22px; font-weight: 800; color: var(--white);
+      letter-spacing: -0.5px; line-height: 1;
+    }
+    .header-logo-text span { color: var(--blue-light); }
+    .header-logo-sub {
+      font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5);
+      text-transform: uppercase; letter-spacing: 1.5px; margin-top: 2px;
+    }
+    .header-nav { display: flex; align-items: center; gap: 28px; }
+    .header-nav a {
+      color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 600;
+      transition: color var(--transition); letter-spacing: 0.2px;
+    }
+    .header-nav a:hover { color: var(--white); }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .header-phone {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--white); font-size: 15px; font-weight: 700;
+    }
+    .header-phone:hover { color: var(--blue-light); }
+    .header-cta {
+      background: var(--red); color: var(--white);
+      padding: 9px 22px; border-radius: 6px;
+      font-size: 13px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.5px; transition: all var(--transition);
+      box-shadow: 0 2px 8px rgba(215,38,56,0.3);
+    }
+    .header-cta:hover { background: var(--red-hover); transform: translateY(-1px); }
+    .header-nmls { color: rgba(255,255,255,0.35); font-size: 10px; }
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer; padding: 4px;
+      flex-direction: column; gap: 5px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px; background: #fff;
+      border-radius: 2px; transition: all 0.3s ease;
+    }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .mobile-menu {
+      display: none; position: fixed; top: 60px; left: 0; right: 0; z-index: 999;
+      background: rgba(0,21,43,0.98); padding: 20px 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      flex-direction: column;
+    }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu a {
+      color: rgba(255,255,255,0.85); font-size: 16px; font-weight: 600;
+      padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    @media (max-width: 768px) {
+      .header { padding: 0 16px; height: 60px; }
+      .header-nav, .header-nmls { display: none; }
+      .header-phone span { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+      background: var(--off-white);
+      padding: 92px 24px 16px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .breadcrumb-inner {
+      max-width: 1040px; margin: 0 auto;
+      font-size: 13px; color: var(--gray-600);
+    }
+    .breadcrumb a { color: var(--blue); font-weight: 600; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { color: var(--gray-400); margin: 0 8px; }
+
+    /* HERO */
+    .calc-hero {
+      background: linear-gradient(170deg, var(--navy-dark) 0%, var(--navy) 50%, #004A8F 100%);
+      padding: 48px 24px;
+      position: relative; overflow: hidden;
+      text-align: center;
+    }
+    .calc-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(0,113,206,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .calc-hero-inner { max-width: 760px; margin: 0 auto; position: relative; z-index: 1; }
+    .calc-hero-eyebrow {
+      display: inline-block;
+      background: rgba(0,113,206,0.18);
+      border: 1px solid rgba(77,163,232,0.35);
+      color: var(--blue-light);
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      padding: 6px 14px; border-radius: 100px; margin-bottom: 16px;
+    }
+    .calc-hero h1 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: clamp(28px, 4vw, 38px);
+      font-weight: 900; line-height: 1.2;
+      color: var(--white); letter-spacing: -0.3px;
+      margin-bottom: 14px;
+    }
+    .calc-hero h1 span { color: var(--blue-light); }
+    .calc-hero p {
+      font-size: 16px; line-height: 1.6;
+      color: rgba(255,255,255,0.8);
+      max-width: 580px; margin: 0 auto;
+    }
+
+    /* CALCULATOR */
+    .calc-section { padding: 40px 24px 60px; background: var(--off-white); }
+    .calc-inner { max-width: 960px; margin: 0 auto; }
+    .calc-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md); overflow: hidden;
+    }
+    .calc-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .calc-col {
+      padding: 28px;
+    }
+    .calc-col:first-child {
+      border-right: 1px solid var(--gray-100);
+      background: linear-gradient(135deg, var(--blue-pale) 0%, rgba(232,242,252,0.4) 100%);
+    }
+    .calc-col-title {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .calc-col-title svg { flex-shrink: 0; }
+    .calc-col-sub {
+      font-size: 13px; color: var(--gray-600);
+      margin-bottom: 20px;
+    }
+    @media (max-width: 768px) {
+      .calc-grid { grid-template-columns: 1fr; }
+      .calc-col:first-child { border-right: none; border-bottom: 1px solid var(--gray-100); }
+    }
+
+    /* FORM */
+    .calc-form-row { margin-bottom: 16px; }
+    .calc-form-row:last-child { margin-bottom: 0; }
+    .calc-label {
+      display: block; font-size: 13px; font-weight: 700;
+      color: var(--navy); margin-bottom: 6px;
+    }
+    .calc-input-wrap { position: relative; }
+    .calc-input-prefix {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--gray-400); font-weight: 700; font-size: 15px;
+      pointer-events: none;
+    }
+    .calc-input-suffix {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--gray-400); font-weight: 700; font-size: 14px;
+      pointer-events: none;
+    }
+    .calc-input {
+      width: 100%;
+      padding: 11px 14px 11px 30px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 15px; font-weight: 600;
+      color: var(--gray-800);
+      background: var(--white);
+      transition: all var(--transition);
+      outline: none;
+      -moz-appearance: textfield;
+    }
+    .calc-input::-webkit-outer-spin-button,
+    .calc-input::-webkit-inner-spin-button {
+      -webkit-appearance: none; margin: 0;
+    }
+    .calc-input.has-suffix { padding-left: 14px; padding-right: 38px; }
+    .calc-input.no-prefix { padding-left: 14px; }
+    .calc-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(0,113,206,0.12);
+    }
+
+    /* ASSUMPTIONS (collapsible) */
+    .calc-assumptions {
+      padding: 0 28px 24px;
+    }
+    .calc-assumptions-toggle {
+      width: 100%;
+      padding: 14px 18px;
+      background: var(--off-white);
+      border: 1px solid var(--gray-100);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 13px; font-weight: 700;
+      color: var(--navy);
+      text-align: left;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: all var(--transition);
+    }
+    .calc-assumptions-toggle:hover { background: var(--blue-pale); }
+    .calc-assumptions-toggle svg {
+      transition: transform var(--transition);
+    }
+    .calc-assumptions-toggle.open svg {
+      transform: rotate(180deg);
+    }
+    .calc-assumptions-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .calc-assumptions-body.open { max-height: 1000px; }
+    .calc-assumptions-grid {
+      padding: 18px;
+      background: var(--off-white);
+      border-radius: var(--radius);
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 600px) {
+      .calc-assumptions-grid { grid-template-columns: 1fr; }
+    }
+
+    /* EXEMPT */
+    .calc-exempt {
+      display: flex; align-items: center; gap: 12px;
+      padding: 11px 14px;
+      background: var(--green-pale);
+      border: 1.5px solid rgba(27,135,75,0.2);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .calc-exempt:hover { background: rgba(232,245,238,0.7); }
+    .calc-exempt input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--green); }
+    .calc-exempt-text { font-size: 13px; font-weight: 600; color: var(--gray-800); }
+    .calc-exempt-text strong { color: var(--green); }
+
+    /* RESULT */
+    .calc-result {
+      padding: 32px 28px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+      color: var(--white);
+      position: relative; overflow: hidden;
+    }
+    .calc-result::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 20%, rgba(0,113,206,0.18) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .calc-result-inner { position: relative; z-index: 1; }
+    .calc-result-headline {
+      text-align: center;
+      margin-bottom: 24px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .calc-result-label {
+      font-size: 12px; font-weight: 700;
+      color: var(--blue-light);
+      text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .calc-result-amount {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: clamp(32px, 6vw, 44px); font-weight: 900;
+      color: var(--white); line-height: 1.1;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+    .calc-result-amount.buying-wins { color: #6EE8A4; }
+    .calc-result-amount.renting-wins { color: #FFB585; }
+    .calc-result-headline-sub {
+      font-size: 14px; color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+      max-width: 520px; margin: 0 auto;
+    }
+
+    .calc-result-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    @media (max-width: 600px) {
+      .calc-result-stats { grid-template-columns: 1fr; }
+    }
+    .calc-stat-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+    .calc-stat-label {
+      font-size: 11px; color: rgba(255,255,255,0.65);
+      text-transform: uppercase; letter-spacing: 0.8px;
+      font-weight: 700; margin-bottom: 6px;
+    }
+    .calc-stat-value {
+      font-size: 22px; font-weight: 800;
+      color: var(--white);
+      font-family: 'Merriweather', Georgia, serif;
+      line-height: 1.1;
+    }
+    .calc-stat-value.green { color: #6EE8A4; }
+    .calc-stat-value.amber { color: #FFB585; }
+
+    /* CHART */
+    .calc-chart-section {
+      padding: 28px;
+      background: var(--white);
+      border-top: 1px solid var(--gray-100);
+    }
+    .calc-chart-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 6px; flex-wrap: wrap; gap: 8px;
+    }
+    .calc-chart-title {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--navy);
+    }
+    .calc-chart-legend {
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .calc-chart-legend-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600; color: var(--gray-600);
+    }
+    .calc-chart-legend-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .calc-chart-legend-dot.buy { background: var(--blue); }
+    .calc-chart-legend-dot.rent { background: var(--red); }
+    .calc-chart-sub {
+      font-size: 13px; color: var(--gray-600); margin-bottom: 16px;
+    }
+    .calc-chart-wrap {
+      position: relative;
+      width: 100%;
+      overflow: visible;
+    }
+    .calc-chart-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* LEAD CAPTURE */
+    .calc-lead {
+      background: var(--white);
+      padding: 28px;
+      border-top: 1px solid var(--gray-100);
+    }
+    .calc-lead h3 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--navy); margin-bottom: 6px;
+    }
+    .calc-lead p {
+      font-size: 14px; color: var(--gray-600);
+      margin-bottom: 18px;
+    }
+    .calc-lead-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .calc-lead-row.single { grid-template-columns: 1fr; }
+    .calc-lead-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 15px; color: var(--gray-800);
+      background: var(--white);
+      transition: border var(--transition);
+      outline: none;
+    }
+    .calc-lead-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(0,113,206,0.12);
+    }
+    .calc-lead-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 15px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all var(--transition);
+      box-shadow: 0 4px 14px rgba(215,38,56,0.3);
+      margin-top: 12px;
+    }
+    .calc-lead-btn:hover { background: var(--red-hover); transform: translateY(-1px); }
+    .calc-lead-disclaimer {
+      font-size: 11px; color: var(--gray-400);
+      line-height: 1.5; margin-top: 12px;
+    }
+    .calc-lead-disclaimer a { color: var(--blue); }
+    .calc-lead-thanks {
+      display: none;
+      background: var(--green-pale);
+      border: 1.5px solid rgba(27,135,75,0.25);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+    }
+    .calc-lead-thanks.active { display: block; }
+    .calc-lead-thanks h4 {
+      color: var(--green); font-size: 17px; margin-bottom: 6px;
+    }
+    .calc-lead-thanks p {
+      font-size: 14px; color: var(--gray-800); margin: 0;
+    }
+
+    /* EXPLAINER */
+    .explainer-section {
+      padding: 60px 24px; background: var(--white);
+    }
+    .explainer-inner { max-width: 760px; margin: 0 auto; }
+    .explainer-section h2 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 28px; font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px; letter-spacing: -0.3px;
+    }
+    .explainer-section .intro {
+      font-size: 17px; color: var(--gray-600);
+      margin-bottom: 32px; line-height: 1.7;
+    }
+    .explainer-section h3 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--navy);
+      margin-top: 32px; margin-bottom: 12px;
+    }
+    .explainer-section p {
+      font-size: 16px; line-height: 1.7;
+      color: var(--gray-800);
+      margin-bottom: 14px;
+    }
+    .va-advantage {
+      background: var(--blue-pale);
+      border-left: 4px solid var(--blue);
+      padding: 20px 24px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 20px 0;
+    }
+    .va-advantage h4 {
+      color: var(--navy); font-size: 16px;
+      margin-bottom: 8px;
+      font-family: 'Merriweather', Georgia, serif;
+    }
+    .va-advantage p { margin: 0; font-size: 15px; }
+
+    /* BOTTOM CTA */
+    .bottom-cta {
+      padding: 56px 24px; background: var(--navy);
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .bottom-cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(0,113,206,0.1) 0%, transparent 70%);
+    }
+    .bottom-cta-inner { position: relative; z-index: 1; }
+    .bottom-cta h2 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 28px; font-weight: 700;
+      color: var(--white); margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+    .bottom-cta p {
+      color: rgba(255,255,255,0.7); font-size: 16px;
+      margin-bottom: 24px;
+      max-width: 520px; margin-left: auto; margin-right: auto;
+    }
+    .btn-primary {
+      display: inline-block; background: var(--red); color: var(--white);
+      padding: 16px 36px; border-radius: var(--radius);
+      font-size: 15px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      transition: all var(--transition);
+      box-shadow: 0 4px 14px rgba(215,38,56,0.3);
+    }
+    .btn-primary:hover { background: var(--red-hover); transform: translateY(-1px); }
+
+    /* COMPLIANCE */
+    .compliance {
+      background: var(--navy-deeper); padding: 32px 24px; text-align: center;
+    }
+    .compliance-inner { max-width: 800px; margin: 0 auto; }
+    .compliance p { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.8; }
+    .compliance a { color: var(--blue-light); }
+    .compliance a:hover { text-decoration: underline; }
+    .compliance-ehl {
+      margin-top: 14px; font-size: 11px; color: rgba(255,255,255,0.5);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="/">
+      <div>
+        <div class="header-logo-text">Show<span>Me</span>Rates</div>
+        <div class="header-logo-sub">Tools</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/">Calculators</a>
+      <a href="https://showmerates.com">Main Site</a>
+      <a href="https://showmerates.com/va-loan-resources">Resources</a>
+    </nav>
+    <div class="header-right">
+      <a class="header-phone" href="tel:+18447371455">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.81.36 1.6.68 2.35a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.75.32 1.54.55 2.35.68A2 2 0 0122 16.92z" stroke="#fff" stroke-width="2"/></svg>
+        <span>(844) 737-1455</span>
+      </a>
+      <a class="header-cta" href="https://showmerates.com/#smrFormCard">Get My Rate</a>
+      <span class="header-nmls">NMLS# 1416824</span>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/">Calculators</a>
+  <a href="https://showmerates.com">Main Site</a>
+  <a href="https://showmerates.com/va-loan-resources">Resources</a>
+  <a href="tel:+18447371455">(844) 737-1455</a>
+</div>
+
+<!-- BREADCRUMB -->
+<nav class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="/">Tools</a>
+    <span>&rsaquo;</span>
+    Buy vs Rent for Veterans
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="calc-hero">
+  <div class="calc-hero-inner">
+    <div class="calc-hero-eyebrow">Buy vs Rent &mdash; VA Edition</div>
+    <h1>Buy or Rent?<br><span>The Real Math for Veterans.</span></h1>
+    <p>Civilian buy-vs-rent calculators assume you need 20% down and PMI. With a VA loan, you don't. Here's the comparison built for how Veterans actually buy.</p>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="calc-section">
+  <div class="calc-inner">
+    <div class="calc-card">
+
+      <div class="calc-grid">
+        <!-- BUYING SIDE -->
+        <div class="calc-col">
+          <h2 class="calc-col-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M3 12l9-9 9 9M5 10v10h14V10" stroke="#0071CE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            If You Buy
+          </h2>
+          <p class="calc-col-sub">VA loan: $0 down, no PMI, low rate.</p>
+
+          <div class="calc-form-row">
+            <label class="calc-label" for="homePrice">Home Price</label>
+            <div class="calc-input-wrap">
+              <span class="calc-input-prefix">$</span>
+              <input type="number" class="calc-input" id="homePrice" value="350000" min="0" step="1000">
+            </div>
+          </div>
+
+          <div class="calc-form-row">
+            <label class="calc-label" for="downPayment">Down Payment</label>
+            <div class="calc-input-wrap">
+              <span class="calc-input-prefix">$</span>
+              <input type="number" class="calc-input" id="downPayment" value="0" min="0" step="1000">
+            </div>
+          </div>
+
+          <div class="calc-form-row">
+            <label class="calc-label" for="interestRate">Mortgage Rate</label>
+            <div class="calc-input-wrap">
+              <input type="number" class="calc-input has-suffix no-prefix" id="interestRate" value="5.75" min="0" step="0.125">
+              <span class="calc-input-suffix">%</span>
+            </div>
+          </div>
+
+          <div class="calc-form-row">
+            <label class="calc-label" for="loanTerm">Loan Term</label>
+            <div class="calc-input-wrap">
+              <input type="number" class="calc-input has-suffix no-prefix" id="loanTerm" value="30" min="10" max="30" step="1">
+              <span class="calc-input-suffix">years</span>
+            </div>
+          </div>
+
+          <div class="calc-form-row">
+            <label class="calc-exempt" for="exempt">
+              <input type="checkbox" id="exempt">
+              <div>
+                <div class="calc-exempt-text">I am <strong>exempt</strong> from the VA funding fee</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- RENTING SIDE -->
+        <div class="calc-col">
+          <h2 class="calc-col-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M3 21V8l9-5 9 5v13M9 21V13h6v8" stroke="#D72638" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            If You Rent
+          </h2>
+          <p class="calc-col-sub">No down payment, but no equity either.</p>
+
+          <div class="calc-form-row">
+            <label class="calc-label" for="monthlyRent">Monthly Rent</label>
+            <div class="calc-input-wrap">
+              <span class="calc-input-prefix">$</span>
+              <input type="number" class="calc-input" id="monthlyRent" value="2200" min="0" step="50">
+            </div>
+          </div>
+
+          <div class="calc-form-row">
+            <label class="calc-label" for="rentersInsurance">Renters Insurance / month</label>
+            <div class="calc-input-wrap">
+              <span class="calc-input-prefix">$</span>
+              <input type="number" class="calc-input" id="rentersInsurance" value="20" min="0" step="5">
+            </div>
+          </div>
+
+          <div class="calc-form-row">
+            <label class="calc-label" for="rentInflation">Annual Rent Increase</label>
+            <div class="calc-input-wrap">
+              <input type="number" class="calc-input has-suffix no-prefix" id="rentInflation" value="3.0" min="0" max="20" step="0.1">
+              <span class="calc-input-suffix">%</span>
+            </div>
+          </div>
+
+          <div class="calc-form-row">
+            <label class="calc-label" for="investReturn">Investment Return (saved cash)</label>
+            <div class="calc-input-wrap">
+              <input type="number" class="calc-input has-suffix no-prefix" id="investReturn" value="6.0" min="0" max="20" step="0.1">
+              <span class="calc-input-suffix">%</span>
+            </div>
+          </div>
+
+          <div class="calc-form-row">
+            <label class="calc-label" for="timeHorizon">Years You'd Stay</label>
+            <div class="calc-input-wrap">
+              <input type="number" class="calc-input has-suffix no-prefix" id="timeHorizon" value="10" min="1" max="30" step="1">
+              <span class="calc-input-suffix">years</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ASSUMPTIONS (collapsible) -->
+      <div class="calc-assumptions">
+        <button class="calc-assumptions-toggle" id="assumptionsToggle">
+          <span>Advanced assumptions (taxes, appreciation, maintenance)</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="calc-assumptions-body" id="assumptionsBody">
+          <div class="calc-assumptions-grid">
+            <div class="calc-form-row">
+              <label class="calc-label" for="appreciation">Home Appreciation / year</label>
+              <div class="calc-input-wrap">
+                <input type="number" class="calc-input has-suffix no-prefix" id="appreciation" value="3.5" min="0" max="20" step="0.1">
+                <span class="calc-input-suffix">%</span>
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="propertyTax">Property Tax / year</label>
+              <div class="calc-input-wrap">
+                <input type="number" class="calc-input has-suffix no-prefix" id="propertyTax" value="1.2" min="0" max="10" step="0.05">
+                <span class="calc-input-suffix">%</span>
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="homeInsurance">Home Insurance / year</label>
+              <div class="calc-input-wrap">
+                <span class="calc-input-prefix">$</span>
+                <input type="number" class="calc-input" id="homeInsurance" value="1800" min="0" step="100">
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="maintenance">Maintenance / year</label>
+              <div class="calc-input-wrap">
+                <input type="number" class="calc-input has-suffix no-prefix" id="maintenance" value="1.0" min="0" max="10" step="0.1">
+                <span class="calc-input-suffix">% of home value</span>
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="closingCosts">Buyer Closing Costs</label>
+              <div class="calc-input-wrap">
+                <span class="calc-input-prefix">$</span>
+                <input type="number" class="calc-input" id="closingCosts" value="4500" min="0" step="100">
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="sellingCosts">Selling Costs at Exit</label>
+              <div class="calc-input-wrap">
+                <input type="number" class="calc-input has-suffix no-prefix" id="sellingCosts" value="7.0" min="0" max="20" step="0.5">
+                <span class="calc-input-suffix">% of sale</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <div class="calc-result">
+        <div class="calc-result-inner">
+          <div class="calc-result-headline">
+            <div class="calc-result-label" id="resultLabel">Buying Comes Out Ahead By</div>
+            <div class="calc-result-amount buying-wins" id="resultAmount">$87,000</div>
+            <p class="calc-result-headline-sub" id="resultSub">After 10 years, owning builds <strong>$87,000</strong> more wealth than renting and investing the difference.</p>
+          </div>
+
+          <div class="calc-result-stats">
+            <div class="calc-stat-card">
+              <div class="calc-stat-label">Breakeven Year</div>
+              <div class="calc-stat-value green" id="statBreakeven">Year 3</div>
+            </div>
+            <div class="calc-stat-card">
+              <div class="calc-stat-label">Net Wealth — Buying</div>
+              <div class="calc-stat-value" id="statBuyWealth">$215,000</div>
+            </div>
+            <div class="calc-stat-card">
+              <div class="calc-stat-label">Net Wealth — Renting</div>
+              <div class="calc-stat-value" id="statRentWealth">$128,000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CHART -->
+      <div class="calc-chart-section">
+        <div class="calc-chart-header">
+          <h3 class="calc-chart-title">Net Wealth Over Time</h3>
+          <div class="calc-chart-legend">
+            <div class="calc-chart-legend-item">
+              <span class="calc-chart-legend-dot buy"></span>Buying
+            </div>
+            <div class="calc-chart-legend-item">
+              <span class="calc-chart-legend-dot rent"></span>Renting + Investing
+            </div>
+          </div>
+        </div>
+        <p class="calc-chart-sub">Shows your cumulative wealth in each scenario. Where the lines cross is your breakeven point.</p>
+        <div class="calc-chart-wrap">
+          <svg class="calc-chart-svg" id="chart" viewBox="0 0 700 320" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"></svg>
+        </div>
+      </div>
+
+      <!-- LEAD CAPTURE -->
+      <div class="calc-lead">
+        <div id="leadForm">
+          <h3>Want this in writing?</h3>
+          <p>Get a personalized PDF report with your buy-vs-rent analysis, breakeven year, and a 30-year wealth projection &mdash; emailed directly to you. No spam, no obligation.</p>
+          <div class="calc-lead-row">
+            <input type="text" class="calc-lead-input" id="leadFirstName" placeholder="First name">
+            <input type="text" class="calc-lead-input" id="leadLastName" placeholder="Last name">
+          </div>
+          <div class="calc-lead-row single">
+            <input type="email" class="calc-lead-input" id="leadEmail" placeholder="Email address">
+          </div>
+          <div class="calc-lead-row single">
+            <input type="tel" class="calc-lead-input" id="leadPhone" placeholder="Phone (optional)">
+          </div>
+          <button class="calc-lead-btn" id="leadSubmit">Email Me My Report &rarr;</button>
+          <p class="calc-lead-disclaimer">
+            By submitting, you consent to receive emails and calls/texts from our VA loan specialist at E Mortgage Capital, Inc. (NMLS# 1416824) about your VA mortgage inquiry. Consent is not required to purchase. Msg &amp; data rates may apply. Reply STOP to opt out.
+            <a href="https://showmerates.com/privacy-policy" target="_blank">Privacy Policy</a>.
+          </p>
+        </div>
+        <div class="calc-lead-thanks" id="leadThanks">
+          <h4>Thanks! Your report is on the way.</h4>
+          <p>Check your email in the next few minutes. If you don't see it, check your spam folder or call Terry directly at <a href="tel:+18447371455">(844) 737-1455</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLAINER -->
+<section class="explainer-section">
+  <div class="explainer-inner">
+    <h2>The Buy vs Rent Question, Done Right</h2>
+    <p class="intro">Most online buy-vs-rent calculators were built for civilian buyers with conventional or FHA loans. They assume you need 20% down, build in PMI costs, and ignore the unique advantages of a VA loan. For Veterans, the math is significantly different &mdash; usually in your favor.</p>
+
+    <h3>What Makes the VA Math Different</h3>
+    <p>Three things change the calculation completely for VA-eligible buyers:</p>
+
+    <div class="va-advantage">
+      <h4>1. $0 Down Payment</h4>
+      <p>You don't need to save up a 20% down payment. That's $70,000 on a $350,000 home that stays in your pocket &mdash; available for emergency reserves, investments, or simply not waiting another five years to buy.</p>
+    </div>
+
+    <div class="va-advantage">
+      <h4>2. No Private Mortgage Insurance (PMI)</h4>
+      <p>Conventional and FHA loans charge $150&ndash;$400/month in PMI when you put less than 20% down. VA loans don't &mdash; ever. That's $1,800&ndash;$4,800 per year that stays in your pocket and compounds for the entire life of the loan.</p>
+    </div>
+
+    <div class="va-advantage">
+      <h4>3. Generally Lower Rates</h4>
+      <p>VA loans usually carry interest rates a quarter to a half percent below comparable conventional loans. Combined with the no-PMI savings, your effective monthly cost is often significantly lower than what civilian calculators assume.</p>
+    </div>
+
+    <h3>How This Calculator Works</h3>
+    <p>The calculator runs both scenarios year-by-year:</p>
+    <p><strong>Buying:</strong> Each year you build equity through principal paydown and home appreciation. You pay property tax, insurance, and maintenance. At your exit year, the calculator subtracts your remaining loan balance and selling costs (typically 6&ndash;8% of sale price) to find your net wealth.</p>
+    <p><strong>Renting + Investing:</strong> Each year you pay rent (which increases at the rate you set), plus renters insurance. The money you would have spent on owning costs &mdash; closing costs, the difference between rent and a higher monthly housing cost &mdash; gets invested at your chosen return rate. Final wealth is what that invested money has grown to.</p>
+    <p>The <strong>breakeven year</strong> is when buying first overtakes renting. The longer you stay past breakeven, the more buying typically wins &mdash; because rent inflation never stops, while your principal-and-interest payment stays fixed.</p>
+
+    <h3>The Hidden Factor Civilian Calculators Miss</h3>
+    <p>Rent inflation. Most calculators let you set rent inflation, but they default to 1&ndash;2%. The reality is closer to 3&ndash;4% over long periods, and during pandemic years it was 8%+. Every year your rent goes up. Every year your mortgage principal-and-interest stays exactly the same. After 10 years of even modest rent inflation, your monthly rent is 30&ndash;40% higher than when you started &mdash; while your mortgage payment is identical to day one. This is the single biggest argument for buying when you can.</p>
+
+    <h3>When Renting Actually Wins</h3>
+    <p>To be fair, renting can win in specific situations:</p>
+    <p><strong>Short time horizons.</strong> If you're moving in less than 3&ndash;4 years, the closing costs and selling costs eat up your gains. Buying is rarely the right move for short-term housing.</p>
+    <p><strong>Hot, then cold markets.</strong> If you buy at a peak and sell during a correction, you can lose money. Real estate is generally a long game.</p>
+    <p><strong>Maintenance-heavy properties.</strong> Older homes can cost 2&ndash;3% of value per year in upkeep. The calculator defaults to 1%, which is reasonable for newer homes but conservative for older ones.</p>
+    <p><strong>Strong stock market years.</strong> If you'd invest aggressively and your money compounds at 10%+, renting can occasionally outperform &mdash; though that assumes you actually invest the difference, which most renters don't.</p>
+
+    <h3>Real Talk From Terry</h3>
+    <p>I've worked with hundreds of Veterans deciding whether to use their VA benefit. The pattern is consistent: those who buy with VA in their first 1&ndash;2 years of eligibility almost always come out ahead by year 5, regardless of market timing. Those who wait "until rates are lower" or "until they save more" usually pay more in cumulative rent than they would have saved on a lower rate. The VA benefit is one of the most powerful wealth-building tools in the federal government. If you can comfortably afford the monthly payment and plan to stay 4+ years, the math almost always says: use it.</p>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta">
+  <div class="bottom-cta-inner">
+    <h2>Ready To See What You Actually Qualify For?</h2>
+    <p>The calculator gives you the math. A real rate quote gives you the actual numbers &mdash; rate, payment, what you can afford. Takes 60 seconds.</p>
+    <a href="https://showmerates.com/#smrFormCard" class="btn-primary">Get My VA Quote &rarr;</a>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section class="compliance">
+  <div class="compliance-inner">
+    <p>
+      ShowMeRates.com is operated by E Mortgage Capital, Inc., NMLS# 1416824, 3750 S Susan Street, Santa Ana, California 92704.<br>
+      <a href="https://nmlsconsumeraccess.org" target="_blank" rel="noopener">nmlsconsumeraccess.org</a> &middot; Equal Housing Lender &middot; Licensed in 48 states<br>
+      This calculator is for informational and educational purposes only and does not constitute a loan estimate, commitment to lend, or offer of credit. Results are projections based on assumptions you provide and do not reflect actual financial advice. Past performance of real estate or investments does not guarantee future results. Consult with a tax professional regarding deductibility of mortgage interest and property taxes.<br>
+      Not endorsed or sponsored by the Dept. of Veterans Affairs or any government agency.<br>
+      <a href="https://showmerates.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a> &middot; <a href="https://showmerates.com/privacy-policy" target="_blank" rel="noopener">Terms of Use</a> &middot; <a href="https://showmerates.com/licenses" target="_blank" rel="noopener">Licensing</a>
+    </p>
+    <div class="compliance-ehl">
+      <svg width="20" height="18" viewBox="0 0 20 18" fill="none"><path d="M10 0L0 8h3v10h14V8h3L10 0zM7 14v-4h6v4H7z" fill="rgba(255,255,255,0.4)"/></svg>
+      Equal Housing Lender
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var state = {
+    homePrice: 350000,
+    downPayment: 0,
+    interestRate: 5.75,
+    loanTerm: 30,
+    exempt: false,
+    monthlyRent: 2200,
+    rentersInsurance: 20,
+    rentInflation: 3.0,
+    investReturn: 6.0,
+    timeHorizon: 10,
+    appreciation: 3.5,
+    propertyTax: 1.2,
+    homeInsurance: 1800,
+    maintenance: 1.0,
+    closingCosts: 4500,
+    sellingCosts: 7.0
+  };
+
+  // VA funding fee for first-use purchase, <5% down = 2.15%
+  // (this calculator assumes first-use as the common case; advanced users can ignore via exempt)
+  var VA_FUNDING_FEE_RATE = 0.0215;
+
+  function calcMonthlyPI(principal, annualRatePct, years) {
+    if (annualRatePct <= 0 || years <= 0 || principal <= 0) return 0;
+    var monthlyRate = (annualRatePct / 100) / 12;
+    var n = years * 12;
+    return principal * (monthlyRate * Math.pow(1 + monthlyRate, n)) / (Math.pow(1 + monthlyRate, n) - 1);
+  }
+
+  function remainingBalance(principal, annualRatePct, years, monthsPaid) {
+    if (principal <= 0 || monthsPaid <= 0) return principal;
+    var monthlyRate = (annualRatePct / 100) / 12;
+    var n = years * 12;
+    if (monthsPaid >= n) return 0;
+    var pi = calcMonthlyPI(principal, annualRatePct, years);
+    // Standard amortization remaining balance formula
+    var balance = principal * Math.pow(1 + monthlyRate, monthsPaid) -
+                  pi * ((Math.pow(1 + monthlyRate, monthsPaid) - 1) / monthlyRate);
+    return Math.max(0, balance);
+  }
+
+  function formatCurrency(n, abbreviate) {
+    var abs = Math.abs(n);
+    if (abbreviate && abs >= 1000000) {
+      return (n < 0 ? '-' : '') + '$' + (abs / 1000000).toFixed(1) + 'M';
+    }
+    if (abbreviate && abs >= 10000) {
+      return (n < 0 ? '-' : '') + '$' + Math.round(abs / 1000) + 'k';
+    }
+    return (n < 0 ? '-' : '') + '$' + Math.round(abs).toLocaleString('en-US');
+  }
+
+  // Run year-by-year simulation
+  function simulate() {
+    var loanAmount = state.homePrice - state.downPayment;
+    var fundingFee = state.exempt ? 0 : loanAmount * VA_FUNDING_FEE_RATE;
+    // Funding fee is typically financed
+    var totalLoanAmount = loanAmount + fundingFee;
+    var monthlyPI = calcMonthlyPI(totalLoanAmount, state.interestRate, state.loanTerm);
+
+    // Initial cash outlay for buying = down payment + closing costs
+    // (funding fee is financed into the loan, so doesn't come out of pocket here)
+    var buyingInitialCashOut = state.downPayment + state.closingCosts;
+
+    var years = [];
+    var buyCumWealth = 0;
+    var rentCumWealth = buyingInitialCashOut; // renter starts with this cash invested
+
+    var currentRent = state.monthlyRent;
+    var currentHomeValue = state.homePrice;
+    var investmentBalance = buyingInitialCashOut;
+
+    // Cumulative buyer costs paid (not including principal which builds equity)
+    // and cumulative renter costs paid
+    var cumBuyerCash = buyingInitialCashOut;
+    var cumRenterCash = 0;
+
+    for (var year = 1; year <= 30; year++) {
+      // === BUYING SCENARIO ===
+      // Annual costs
+      var annualPI = monthlyPI * 12;
+      var annualPropertyTax = currentHomeValue * (state.propertyTax / 100);
+      var annualMaintenance = currentHomeValue * (state.maintenance / 100);
+      var annualInsurance = state.homeInsurance;
+
+      var annualOwnerCosts = annualPI + annualPropertyTax + annualMaintenance + annualInsurance;
+      cumBuyerCash += annualOwnerCosts;
+
+      // Home appreciation
+      currentHomeValue = currentHomeValue * (1 + state.appreciation / 100);
+
+      // Remaining loan balance
+      var balance = remainingBalance(totalLoanAmount, state.interestRate, state.loanTerm, year * 12);
+
+      // Selling costs if exited at year
+      var sellingCostAmount = currentHomeValue * (state.sellingCosts / 100);
+      var netHomeValue = currentHomeValue - sellingCostAmount - balance;
+
+      // Buyer net wealth = home equity (after sale costs) minus total cash spent
+      var buyerNetWealth = netHomeValue - cumBuyerCash;
+
+      // === RENTING SCENARIO ===
+      var annualRent = currentRent * 12;
+      var annualRenterCosts = annualRent + state.rentersInsurance * 12;
+      cumRenterCash += annualRenterCosts;
+
+      // Rent increases for next year
+      currentRent = currentRent * (1 + state.rentInflation / 100);
+
+      // Investment growth + delta contribution
+      // Renter's monthly housing cost (current year average) vs owner's = the delta gets invested if positive
+      var ownerMonthlyCost = annualOwnerCosts / 12;
+      var renterMonthlyCost = annualRent / 12 + state.rentersInsurance;
+      var monthlyDelta = ownerMonthlyCost - renterMonthlyCost; // positive if owning is more expensive
+
+      // Investment balance grows at investReturn, plus delta if owning was more expensive that year
+      investmentBalance = investmentBalance * (1 + state.investReturn / 100);
+      if (monthlyDelta > 0) {
+        // renter invests the savings monthly throughout the year; approximate as lump
+        investmentBalance += monthlyDelta * 12;
+      }
+
+      var renterNetWealth = investmentBalance - cumRenterCash;
+
+      years.push({
+        year: year,
+        buyWealth: buyerNetWealth,
+        rentWealth: renterNetWealth,
+        homeValue: currentHomeValue,
+        balance: balance,
+        annualRent: annualRent,
+        annualOwnerCosts: annualOwnerCosts
+      });
+    }
+
+    return years;
+  }
+
+  function findBreakeven(years) {
+    for (var i = 0; i < years.length; i++) {
+      if (years[i].buyWealth >= years[i].rentWealth) return years[i].year;
+    }
+    return null;
+  }
+
+  function render() {
+    var years = simulate();
+    var horizon = Math.min(state.timeHorizon, 30);
+    var result = years[horizon - 1];
+    var breakeven = findBreakeven(years);
+
+    var diff = result.buyWealth - result.rentWealth;
+    var labelEl = document.getElementById('resultLabel');
+    var amountEl = document.getElementById('resultAmount');
+    var subEl = document.getElementById('resultSub');
+
+    if (diff > 0) {
+      labelEl.textContent = 'Buying Comes Out Ahead By';
+      amountEl.className = 'calc-result-amount buying-wins';
+      amountEl.textContent = formatCurrency(diff);
+      subEl.innerHTML = 'After <strong>' + horizon + ' years</strong>, owning builds <strong>' + formatCurrency(diff) + '</strong> more wealth than renting and investing the difference.';
+    } else {
+      labelEl.textContent = 'Renting Comes Out Ahead By';
+      amountEl.className = 'calc-result-amount renting-wins';
+      amountEl.textContent = formatCurrency(-diff);
+      subEl.innerHTML = 'After <strong>' + horizon + ' years</strong>, renting and investing builds <strong>' + formatCurrency(-diff) + '</strong> more wealth than owning. Consider a longer time horizon or adjusting assumptions.';
+    }
+
+    var breakevenEl = document.getElementById('statBreakeven');
+    if (breakeven === null) {
+      breakevenEl.textContent = '30+ yrs';
+      breakevenEl.className = 'calc-stat-value amber';
+    } else {
+      breakevenEl.textContent = 'Year ' + breakeven;
+      breakevenEl.className = 'calc-stat-value green';
+    }
+
+    document.getElementById('statBuyWealth').textContent = formatCurrency(result.buyWealth);
+    document.getElementById('statRentWealth').textContent = formatCurrency(result.rentWealth);
+
+    renderChart(years.slice(0, horizon + 5 > 30 ? 30 : Math.max(horizon + 5, 10)));
+  }
+
+  // CHART
+  function renderChart(years) {
+    var svg = document.getElementById('chart');
+    var W = 700, H = 320;
+    var padLeft = 60, padRight = 20, padTop = 20, padBottom = 40;
+    var chartW = W - padLeft - padRight;
+    var chartH = H - padTop - padBottom;
+
+    // Determine bounds
+    var maxY = -Infinity, minY = Infinity;
+    years.forEach(function(d) {
+      maxY = Math.max(maxY, d.buyWealth, d.rentWealth);
+      minY = Math.min(minY, d.buyWealth, d.rentWealth);
+    });
+    if (minY > 0) minY = 0;
+    // Add padding
+    var yRange = maxY - minY;
+    maxY += yRange * 0.1;
+    minY -= yRange * 0.05;
+
+    var maxX = years.length;
+
+    function xPos(year) { return padLeft + (year / maxX) * chartW; }
+    function yPos(val) {
+      if (yRange === 0) return padTop + chartH / 2;
+      return padTop + chartH - ((val - minY) / (maxY - minY)) * chartH;
+    }
+
+    // Build paths
+    var buyPath = 'M ' + xPos(0) + ' ' + yPos(0);
+    var rentPath = 'M ' + xPos(0) + ' ' + yPos(state.downPayment + state.closingCosts);
+    // Note: renter starts with initial cash so their wealth starts positive
+
+    years.forEach(function(d) {
+      buyPath += ' L ' + xPos(d.year) + ' ' + yPos(d.buyWealth);
+      rentPath += ' L ' + xPos(d.year) + ' ' + yPos(d.rentWealth);
+    });
+
+    // Y-axis labels (4 ticks)
+    var yTicks = '';
+    for (var i = 0; i <= 4; i++) {
+      var val = minY + (maxY - minY) * (i / 4);
+      var yp = yPos(val);
+      yTicks += '<line x1="' + padLeft + '" y1="' + yp + '" x2="' + (W - padRight) + '" y2="' + yp + '" stroke="#EEF0F3" stroke-width="1"/>';
+      yTicks += '<text x="' + (padLeft - 8) + '" y="' + (yp + 4) + '" font-size="11" font-family="Source Sans 3, sans-serif" fill="#9BA3AF" text-anchor="end">' + formatCurrency(val, true) + '</text>';
+    }
+
+    // X-axis labels (every 5 years)
+    var xTicks = '';
+    var step = years.length > 15 ? 5 : (years.length > 8 ? 2 : 1);
+    for (var year = 0; year <= years.length; year += step) {
+      var xp = xPos(year);
+      xTicks += '<text x="' + xp + '" y="' + (H - 12) + '" font-size="11" font-family="Source Sans 3, sans-serif" fill="#9BA3AF" text-anchor="middle">' + (year === 0 ? 'Now' : 'Yr ' + year) + '</text>';
+    }
+
+    // Zero line
+    var zeroLine = '';
+    if (minY < 0 && maxY > 0) {
+      var zp = yPos(0);
+      zeroLine = '<line x1="' + padLeft + '" y1="' + zp + '" x2="' + (W - padRight) + '" y2="' + zp + '" stroke="#5A6270" stroke-width="1" stroke-dasharray="3,3"/>';
+    }
+
+    // Find crossover for marker
+    var crossoverMarker = '';
+    var breakeven = findBreakeven(years);
+    if (breakeven) {
+      var bx = xPos(breakeven);
+      var d = years[breakeven - 1];
+      var by = yPos(d.buyWealth);
+      crossoverMarker =
+        '<line x1="' + bx + '" y1="' + padTop + '" x2="' + bx + '" y2="' + (H - padBottom) + '" stroke="#1B874B" stroke-width="1.5" stroke-dasharray="4,4" opacity="0.6"/>' +
+        '<circle cx="' + bx + '" cy="' + by + '" r="6" fill="#1B874B" stroke="#fff" stroke-width="2"/>' +
+        '<text x="' + bx + '" y="' + (padTop - 4) + '" font-size="11" font-weight="700" font-family="Source Sans 3, sans-serif" fill="#1B874B" text-anchor="middle">Breakeven</text>';
+    }
+
+    svg.innerHTML =
+      yTicks +
+      xTicks +
+      zeroLine +
+      '<path d="' + rentPath + '" fill="none" stroke="#D72638" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<path d="' + buyPath + '" fill="none" stroke="#0071CE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>' +
+      crossoverMarker;
+  }
+
+  // Inputs
+  var inputs = ['homePrice', 'downPayment', 'interestRate', 'loanTerm', 'monthlyRent', 'rentersInsurance',
+                'rentInflation', 'investReturn', 'timeHorizon', 'appreciation', 'propertyTax',
+                'homeInsurance', 'maintenance', 'closingCosts', 'sellingCosts'];
+  inputs.forEach(function(id) {
+    document.getElementById(id).addEventListener('input', function(e) {
+      state[id] = parseFloat(e.target.value) || 0;
+      render();
+    });
+  });
+  document.getElementById('exempt').addEventListener('change', function(e) {
+    state.exempt = e.target.checked;
+    render();
+  });
+
+  // Assumptions toggle
+  var assumpToggle = document.getElementById('assumptionsToggle');
+  var assumpBody = document.getElementById('assumptionsBody');
+  assumpToggle.addEventListener('click', function() {
+    assumpToggle.classList.toggle('open');
+    assumpBody.classList.toggle('open');
+  });
+
+  // Lead capture
+  document.getElementById('leadSubmit').addEventListener('click', function() {
+    var firstName = document.getElementById('leadFirstName').value.trim();
+    var lastName = document.getElementById('leadLastName').value.trim();
+    var email = document.getElementById('leadEmail').value.trim();
+    var phone = document.getElementById('leadPhone').value.trim();
+
+    if (!firstName || !email) {
+      alert('Please enter at least your first name and email.');
+      return;
+    }
+
+    var years = simulate();
+    var horizon = Math.min(state.timeHorizon, 30);
+    var result = years[horizon - 1];
+    var diff = result.buyWealth - result.rentWealth;
+    var breakeven = findBreakeven(years);
+
+    var subject = 'Buy vs Rent Report Request — ' + firstName + ' ' + lastName;
+    var body =
+      'New Buy vs Rent Calculator lead from tools.showmerates.com:\n\n' +
+      '=== CONTACT ===\n' +
+      'Name: ' + firstName + ' ' + lastName + '\n' +
+      'Email: ' + email + '\n' +
+      'Phone: ' + (phone || '(not provided)') + '\n\n' +
+      '=== BUYING SCENARIO ===\n' +
+      'Home Price: ' + formatCurrency(state.homePrice) + '\n' +
+      'Down Payment: ' + formatCurrency(state.downPayment) + '\n' +
+      'Interest Rate: ' + state.interestRate + '%\n' +
+      'Loan Term: ' + state.loanTerm + ' years\n' +
+      'Funding Fee Exempt: ' + (state.exempt ? 'YES' : 'No') + '\n\n' +
+      '=== RENTING SCENARIO ===\n' +
+      'Monthly Rent: ' + formatCurrency(state.monthlyRent) + '\n' +
+      'Annual Rent Inflation: ' + state.rentInflation + '%\n' +
+      'Investment Return: ' + state.investReturn + '%\n' +
+      'Time Horizon: ' + state.timeHorizon + ' years\n\n' +
+      '=== ASSUMPTIONS ===\n' +
+      'Home Appreciation: ' + state.appreciation + '%\n' +
+      'Property Tax: ' + state.propertyTax + '%\n' +
+      'Home Insurance: ' + formatCurrency(state.homeInsurance) + '/yr\n' +
+      'Maintenance: ' + state.maintenance + '%\n' +
+      'Closing Costs: ' + formatCurrency(state.closingCosts) + '\n' +
+      'Selling Costs: ' + state.sellingCosts + '%\n\n' +
+      '=== RESULT (at ' + horizon + ' years) ===\n' +
+      'Buying Net Wealth: ' + formatCurrency(result.buyWealth) + '\n' +
+      'Renting Net Wealth: ' + formatCurrency(result.rentWealth) + '\n' +
+      'Difference: ' + formatCurrency(diff) + ' (' + (diff > 0 ? 'BUYING wins' : 'RENTING wins') + ')\n' +
+      'Breakeven Year: ' + (breakeven ? 'Year ' + breakeven : 'Not within 30 years') + '\n\n' +
+      'Submitted: ' + new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CST';
+
+    var mailtoLink = 'mailto:troberts@emortgagecapital.com?subject=' +
+                     encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailtoLink;
+
+    document.getElementById('leadForm').style.display = 'none';
+    document.getElementById('leadThanks').classList.add('active');
+  });
+
+  // Hamburger
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', function() {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+    });
+  }
+
+  render();
+})();
+</script>
+
+</body>
+</html>
