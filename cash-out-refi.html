@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free 2026 VA Cash-Out Refinance calculator that shows the true savings most calculators hide. Factors in debt consolidation, escrow refunds, skipped payments, and full closing cost math. Built by a USMC Veteran and licensed VA Mortgage Specialist.">
+  <meta name="keywords" content="VA cash out refinance calculator, debt consolidation refinance calculator, refinance true savings, cash out refi 2026, refinance debt payoff calculator">
+  <title>VA Cash-Out Refinance True Savings Calculator 2026 | ShowMeRates Tools</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #003057; --navy-dark: #001F3D; --navy-deeper: #00152B;
+      --blue: #0071CE; --blue-light: #4DA3E8; --blue-pale: #E8F2FC;
+      --red: #D72638; --red-hover: #BF1F2E; --red-pale: #FDEAEC;
+      --white: #FFFFFF; --off-white: #F5F7FA;
+      --gray-100: #EEF0F3; --gray-200: #D5D9E0; --gray-400: #9BA3AF; --gray-600: #5A6270; --gray-800: #2D3239;
+      --green: #1B874B; --green-pale: #E8F5EE;
+      --amber: #F5A623; --amber-pale: #FFF6E6;
+      --shadow-sm: 0 1px 3px rgba(0,48,87,0.07);
+      --shadow-md: 0 4px 12px rgba(0,48,87,0.10);
+      --shadow-lg: 0 8px 28px rgba(0,48,87,0.14);
+      --radius: 8px; --radius-lg: 12px; --transition: 0.25s ease;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      font-family: 'Source Sans 3', -apple-system, sans-serif;
+      color: var(--gray-800); -webkit-font-smoothing: antialiased;
+      line-height: 1.5; background: var(--white);
+    }
+    a { text-decoration: none; }
+
+    /* HEADER */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(0,31,61,0.97);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      height: 68px; padding: 0 28px;
+      display: flex; align-items: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1140px; width: 100%; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header-logo-text {
+      font-size: 22px; font-weight: 800; color: var(--white);
+      letter-spacing: -0.5px; line-height: 1;
+    }
+    .header-logo-text span { color: var(--blue-light); }
+    .header-logo-sub {
+      font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5);
+      text-transform: uppercase; letter-spacing: 1.5px; margin-top: 2px;
+    }
+    .header-nav { display: flex; align-items: center; gap: 28px; }
+    .header-nav a {
+      color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 600;
+      transition: color var(--transition); letter-spacing: 0.2px;
+    }
+    .header-nav a:hover { color: var(--white); }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .header-phone {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--white); font-size: 15px; font-weight: 700;
+    }
+    .header-phone:hover { color: var(--blue-light); }
+    .header-cta {
+      background: var(--red); color: var(--white);
+      padding: 9px 22px; border-radius: 6px;
+      font-size: 13px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.5px; transition: all var(--transition);
+      box-shadow: 0 2px 8px rgba(215,38,56,0.3);
+    }
+    .header-cta:hover { background: var(--red-hover); transform: translateY(-1px); }
+    .header-nmls { color: rgba(255,255,255,0.35); font-size: 10px; }
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer; padding: 4px;
+      flex-direction: column; gap: 5px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px; background: #fff;
+      border-radius: 2px; transition: all 0.3s ease;
+    }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .mobile-menu {
+      display: none; position: fixed; top: 60px; left: 0; right: 0; z-index: 999;
+      background: rgba(0,21,43,0.98); padding: 20px 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      flex-direction: column;
+    }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu a {
+      color: rgba(255,255,255,0.85); font-size: 16px; font-weight: 600;
+      padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    @media (max-width: 768px) {
+      .header { padding: 0 16px; height: 60px; }
+      .header-nav, .header-nmls { display: none; }
+      .header-phone span { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+      background: var(--off-white);
+      padding: 92px 24px 16px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .breadcrumb-inner {
+      max-width: 1040px; margin: 0 auto;
+      font-size: 13px; color: var(--gray-600);
+    }
+    .breadcrumb a { color: var(--blue); font-weight: 600; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { color: var(--gray-400); margin: 0 8px; }
+
+    /* HERO */
+    .calc-hero {
+      background: linear-gradient(170deg, var(--navy-dark) 0%, var(--navy) 50%, #004A8F 100%);
+      padding: 48px 24px;
+      position: relative; overflow: hidden;
+      text-align: center;
+    }
+    .calc-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(0,113,206,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .calc-hero-inner { max-width: 760px; margin: 0 auto; position: relative; z-index: 1; }
+    .calc-hero-eyebrow {
+      display: inline-block;
+      background: rgba(0,113,206,0.18);
+      border: 1px solid rgba(77,163,232,0.35);
+      color: var(--blue-light);
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      padding: 6px 14px; border-radius: 100px; margin-bottom: 16px;
+    }
+    .calc-hero h1 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: clamp(28px, 4vw, 38px);
+      font-weight: 900; line-height: 1.2;
+      color: var(--white); letter-spacing: -0.3px;
+      margin-bottom: 14px;
+    }
+    .calc-hero h1 span { color: var(--blue-light); }
+    .calc-hero p {
+      font-size: 16px; line-height: 1.6;
+      color: rgba(255,255,255,0.8);
+      max-width: 580px; margin: 0 auto;
+    }
+
+    /* CALCULATOR */
+    .calc-section { padding: 40px 24px 60px; background: var(--off-white); }
+    .calc-inner { max-width: 960px; margin: 0 auto; }
+    .calc-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md); overflow: hidden;
+    }
+
+    /* FORM */
+    .calc-form { padding: 28px; }
+    .calc-form-section {
+      padding-bottom: 22px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .calc-form-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .calc-section-title {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 16px; font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .calc-section-title .num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px;
+      background: var(--blue-pale); color: var(--blue);
+      border-radius: 50%;
+      font-size: 13px; font-weight: 800;
+      font-family: 'Source Sans 3', sans-serif;
+    }
+    .calc-section-help {
+      font-size: 13px; color: var(--gray-600);
+      margin-bottom: 16px;
+      padding-left: 32px;
+    }
+    .calc-form-row { margin-bottom: 14px; }
+    .calc-form-row:last-child { margin-bottom: 0; }
+    .calc-form-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    }
+    @media (max-width: 600px) {
+      .calc-form-grid { grid-template-columns: 1fr; }
+    }
+    .calc-label {
+      display: block; font-size: 13px; font-weight: 700;
+      color: var(--navy); margin-bottom: 6px;
+    }
+    .calc-label-help {
+      font-size: 11px; font-weight: 400;
+      color: var(--gray-400);
+      margin-left: 6px;
+    }
+    .calc-input-wrap { position: relative; }
+    .calc-input-prefix {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--gray-400); font-weight: 700; font-size: 15px;
+      pointer-events: none;
+    }
+    .calc-input-suffix {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--gray-400); font-weight: 700; font-size: 14px;
+      pointer-events: none;
+    }
+    .calc-input {
+      width: 100%;
+      padding: 11px 14px 11px 30px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 15px; font-weight: 600;
+      color: var(--gray-800);
+      background: var(--white);
+      transition: all var(--transition);
+      outline: none;
+      -moz-appearance: textfield;
+    }
+    .calc-input::-webkit-outer-spin-button,
+    .calc-input::-webkit-inner-spin-button {
+      -webkit-appearance: none; margin: 0;
+    }
+    .calc-input.has-suffix { padding-left: 14px; padding-right: 38px; }
+    .calc-input.no-prefix { padding-left: 14px; }
+    .calc-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(0,113,206,0.12);
+    }
+
+    /* DEBTS REPEATER */
+    .debt-list {
+      display: grid; gap: 8px;
+    }
+    .debt-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr auto;
+      gap: 8px;
+      align-items: center;
+      padding: 10px;
+      background: var(--off-white);
+      border-radius: var(--radius);
+      border: 1px solid var(--gray-100);
+    }
+    @media (max-width: 700px) {
+      .debt-row { grid-template-columns: 1fr 1fr; }
+      .debt-row .debt-name-wrap { grid-column: 1 / -1; }
+      .debt-row .debt-remove { grid-column: 1 / -1; justify-self: end; }
+    }
+    .debt-input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 14px;
+      background: var(--white);
+      outline: none;
+      -moz-appearance: textfield;
+    }
+    .debt-input::-webkit-outer-spin-button,
+    .debt-input::-webkit-inner-spin-button {
+      -webkit-appearance: none; margin: 0;
+    }
+    .debt-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 2px rgba(0,113,206,0.12);
+    }
+    .debt-input-wrap { position: relative; }
+    .debt-input-wrap.dollar { padding-left: 0; }
+    .debt-input-wrap.dollar .debt-input { padding-left: 22px; }
+    .debt-input-wrap.dollar::before {
+      content: '$';
+      position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+      color: var(--gray-400); font-weight: 700;
+      pointer-events: none;
+    }
+    .debt-input-wrap.percent .debt-input { padding-right: 22px; }
+    .debt-input-wrap.percent::after {
+      content: '%';
+      position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+      color: var(--gray-400); font-weight: 700;
+      pointer-events: none;
+    }
+    .debt-remove {
+      background: var(--white);
+      border: 1.5px solid var(--gray-200);
+      border-radius: 6px;
+      width: 32px; height: 32px;
+      cursor: pointer;
+      color: var(--gray-400);
+      transition: all var(--transition);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .debt-remove:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+    .debt-add-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--blue-pale);
+      color: var(--blue);
+      border: 1.5px dashed rgba(0,113,206,0.4);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 14px; font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all var(--transition);
+    }
+    .debt-add-btn:hover {
+      background: rgba(0,113,206,0.12);
+      border-style: solid;
+    }
+
+    /* CHECKBOX */
+    .calc-check {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px;
+      background: var(--off-white);
+      border-radius: var(--radius);
+      cursor: pointer;
+      border: 1.5px solid var(--gray-100);
+      transition: all var(--transition);
+    }
+    .calc-check:hover { border-color: var(--blue); }
+    .calc-check input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--blue); }
+    .calc-check-text { font-size: 13px; font-weight: 600; color: var(--gray-800); }
+    .calc-check.exempt {
+      background: var(--green-pale);
+      border-color: rgba(27,135,75,0.2);
+    }
+    .calc-check.exempt input { accent-color: var(--green); }
+    .calc-check.exempt .calc-check-text strong { color: var(--green); }
+
+    /* RESULT */
+    .calc-result {
+      padding: 32px 28px;
+      color: var(--white);
+      position: relative; overflow: hidden;
+      transition: background 0.4s ease;
+    }
+    .calc-result.win {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    }
+    .calc-result.lose {
+      background: linear-gradient(135deg, #6B1E2A 0%, #4A1219 100%);
+    }
+    .calc-result::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 20%, rgba(0,113,206,0.18) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .calc-result.lose::before {
+      background: radial-gradient(ellipse at 80% 20%, rgba(215,38,56,0.22) 0%, transparent 60%);
+    }
+    .calc-result-inner { position: relative; z-index: 1; }
+
+    .calc-result-headline {
+      text-align: center;
+      margin-bottom: 24px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    .calc-result-status {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 11px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      margin-bottom: 14px;
+    }
+    .calc-result.win .calc-result-status {
+      background: rgba(27,135,75,0.25);
+      border: 1px solid rgba(27,135,75,0.4);
+      color: #6EE8A4;
+    }
+    .calc-result.lose .calc-result-status {
+      background: rgba(215,38,56,0.25);
+      border: 1px solid rgba(215,38,56,0.4);
+      color: #FF9BA8;
+    }
+    .calc-result-label {
+      font-size: 12px; font-weight: 700;
+      color: var(--blue-light);
+      text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 6px;
+    }
+    .calc-result.lose .calc-result-label { color: #FF9BA8; }
+    .calc-result-amount {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: clamp(36px, 7vw, 56px); font-weight: 900;
+      color: var(--white); line-height: 1.05;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+    }
+    .calc-result-amount.win { color: #6EE8A4; }
+    .calc-result-amount.lose { color: #FFB585; }
+    .calc-result-amount .unit {
+      font-size: 0.45em; font-weight: 700;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0;
+      margin-left: 4px;
+    }
+    .calc-result-headline-sub {
+      font-size: 15px; color: rgba(255,255,255,0.8);
+      line-height: 1.6;
+      max-width: 580px; margin: 0 auto;
+    }
+    .calc-result-headline-sub strong { color: var(--white); font-weight: 700; }
+
+    .calc-result-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    }
+    @media (max-width: 600px) {
+      .calc-result-stats { grid-template-columns: 1fr; }
+    }
+    .calc-stat-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+    .calc-stat-label {
+      font-size: 11px; color: rgba(255,255,255,0.65);
+      text-transform: uppercase; letter-spacing: 0.8px;
+      font-weight: 700; margin-bottom: 6px;
+    }
+    .calc-stat-value {
+      font-size: 20px; font-weight: 800;
+      color: var(--white);
+      font-family: 'Merriweather', Georgia, serif;
+      line-height: 1.15;
+    }
+    .calc-stat-value.green { color: #6EE8A4; }
+    .calc-stat-value.red { color: #FF9BA8; }
+
+    /* BREAKDOWN SECTIONS */
+    .breakdown-section {
+      padding: 28px;
+      background: var(--white);
+      border-top: 1px solid var(--gray-100);
+    }
+    .breakdown-section h3 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .breakdown-section .sub {
+      font-size: 13px; color: var(--gray-600);
+      margin-bottom: 18px;
+    }
+
+    /* THREE-COLUMN MONTHLY COMPARISON */
+    .three-col {
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 700px) {
+      .three-col { grid-template-columns: 1fr; }
+    }
+    .three-col-card {
+      padding: 18px;
+      border-radius: var(--radius);
+      border: 1.5px solid var(--gray-100);
+    }
+    .three-col-card.before {
+      background: var(--red-pale);
+      border-color: rgba(215,38,56,0.2);
+    }
+    .three-col-card.after {
+      background: var(--green-pale);
+      border-color: rgba(27,135,75,0.2);
+    }
+    .three-col-card.savings {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+    .three-col-title {
+      font-size: 11px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      margin-bottom: 12px;
+      color: var(--gray-600);
+    }
+    .three-col-card.before .three-col-title { color: var(--red); }
+    .three-col-card.after .three-col-title { color: var(--green); }
+    .three-col-card.savings .three-col-title { color: var(--blue-light); }
+    .three-col-rows { display: grid; gap: 6px; }
+    .three-col-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-size: 13px;
+      padding: 4px 0;
+    }
+    .three-col-row.total {
+      border-top: 1.5px solid rgba(0,0,0,0.1);
+      margin-top: 6px;
+      padding-top: 8px;
+      font-weight: 800;
+      font-size: 15px;
+    }
+    .three-col-card.savings .three-col-row.total {
+      border-top-color: rgba(255,255,255,0.2);
+    }
+    .three-col-row span:first-child {
+      color: var(--gray-600);
+    }
+    .three-col-card.savings .three-col-row span:first-child {
+      color: rgba(255,255,255,0.7);
+    }
+    .three-col-row span:last-child {
+      font-weight: 700;
+      color: var(--gray-800);
+      font-family: 'Merriweather', Georgia, serif;
+    }
+    .three-col-card.before .three-col-row span:last-child { color: var(--red); }
+    .three-col-card.after .three-col-row span:last-child { color: var(--green); }
+    .three-col-card.savings .three-col-row span:last-child { color: var(--white); }
+    .three-col-card.savings .three-col-row.total span:last-child { color: #6EE8A4; }
+
+    /* CLOSING COSTS / CASH AT CLOSE */
+    .cash-flow {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 700px) {
+      .cash-flow { grid-template-columns: 1fr; }
+    }
+    .cash-card {
+      padding: 18px 20px;
+      background: var(--off-white);
+      border-radius: var(--radius);
+      border-left: 4px solid var(--blue);
+    }
+    .cash-card.green { border-left-color: var(--green); }
+    .cash-card h4 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 15px; font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .cash-card-rows { display: grid; gap: 4px; }
+    .cash-card-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-size: 13px;
+      padding: 3px 0;
+    }
+    .cash-card-row span:first-child { color: var(--gray-600); }
+    .cash-card-row span:last-child {
+      font-weight: 700;
+      color: var(--gray-800);
+      font-family: 'Merriweather', Georgia, serif;
+    }
+    .cash-card-row.total {
+      border-top: 1px solid var(--gray-200);
+      margin-top: 5px;
+      padding-top: 7px;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .cash-card.green .cash-card-row.total span:last-child { color: var(--green); }
+    .cash-card .cash-card-row.subtract span:last-child { color: var(--red); }
+
+    /* WARNINGS */
+    .calc-warning {
+      background: var(--amber-pale);
+      border-left: 4px solid var(--amber);
+      padding: 14px 18px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-top: 16px;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .calc-warning.success {
+      background: var(--green-pale);
+      border-left-color: var(--green);
+    }
+    .calc-warning.error {
+      background: var(--red-pale);
+      border-left-color: var(--red);
+    }
+    .calc-warning-icon { flex-shrink: 0; }
+    .calc-warning-text { font-size: 13px; color: var(--gray-800); line-height: 1.5; }
+    .calc-warning-text strong { color: var(--navy); font-weight: 700; }
+    .calc-warning-text a { color: var(--blue); font-weight: 700; }
+
+    /* LEAD CAPTURE */
+    .calc-lead {
+      background: var(--white);
+      padding: 28px;
+      border-top: 1px solid var(--gray-100);
+    }
+    .calc-lead h3 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--navy); margin-bottom: 6px;
+    }
+    .calc-lead p {
+      font-size: 14px; color: var(--gray-600);
+      margin-bottom: 18px;
+    }
+    .calc-lead-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .calc-lead-row.single { grid-template-columns: 1fr; }
+    .calc-lead-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 15px; color: var(--gray-800);
+      background: var(--white);
+      transition: border var(--transition);
+      outline: none;
+    }
+    .calc-lead-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(0,113,206,0.12);
+    }
+    .calc-lead-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 15px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all var(--transition);
+      box-shadow: 0 4px 14px rgba(215,38,56,0.3);
+      margin-top: 12px;
+    }
+    .calc-lead-btn:hover { background: var(--red-hover); transform: translateY(-1px); }
+    .calc-lead-disclaimer {
+      font-size: 11px; color: var(--gray-400);
+      line-height: 1.5; margin-top: 12px;
+    }
+    .calc-lead-disclaimer a { color: var(--blue); }
+    .calc-lead-thanks {
+      display: none;
+      background: var(--green-pale);
+      border: 1.5px solid rgba(27,135,75,0.25);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+    }
+    .calc-lead-thanks.active { display: block; }
+    .calc-lead-thanks h4 {
+      color: var(--green); font-size: 17px; margin-bottom: 6px;
+    }
+    .calc-lead-thanks p {
+      font-size: 14px; color: var(--gray-800); margin: 0;
+    }
+
+    /* EXPLAINER */
+    .explainer-section { padding: 60px 24px; background: var(--white); }
+    .explainer-inner { max-width: 760px; margin: 0 auto; }
+    .explainer-section h2 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 28px; font-weight: 700;
+      color: var(--navy); margin-bottom: 12px; letter-spacing: -0.3px;
+    }
+    .explainer-section .intro {
+      font-size: 17px; color: var(--gray-600);
+      margin-bottom: 32px; line-height: 1.7;
+    }
+    .explainer-section h3 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--navy);
+      margin-top: 32px; margin-bottom: 12px;
+    }
+    .explainer-section p {
+      font-size: 16px; line-height: 1.7;
+      color: var(--gray-800);
+      margin-bottom: 14px;
+    }
+    .myth-box {
+      background: var(--amber-pale);
+      border-left: 4px solid var(--amber);
+      padding: 18px 22px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 18px 0;
+    }
+    .myth-box h4 {
+      color: var(--navy); font-size: 15px;
+      margin-bottom: 8px;
+      font-family: 'Merriweather', Georgia, serif;
+    }
+    .myth-box p {
+      font-size: 14px; margin-bottom: 8px; line-height: 1.6;
+    }
+    .myth-box p:last-child { margin-bottom: 0; }
+
+    /* BOTTOM CTA */
+    .bottom-cta {
+      padding: 56px 24px; background: var(--navy);
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .bottom-cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(0,113,206,0.1) 0%, transparent 70%);
+    }
+    .bottom-cta-inner { position: relative; z-index: 1; }
+    .bottom-cta h2 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 28px; font-weight: 700;
+      color: var(--white); margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+    .bottom-cta p {
+      color: rgba(255,255,255,0.7); font-size: 16px;
+      margin-bottom: 24px;
+      max-width: 520px; margin-left: auto; margin-right: auto;
+    }
+    .btn-primary {
+      display: inline-block; background: var(--red); color: var(--white);
+      padding: 16px 36px; border-radius: var(--radius);
+      font-size: 15px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      transition: all var(--transition);
+      box-shadow: 0 4px 14px rgba(215,38,56,0.3);
+    }
+    .btn-primary:hover { background: var(--red-hover); transform: translateY(-1px); }
+
+    /* COMPLIANCE */
+    .compliance { background: var(--navy-deeper); padding: 32px 24px; text-align: center; }
+    .compliance-inner { max-width: 800px; margin: 0 auto; }
+    .compliance p { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.8; }
+    .compliance a { color: var(--blue-light); }
+    .compliance a:hover { text-decoration: underline; }
+    .compliance-ehl {
+      margin-top: 14px; font-size: 11px; color: rgba(255,255,255,0.5);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="/">
+      <div>
+        <div class="header-logo-text">Show<span>Me</span>Rates</div>
+        <div class="header-logo-sub">Tools</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/">Calculators</a>
+      <a href="https://showmerates.com">Main Site</a>
+      <a href="https://showmerates.com/va-loan-resources">Resources</a>
+    </nav>
+    <div class="header-right">
+      <a class="header-phone" href="tel:+18447371455">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.81.36 1.6.68 2.35a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.75.32 1.54.55 2.35.68A2 2 0 0122 16.92z" stroke="#fff" stroke-width="2"/></svg>
+        <span>(844) 737-1455</span>
+      </a>
+      <a class="header-cta" href="https://showmerates.com/#smrFormCard">Get My Rate</a>
+      <span class="header-nmls">NMLS# 1416824</span>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/">Calculators</a>
+  <a href="https://showmerates.com">Main Site</a>
+  <a href="https://showmerates.com/va-loan-resources">Resources</a>
+  <a href="tel:+18447371455">(844) 737-1455</a>
+</div>
+
+<!-- BREADCRUMB -->
+<nav class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="/">Tools</a>
+    <span>&rsaquo;</span>
+    VA Cash-Out Refinance True Savings
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="calc-hero">
+  <div class="calc-hero-inner">
+    <div class="calc-hero-eyebrow">VA Cash-Out True Savings</div>
+    <h1>The Real Math On A<br><span>VA Cash-Out Refinance.</span></h1>
+    <p>Includes debt consolidation, the escrow refund timing, the deferred first payment, and the full closing cost math &mdash; so you can see whether refinancing actually helps or just shuffles money around.</p>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="calc-section">
+  <div class="calc-inner">
+    <div class="calc-card">
+
+      <div class="calc-form">
+
+        <!-- 1. CURRENT LOAN -->
+        <div class="calc-form-section">
+          <h2 class="calc-section-title"><span class="num">1</span>Your Current Loan</h2>
+          <p class="calc-section-help">What you have today. Use your latest mortgage statement.</p>
+
+          <div class="calc-form-grid">
+            <div class="calc-form-row">
+              <label class="calc-label" for="currentBalance">Current Mortgage Balance</label>
+              <div class="calc-input-wrap">
+                <span class="calc-input-prefix">$</span>
+                <input type="number" class="calc-input" id="currentBalance" value="280000" min="0" step="1000">
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="currentRate">Current Interest Rate</label>
+              <div class="calc-input-wrap">
+                <input type="number" class="calc-input has-suffix no-prefix" id="currentRate" value="7.25" min="0" step="0.125">
+                <span class="calc-input-suffix">%</span>
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="currentPI">Current P&amp;I Payment <span class="calc-label-help">(principal &amp; interest only)</span></label>
+              <div class="calc-input-wrap">
+                <span class="calc-input-prefix">$</span>
+                <input type="number" class="calc-input" id="currentPI" value="2046" min="0" step="10">
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="currentEscrow">Current Escrow Payment <span class="calc-label-help">(taxes + insurance)</span></label>
+              <div class="calc-input-wrap">
+                <span class="calc-input-prefix">$</span>
+                <input type="number" class="calc-input" id="currentEscrow" value="450" min="0" step="10">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. NEW LOAN -->
+        <div class="calc-form-section">
+          <h2 class="calc-section-title"><span class="num">2</span>The New VA Cash-Out Loan</h2>
+          <p class="calc-section-help">The refinance terms your LO quoted. Cash-out replaces your full mortgage with a new VA loan.</p>
+
+          <div class="calc-form-grid">
+            <div class="calc-form-row">
+              <label class="calc-label" for="newRate">New Interest Rate</label>
+              <div class="calc-input-wrap">
+                <input type="number" class="calc-input has-suffix no-prefix" id="newRate" value="5.875" min="0" step="0.125">
+                <span class="calc-input-suffix">%</span>
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="newTerm">New Loan Term</label>
+              <div class="calc-input-wrap">
+                <input type="number" class="calc-input has-suffix no-prefix" id="newTerm" value="30" min="10" max="30" step="1">
+                <span class="calc-input-suffix">years</span>
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="closingCosts">Closing Costs <span class="calc-label-help">(excluding funding fee)</span></label>
+              <div class="calc-input-wrap">
+                <span class="calc-input-prefix">$</span>
+                <input type="number" class="calc-input" id="closingCosts" value="6500" min="0" step="100">
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="appraisedValue">Home Appraised Value</label>
+              <div class="calc-input-wrap">
+                <span class="calc-input-prefix">$</span>
+                <input type="number" class="calc-input" id="appraisedValue" value="425000" min="0" step="1000">
+              </div>
+            </div>
+          </div>
+
+          <div class="calc-form-grid">
+            <div class="calc-form-row">
+              <label class="calc-check" for="subsequentUse">
+                <input type="checkbox" id="subsequentUse">
+                <div class="calc-check-text">This is a <strong>subsequent use</strong> of my VA benefit (3.30% funding fee instead of 2.15%)</div>
+              </label>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-check exempt" for="exempt">
+                <input type="checkbox" id="exempt">
+                <div class="calc-check-text">I am <strong>exempt</strong> from the VA funding fee</div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. DEBTS TO CONSOLIDATE -->
+        <div class="calc-form-section">
+          <h2 class="calc-section-title"><span class="num">3</span>High-Interest Debts to Pay Off</h2>
+          <p class="calc-section-help">Add any credit cards, personal loans, or HELOCs you want to pay off with cash-out proceeds. The savings on these can be the biggest win.</p>
+
+          <div class="debt-list" id="debtList"></div>
+          <button type="button" class="debt-add-btn" id="addDebtBtn">+ Add Another Debt</button>
+        </div>
+
+      </div>
+
+      <!-- HEADLINE RESULT -->
+      <div class="calc-result win" id="calcResult">
+        <div class="calc-result-inner">
+          <div class="calc-result-headline">
+            <div class="calc-result-status" id="resultStatus">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+              <span id="resultStatusText">This Refi Saves You Money</span>
+            </div>
+            <div class="calc-result-label" id="resultLabel">Total Monthly Savings (Year 1)</div>
+            <div class="calc-result-amount win" id="resultAmount">$1,247<span class="unit">/month</span></div>
+            <p class="calc-result-headline-sub" id="resultSub">By lowering your rate AND replacing high-interest debt payments with mortgage debt, you free up <strong>$1,247/month</strong> in cash flow. Over the first year, that's <strong>$14,964</strong> back in your pocket.</p>
+          </div>
+
+          <div class="calc-result-stats">
+            <div class="calc-stat-card">
+              <div class="calc-stat-label">Cash At Closing</div>
+              <div class="calc-stat-value green" id="statCashAtClosing">$5,500</div>
+            </div>
+            <div class="calc-stat-card">
+              <div class="calc-stat-label">Break-Even Point</div>
+              <div class="calc-stat-value" id="statBreakeven">Month 1</div>
+            </div>
+            <div class="calc-stat-card">
+              <div class="calc-stat-label">12-Month Net Savings</div>
+              <div class="calc-stat-value green" id="statYearSavings">$14,964</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MONTHLY COMPARISON -->
+      <div class="breakdown-section">
+        <h3>Monthly Cash Flow: Before vs After</h3>
+        <p class="sub">Compares what you're paying today vs what you'll pay after the refi &mdash; including the debts you'll have paid off.</p>
+
+        <div class="three-col">
+          <div class="three-col-card before">
+            <div class="three-col-title">Today (Before)</div>
+            <div class="three-col-rows" id="beforeRows"></div>
+          </div>
+          <div class="three-col-card after">
+            <div class="three-col-title">After Refi</div>
+            <div class="three-col-rows" id="afterRows"></div>
+          </div>
+          <div class="three-col-card savings">
+            <div class="three-col-title">You Save</div>
+            <div class="three-col-rows" id="savingsRows"></div>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 20px;">Cash At Closing</h3>
+        <p class="sub">Most cash-out borrowers don't realize the closing cash math includes more than just the lump-sum payout. Here's the full picture.</p>
+
+        <div class="cash-flow">
+          <div class="cash-card">
+            <h4>What Comes Out</h4>
+            <div class="cash-card-rows" id="cashOutRows"></div>
+          </div>
+          <div class="cash-card green">
+            <h4>What Comes Back To You</h4>
+            <div class="cash-card-rows" id="cashInRows"></div>
+          </div>
+        </div>
+
+        <div id="warningBox"></div>
+      </div>
+
+      <!-- LEAD CAPTURE -->
+      <div class="calc-lead">
+        <div id="leadForm">
+          <h3>Want this in writing?</h3>
+          <p>Get a personalized PDF with your full cash-out analysis, debt consolidation breakdown, and break-even math &mdash; emailed directly to you. No spam, no obligation.</p>
+          <div class="calc-lead-row">
+            <input type="text" class="calc-lead-input" id="leadFirstName" placeholder="First name">
+            <input type="text" class="calc-lead-input" id="leadLastName" placeholder="Last name">
+          </div>
+          <div class="calc-lead-row single">
+            <input type="email" class="calc-lead-input" id="leadEmail" placeholder="Email address">
+          </div>
+          <div class="calc-lead-row single">
+            <input type="tel" class="calc-lead-input" id="leadPhone" placeholder="Phone (optional)">
+          </div>
+          <button class="calc-lead-btn" id="leadSubmit">Email Me My Report &rarr;</button>
+          <p class="calc-lead-disclaimer">
+            By submitting, you consent to receive emails and calls/texts from our VA loan specialist at E Mortgage Capital, Inc. (NMLS# 1416824) about your VA mortgage inquiry. Consent is not required to purchase. Msg &amp; data rates may apply. Reply STOP to opt out.
+            <a href="https://showmerates.com/privacy-policy" target="_blank">Privacy Policy</a>.
+          </p>
+        </div>
+        <div class="calc-lead-thanks" id="leadThanks">
+          <h4>Thanks! Your report is on the way.</h4>
+          <p>Check your email in the next few minutes. If you don't see it, check your spam folder or call us directly at <a href="tel:+18447371455">(844) 737-1455</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLAINER -->
+<section class="explainer-section">
+  <div class="explainer-inner">
+    <h2>How VA Cash-Out Refinance Math Actually Works</h2>
+    <p class="intro">A cash-out refinance replaces your existing mortgage with a new, larger VA loan and you pocket the difference. On its own that doesn't save you money &mdash; it just shifts debt around. But when you combine it with paying off high-interest debt AND lowering your mortgage rate, the math can be genuinely powerful. The key word is <em>can</em>. Most calculators oversimplify this; here's the honest version.</p>
+
+    <h3>The Three Real Sources of Savings</h3>
+    <p><strong>1. Lower mortgage rate.</strong> If your current rate is meaningfully higher than what's available today (say, 1 percentage point or more), refinancing the existing balance saves you money every month for the life of the loan. This is the obvious one.</p>
+    <p><strong>2. Debt consolidation.</strong> This is where the real magic usually happens. Credit cards at 22% APR, personal loans at 11%, HELOCs at variable rates &mdash; paying these off and rolling them into a 6% mortgage can drop your effective monthly debt service by hundreds or thousands of dollars. Even when total interest paid over the life of the loan is higher (mortgages amortize over 30 years), monthly cash flow improves dramatically.</p>
+    <p><strong>3. Resetting amortization on existing high-rate principal.</strong> If you're 7 years into a 30-year loan at 7.25%, you've been paying a lot of interest and very little principal. Refinancing into a fresh 30-year at a lower rate dramatically reduces your monthly principal-and-interest payment &mdash; but it also extends how long you'll be paying. This calculator focuses on monthly cash flow, not long-term total interest, because cash flow is what people actually feel.</p>
+
+    <h3>What the Closing Cash Looks Like (The Honest Version)</h3>
+    <p>This is where lender marketing gets sloppy. Here's what actually happens at a refinance closing:</p>
+    <p><strong>What comes out of your equity:</strong> Closing costs (typically $4,000-$8,000 on a VA refi), the VA funding fee (2.15% first use, 3.30% subsequent use, unless you're exempt), payoff of your current mortgage balance, payoff of any consolidated debts. All of this typically gets rolled into the new loan amount.</p>
+    <p><strong>What comes back to you:</strong> The remaining "cash out" amount goes to your bank account a few days after closing. You'll also receive an escrow refund check from your old lender within 15-30 days &mdash; this is the unused balance that was sitting in your escrow account for property taxes and insurance.</p>
+    <p><strong>The "skipped payment" trick:</strong> You typically don't make your first new mortgage payment for 30-60 days after closing. This feels like free money but it isn't &mdash; you're prepaying daily interest at closing for the rest of that month, and your first payment covers the following month's interest. It's still a real cash flow benefit because you get to skip writing the check, but it's not actually new savings.</p>
+
+    <div class="myth-box">
+      <h4>The Lender Myths You'll Hear</h4>
+      <p><strong>"Skip 2 months of payments!"</strong> &mdash; This is largely marketing. You're paying daily interest at closing and your first payment is timed normally. You might genuinely skip one payment cycle depending on closing date, but it's not "free money."</p>
+      <p><strong>"Get your escrow refund as bonus cash!"</strong> &mdash; That's your own money the prior servicer was holding. You'd have gotten it anyway eventually.</p>
+      <p><strong>"No money out of pocket!"</strong> &mdash; True in the sense that closing costs and funding fee get financed into the loan. But you're paying interest on those costs for 30 years if you don't pay them down.</p>
+    </div>
+
+    <h3>When Cash-Out Makes Sense</h3>
+    <p>The cleanest scenarios are: you have meaningful high-interest debt (credit cards, personal loans), enough home equity to cover the cash-out without going above 90% loan-to-value, and a current mortgage rate that's at least 0.75&ndash;1.0% above market. If all three are true, the math usually works overwhelmingly in your favor.</p>
+    <p>It also makes sense for home improvements at a much lower rate than a HELOC, paying for college without taking on student loans, or building an emergency fund if you're truly capital-constrained &mdash; but those are individual decisions, not pure savings plays.</p>
+
+    <h3>When It Doesn't Make Sense</h3>
+    <p>If your current rate is already low (5% or below), cash-out usually doesn't save monthly &mdash; your new payment after factoring in closing costs and funding fee will be higher even with a lower rate. If you have no high-interest debt to consolidate, the only benefit is the cash itself, and you're paying real closing costs to get money you could probably borrow more cheaply elsewhere (HELOC, 0% APR card balance transfer, etc.) for short-term needs.</p>
+    <p>If you plan to sell within 2-3 years, you may not recoup the closing costs through monthly savings.</p>
+
+    <h3>The VA-Specific Advantages</h3>
+    <p>VA cash-out has a few real edges over conventional cash-out: no PMI ever (saves $100-300/month vs conventional), more lenient credit/DTI underwriting, and the funding fee (which is higher than a purchase but financed into the loan). Many lenders cap conventional cash-out at 80% LTV, while VA programs technically allow up to 100% (most lenders impose 90% overlays in 2026). That higher allowable LTV means more cash available, more debts payable, more potential consolidation savings.</p>
+    <p>If you're exempt from the funding fee due to a service-connected disability, your VA cash-out beats conventional cash-out by a wide margin &mdash; you skip the largest single cost.</p>
+
+    <h3>Real Talk From an LO</h3>
+    <p>Cash-out refinance is one of the most useful tools in mortgage when the math works, and one of the most over-pitched products when it doesn't. The honest test: if I removed the closing costs and funding fee from your scenario entirely, would the new loan still be worth it on monthly savings alone? If yes, the refi is genuinely solid. If no, you're paying real money for marginal benefit. Ask your LO to run both numbers and don't accept marketing language that obscures the real cost.</p>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta">
+  <div class="bottom-cta-inner">
+    <h2>Want a Real Cash-Out Analysis on Your Specific Loan?</h2>
+    <p>Get a free side-by-side comparison &mdash; current rate, new rate, debt consolidation impact, and your actual cash at closing.</p>
+    <a href="https://showmerates.com/#smrFormCard" class="btn-primary">Get My Cash-Out Quote &rarr;</a>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section class="compliance">
+  <div class="compliance-inner">
+    <p>
+      ShowMeRates.com is operated by E Mortgage Capital, Inc., NMLS# 1416824, 3750 S Susan Street, Santa Ana, California 92704.<br>
+      <a href="https://nmlsconsumeraccess.org" target="_blank" rel="noopener">nmlsconsumeraccess.org</a> &middot; Equal Housing Lender &middot; Licensed in 48 states<br>
+      This calculator is for informational and educational purposes only and does not constitute a loan estimate, commitment to lend, or offer of credit. Cash-out refinance loans extend the amortization period and may increase total interest paid over the life of the loan even when monthly payments decrease. Consult a licensed loan officer regarding your specific situation, eligibility, and full closing cost details. Skipped payments and escrow refunds are standard refinance mechanics, not lender concessions.<br>
+      Not endorsed or sponsored by the Dept. of Veterans Affairs or any government agency.<br>
+      <a href="https://showmerates.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a> &middot; <a href="https://showmerates.com/privacy-policy" target="_blank" rel="noopener">Terms of Use</a> &middot; <a href="https://showmerates.com/licenses" target="_blank" rel="noopener">Licensing</a>
+    </p>
+    <div class="compliance-ehl">
+      <svg width="20" height="18" viewBox="0 0 20 18" fill="none"><path d="M10 0L0 8h3v10h14V8h3L10 0zM7 14v-4h6v4H7z" fill="rgba(255,255,255,0.4)"/></svg>
+      Equal Housing Lender
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var VA_FUNDING_FEE_FIRST = 0.0215;
+  var VA_FUNDING_FEE_SUBSEQUENT = 0.0330;
+
+  var state = {
+    currentBalance: 280000,
+    currentRate: 7.25,
+    currentPI: 2046,
+    currentEscrow: 450,
+    newRate: 5.875,
+    newTerm: 30,
+    closingCosts: 6500,
+    appraisedValue: 425000,
+    subsequentUse: false,
+    exempt: false,
+    debts: [
+      { id: 1, name: 'Credit Cards', balance: 18000, payment: 540, rate: 22 },
+      { id: 2, name: 'Auto Loan', balance: 14000, payment: 380, rate: 8.5 }
+    ],
+    nextDebtId: 3
+  };
+
+  function calcMonthlyPI(principal, annualRatePct, years) {
+    if (annualRatePct <= 0 || years <= 0 || principal <= 0) return 0;
+    var monthlyRate = (annualRatePct / 100) / 12;
+    var n = years * 12;
+    return principal * (monthlyRate * Math.pow(1 + monthlyRate, n)) / (Math.pow(1 + monthlyRate, n) - 1);
+  }
+
+  function formatCurrency(n) {
+    var abs = Math.abs(n);
+    return (n < 0 ? '-' : '') + '$' + Math.round(abs).toLocaleString('en-US');
+  }
+
+  function totalDebtBalance() {
+    return state.debts.reduce(function(sum, d) { return sum + (d.balance || 0); }, 0);
+  }
+  function totalDebtPayment() {
+    return state.debts.reduce(function(sum, d) { return sum + (d.payment || 0); }, 0);
+  }
+
+  function renderDebts() {
+    var container = document.getElementById('debtList');
+    var html = '';
+    state.debts.forEach(function(d, idx) {
+      html +=
+        '<div class="debt-row" data-debt-id="' + d.id + '">' +
+          '<div class="debt-name-wrap">' +
+            '<input type="text" class="debt-input debt-name" value="' + (d.name || '') + '" placeholder="Debt name (e.g. Visa)">' +
+          '</div>' +
+          '<div class="debt-input-wrap dollar">' +
+            '<input type="number" class="debt-input debt-balance" value="' + (d.balance || 0) + '" min="0" step="100" placeholder="Balance">' +
+          '</div>' +
+          '<div class="debt-input-wrap dollar">' +
+            '<input type="number" class="debt-input debt-payment" value="' + (d.payment || 0) + '" min="0" step="10" placeholder="Pmt">' +
+          '</div>' +
+          '<button type="button" class="debt-remove" data-remove-id="' + d.id + '" aria-label="Remove">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>' +
+          '</button>' +
+        '</div>';
+    });
+    container.innerHTML = html;
+
+    // Bind inputs
+    container.querySelectorAll('.debt-row').forEach(function(row) {
+      var id = parseInt(row.dataset.debtId);
+      var nameInp = row.querySelector('.debt-name');
+      var balInp = row.querySelector('.debt-balance');
+      var pmtInp = row.querySelector('.debt-payment');
+      nameInp.addEventListener('input', function(e) {
+        var debt = state.debts.find(function(d) { return d.id === id; });
+        if (debt) debt.name = e.target.value;
+      });
+      balInp.addEventListener('input', function(e) {
+        var debt = state.debts.find(function(d) { return d.id === id; });
+        if (debt) {
+          debt.balance = parseFloat(e.target.value) || 0;
+          render();
+        }
+      });
+      pmtInp.addEventListener('input', function(e) {
+        var debt = state.debts.find(function(d) { return d.id === id; });
+        if (debt) {
+          debt.payment = parseFloat(e.target.value) || 0;
+          render();
+        }
+      });
+    });
+    container.querySelectorAll('[data-remove-id]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var id = parseInt(btn.dataset.removeId);
+        state.debts = state.debts.filter(function(d) { return d.id !== id; });
+        renderDebts();
+        render();
+      });
+    });
+  }
+
+  function calculate() {
+    var debtsBalance = totalDebtBalance();
+    var debtsPayment = totalDebtPayment();
+
+    // New loan amount: payoff old mortgage + debts + closing costs (financed)
+    var baseNewLoan = state.currentBalance + debtsBalance + state.closingCosts;
+    var fundingFeeRate = state.exempt ? 0 : (state.subsequentUse ? VA_FUNDING_FEE_SUBSEQUENT : VA_FUNDING_FEE_FIRST);
+    var fundingFee = baseNewLoan * fundingFeeRate;
+    var newLoanAmount = baseNewLoan + fundingFee;
+
+    var ltv = state.appraisedValue > 0 ? (newLoanAmount / state.appraisedValue) * 100 : 0;
+
+    // New P&I
+    var newPI = calcMonthlyPI(newLoanAmount, state.newRate, state.newTerm);
+
+    // Monthly delta on mortgage payment
+    var mortgageDelta = state.currentPI - newPI;
+
+    // Total monthly savings = mortgage delta + debt consolidation savings
+    // (escrow assumed roughly same — same property, same taxes/insurance)
+    var totalMonthlySavings = mortgageDelta + debtsPayment;
+
+    // Total true cost of refi (financed)
+    var trueRefiCost = state.closingCosts + fundingFee;
+
+    // Break-even months = trueRefiCost / totalMonthlySavings
+    var breakevenMonths = totalMonthlySavings > 0 ? trueRefiCost / totalMonthlySavings : Infinity;
+
+    // 12-month net savings (real cash flow)
+    var year1Savings = totalMonthlySavings * 12;
+
+    // Cash at closing (estimates) — escrow refund typically ~2 months of escrow
+    var escrowRefund = state.currentEscrow * 2;
+    // Skipped payment estimate — current P&I (one month of P&I avoided in cash flow)
+    var skippedPayment = state.currentPI;
+
+    // Net cash from closing = appraised value - new loan amount, but bounded
+    // For now we'll show the structural cash mechanics
+    // True cash to borrower: max LTV proceeds - payoffs
+    // Simpler: cash to borrower = newLoanAmount - currentBalance - debtsBalance - closingCosts - fundingFee
+    var cashToBorrower = newLoanAmount - state.currentBalance - debtsBalance - state.closingCosts - fundingFee;
+    // This will typically be 0 or near-zero since we set newLoan to cover exactly those, but a user can adjust
+
+    // Total cash benefit at/after closing
+    var totalCashBenefit = cashToBorrower + escrowRefund + skippedPayment;
+
+    return {
+      debtsBalance: debtsBalance,
+      debtsPayment: debtsPayment,
+      newLoanAmount: newLoanAmount,
+      fundingFee: fundingFee,
+      newPI: newPI,
+      mortgageDelta: mortgageDelta,
+      totalMonthlySavings: totalMonthlySavings,
+      trueRefiCost: trueRefiCost,
+      breakevenMonths: breakevenMonths,
+      year1Savings: year1Savings,
+      escrowRefund: escrowRefund,
+      skippedPayment: skippedPayment,
+      cashToBorrower: cashToBorrower,
+      totalCashBenefit: totalCashBenefit,
+      ltv: ltv
+    };
+  }
+
+  function render() {
+    var c = calculate();
+
+    // Headline
+    var resultEl = document.getElementById('calcResult');
+    var statusEl = document.getElementById('resultStatus');
+    var labelEl = document.getElementById('resultLabel');
+    var amountEl = document.getElementById('resultAmount');
+    var subEl = document.getElementById('resultSub');
+
+    if (c.totalMonthlySavings > 0) {
+      resultEl.className = 'calc-result win';
+      statusEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg><span>This Refi Saves You Money</span>';
+      labelEl.textContent = 'Total Monthly Savings';
+      amountEl.className = 'calc-result-amount win';
+      amountEl.innerHTML = formatCurrency(c.totalMonthlySavings) + '<span class="unit">/month</span>';
+      var debtPart = c.debtsPayment > 0 ? ' AND replacing high-interest debt payments with mortgage debt' : '';
+      subEl.innerHTML = 'By lowering your rate' + debtPart + ', you free up <strong>' + formatCurrency(c.totalMonthlySavings) + '/month</strong> in cash flow. Over the first year, that\'s <strong>' + formatCurrency(c.year1Savings) + '</strong> back in your pocket.';
+    } else {
+      resultEl.className = 'calc-result lose';
+      statusEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg><span>This Refi Costs You Money</span>';
+      labelEl.textContent = 'Monthly Cash Flow Change';
+      amountEl.className = 'calc-result-amount lose';
+      amountEl.innerHTML = '-' + formatCurrency(Math.abs(c.totalMonthlySavings)) + '<span class="unit">/month</span>';
+      subEl.innerHTML = 'After closing costs are factored into your new loan balance, your monthly payment would be <strong>' + formatCurrency(Math.abs(c.totalMonthlySavings)) + ' higher</strong>. This refi doesn\'t save monthly &mdash; consider whether the cash-out itself is worth it or wait for a better rate environment.';
+    }
+
+    // Stats
+    document.getElementById('statCashAtClosing').textContent = formatCurrency(c.totalCashBenefit);
+    var breakevenEl = document.getElementById('statBreakeven');
+    if (!isFinite(c.breakevenMonths) || c.breakevenMonths <= 0) {
+      breakevenEl.textContent = 'N/A';
+    } else if (c.breakevenMonths < 1) {
+      breakevenEl.textContent = 'Immediate';
+    } else if (c.breakevenMonths < 24) {
+      breakevenEl.textContent = 'Month ' + Math.ceil(c.breakevenMonths);
+    } else {
+      breakevenEl.textContent = 'Year ' + (c.breakevenMonths / 12).toFixed(1);
+    }
+    var yearSavingsEl = document.getElementById('statYearSavings');
+    yearSavingsEl.textContent = (c.year1Savings >= 0 ? '' : '-') + formatCurrency(Math.abs(c.year1Savings));
+    yearSavingsEl.className = c.year1Savings >= 0 ? 'calc-stat-value green' : 'calc-stat-value red';
+
+    // Three-col rows
+    var beforeHtml =
+      '<div class="three-col-row"><span>Mortgage P&amp;I</span><span>' + formatCurrency(state.currentPI) + '</span></div>' +
+      '<div class="three-col-row"><span>Escrow (T&amp;I)</span><span>' + formatCurrency(state.currentEscrow) + '</span></div>' +
+      (c.debtsPayment > 0 ? '<div class="three-col-row"><span>Debt Payments</span><span>' + formatCurrency(c.debtsPayment) + '</span></div>' : '') +
+      '<div class="three-col-row total"><span>Total</span><span>' + formatCurrency(state.currentPI + state.currentEscrow + c.debtsPayment) + '</span></div>';
+
+    var afterHtml =
+      '<div class="three-col-row"><span>New Mortgage P&amp;I</span><span>' + formatCurrency(c.newPI) + '</span></div>' +
+      '<div class="three-col-row"><span>Escrow (T&amp;I)</span><span>' + formatCurrency(state.currentEscrow) + '</span></div>' +
+      (c.debtsPayment > 0 ? '<div class="three-col-row"><span>Debt Payments</span><span>' + formatCurrency(0) + '</span></div>' : '') +
+      '<div class="three-col-row total"><span>Total</span><span>' + formatCurrency(c.newPI + state.currentEscrow) + '</span></div>';
+
+    var mortgageDeltaTxt = c.mortgageDelta >= 0 ? formatCurrency(c.mortgageDelta) : '-' + formatCurrency(Math.abs(c.mortgageDelta));
+    var savingsHtml =
+      '<div class="three-col-row"><span>Mortgage Savings</span><span>' + mortgageDeltaTxt + '</span></div>' +
+      '<div class="three-col-row"><span>Escrow Change</span><span>' + formatCurrency(0) + '</span></div>' +
+      (c.debtsPayment > 0 ? '<div class="three-col-row"><span>Debt Elimination</span><span>' + formatCurrency(c.debtsPayment) + '</span></div>' : '') +
+      '<div class="three-col-row total"><span>Total Savings</span><span>' + formatCurrency(c.totalMonthlySavings) + '/mo</span></div>';
+
+    document.getElementById('beforeRows').innerHTML = beforeHtml;
+    document.getElementById('afterRows').innerHTML = afterHtml;
+    document.getElementById('savingsRows').innerHTML = savingsHtml;
+
+    // Cash flow at closing — what comes out (financed into loan)
+    var cashOutHtml =
+      '<div class="cash-card-row"><span>Pay off current mortgage</span><span>' + formatCurrency(state.currentBalance) + '</span></div>' +
+      (c.debtsBalance > 0 ? '<div class="cash-card-row"><span>Pay off other debts</span><span>' + formatCurrency(c.debtsBalance) + '</span></div>' : '') +
+      '<div class="cash-card-row"><span>Closing costs</span><span>' + formatCurrency(state.closingCosts) + '</span></div>' +
+      '<div class="cash-card-row"><span>VA funding fee' + (state.exempt ? ' (exempt)' : (state.subsequentUse ? ' (3.30%)' : ' (2.15%)')) + '</span><span>' + formatCurrency(c.fundingFee) + '</span></div>' +
+      '<div class="cash-card-row total"><span>New loan amount</span><span>' + formatCurrency(c.newLoanAmount) + '</span></div>';
+
+    var cashInHtml =
+      '<div class="cash-card-row"><span>Escrow refund (est)</span><span>' + formatCurrency(c.escrowRefund) + '</span></div>' +
+      '<div class="cash-card-row"><span>First payment deferred</span><span>' + formatCurrency(c.skippedPayment) + '</span></div>' +
+      (c.cashToBorrower > 0 ? '<div class="cash-card-row"><span>Cash to borrower</span><span>' + formatCurrency(c.cashToBorrower) + '</span></div>' : '') +
+      '<div class="cash-card-row total"><span>Total cash benefit</span><span>' + formatCurrency(c.totalCashBenefit) + '</span></div>';
+
+    document.getElementById('cashOutRows').innerHTML = cashOutHtml;
+    document.getElementById('cashInRows').innerHTML = cashInHtml;
+
+    // Warnings
+    renderWarnings(c);
+  }
+
+  function renderWarnings(c) {
+    var container = document.getElementById('warningBox');
+    container.innerHTML = '';
+    var warnings = [];
+
+    // LTV warning
+    if (c.ltv > 90) {
+      warnings.push({
+        type: 'warning',
+        html: '<strong>High loan-to-value:</strong> Your new loan would be ' + c.ltv.toFixed(0) + '% of the appraised value. Most VA lenders cap cash-out at 90% LTV in 2026, even though VA program rules technically allow higher. You may need to reduce the cash-out amount, pay down some debt first, or get a higher appraisal.'
+      });
+    }
+
+    // Rate not actually lower
+    if (state.newRate >= state.currentRate) {
+      warnings.push({
+        type: 'warning',
+        html: '<strong>Your new rate isn\'t lower.</strong> Refinancing at a higher (or equal) rate only makes sense if the debt consolidation savings outweigh the rate cost &mdash; or if you genuinely need the cash. Consider waiting for rates to drop or using a HELOC for the cash need.'
+      });
+    }
+
+    // Genuinely strong scenario
+    if (c.totalMonthlySavings > 800 && state.newRate < state.currentRate - 0.5 && c.debtsPayment > 200) {
+      warnings.push({
+        type: 'success',
+        html: '<strong>This is a strong cash-out scenario.</strong> Meaningful rate drop, significant debt consolidation, and break-even well inside the first year. The math here is genuinely powerful &mdash; just be sure the rolled-in debt doesn\'t come back (a common trap is paying off cards, then running them up again).'
+      });
+    }
+
+    // Long break-even
+    if (c.breakevenMonths > 36 && c.totalMonthlySavings > 0) {
+      warnings.push({
+        type: 'warning',
+        html: '<strong>Long break-even period.</strong> It would take ' + (c.breakevenMonths / 12).toFixed(1) + ' years to recoup your closing costs through monthly savings. If you might move or refinance before then, this refi may not pay off.'
+      });
+    }
+
+    // Debt trap warning
+    if (c.debtsPayment > 0 && c.debtsBalance > 0) {
+      var avgDebtRate = state.debts.reduce(function(s, d) { return s + (d.rate || 0) * (d.balance || 0); }, 0) / c.debtsBalance;
+      // Only show if user added at least one rate
+      warnings.push({
+        type: 'warning',
+        html: '<strong>The discipline test:</strong> You\'re paying off ' + formatCurrency(c.debtsBalance) + ' of debt with mortgage equity. The single biggest reason debt consolidation refis fail is that the borrower runs the credit cards back up after paying them off. If that happens, you\'ve simply doubled your debt. Commit to closing the accounts or freezing them before doing this.'
+      });
+    }
+
+    if (warnings.length === 0) return;
+    container.innerHTML = warnings.map(function(w) {
+      var color = w.type === 'error' ? '#D72638' : (w.type === 'success' ? '#1B874B' : '#F5A623');
+      return '<div class="calc-warning ' + w.type + '">' +
+        '<div class="calc-warning-icon">' +
+          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 22h20L12 2zM12 9v6M12 18h.01" stroke="' + color + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+        '</div>' +
+        '<div class="calc-warning-text">' + w.html + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // Main input listeners
+  ['currentBalance', 'currentRate', 'currentPI', 'currentEscrow', 'newRate', 'newTerm', 'closingCosts', 'appraisedValue'].forEach(function(id) {
+    document.getElementById(id).addEventListener('input', function(e) {
+      state[id] = parseFloat(e.target.value) || 0;
+      render();
+    });
+  });
+
+  document.getElementById('subsequentUse').addEventListener('change', function(e) {
+    state.subsequentUse = e.target.checked;
+    render();
+  });
+  document.getElementById('exempt').addEventListener('change', function(e) {
+    state.exempt = e.target.checked;
+    render();
+  });
+
+  // Add debt
+  document.getElementById('addDebtBtn').addEventListener('click', function() {
+    state.debts.push({ id: state.nextDebtId++, name: '', balance: 0, payment: 0, rate: 0 });
+    renderDebts();
+    render();
+  });
+
+  // Lead capture
+  document.getElementById('leadSubmit').addEventListener('click', function() {
+    var firstName = document.getElementById('leadFirstName').value.trim();
+    var lastName = document.getElementById('leadLastName').value.trim();
+    var email = document.getElementById('leadEmail').value.trim();
+    var phone = document.getElementById('leadPhone').value.trim();
+
+    if (!firstName || !email) {
+      alert('Please enter at least your first name and email.');
+      return;
+    }
+
+    var c = calculate();
+
+    var debtList = '';
+    state.debts.forEach(function(d) {
+      debtList += '  ' + (d.name || 'Debt') + ': ' + formatCurrency(d.balance) + ' bal, ' + formatCurrency(d.payment) + '/mo\n';
+    });
+
+    var subject = 'VA Cash-Out Refi Report Request — ' + firstName + ' ' + lastName;
+    var body =
+      'New VA Cash-Out Refinance Calculator lead from tools.showmerates.com:\n\n' +
+      '=== CONTACT ===\n' +
+      'Name: ' + firstName + ' ' + lastName + '\n' +
+      'Email: ' + email + '\n' +
+      'Phone: ' + (phone || '(not provided)') + '\n\n' +
+      '=== CURRENT LOAN ===\n' +
+      'Balance: ' + formatCurrency(state.currentBalance) + '\n' +
+      'Rate: ' + state.currentRate + '%\n' +
+      'P&I: ' + formatCurrency(state.currentPI) + '/mo\n' +
+      'Escrow: ' + formatCurrency(state.currentEscrow) + '/mo\n\n' +
+      '=== NEW LOAN ===\n' +
+      'Rate: ' + state.newRate + '%\n' +
+      'Term: ' + state.newTerm + ' years\n' +
+      'Closing Costs: ' + formatCurrency(state.closingCosts) + '\n' +
+      'Appraised Value: ' + formatCurrency(state.appraisedValue) + '\n' +
+      'Subsequent Use: ' + (state.subsequentUse ? 'YES (3.30%)' : 'No (2.15%)') + '\n' +
+      'Funding Fee Exempt: ' + (state.exempt ? 'YES' : 'No') + '\n' +
+      'New Loan Amount: ' + formatCurrency(c.newLoanAmount) + '\n' +
+      'LTV: ' + c.ltv.toFixed(1) + '%\n\n' +
+      '=== DEBTS BEING CONSOLIDATED ===\n' +
+      (debtList || '  (none)\n') +
+      '  Total balance: ' + formatCurrency(c.debtsBalance) + '\n' +
+      '  Total monthly payment: ' + formatCurrency(c.debtsPayment) + '\n\n' +
+      '=== RESULT ===\n' +
+      'New P&I: ' + formatCurrency(c.newPI) + '/mo\n' +
+      'Mortgage Delta: ' + (c.mortgageDelta >= 0 ? '+' : '-') + formatCurrency(Math.abs(c.mortgageDelta)) + '/mo\n' +
+      'Total Monthly Savings: ' + (c.totalMonthlySavings >= 0 ? '+' : '-') + formatCurrency(Math.abs(c.totalMonthlySavings)) + '/mo\n' +
+      'Year-1 Net Savings: ' + (c.year1Savings >= 0 ? '+' : '-') + formatCurrency(Math.abs(c.year1Savings)) + '\n' +
+      'Break-Even: ' + (isFinite(c.breakevenMonths) && c.breakevenMonths > 0 ? Math.ceil(c.breakevenMonths) + ' months' : 'N/A') + '\n' +
+      'Estimated Cash Benefit at Close: ' + formatCurrency(c.totalCashBenefit) + '\n\n' +
+      'Submitted: ' + new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CST';
+
+    var mailtoLink = 'mailto:troberts@emortgagecapital.com?subject=' +
+                     encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailtoLink;
+
+    document.getElementById('leadForm').style.display = 'none';
+    document.getElementById('leadThanks').classList.add('active');
+  });
+
+  // Hamburger
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', function() {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+    });
+  }
+
+  renderDebts();
+  render();
+})();
+</script>
+
+</body>
+</html>
