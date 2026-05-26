@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Free 2026 VA IRRRL Recoup Calculator. Calculate your exact recoup period and verify VA MAP Rule compliance for your VA Streamline Refinance. Built by a USMC Veteran and licensed VA Mortgage Specialist.">
+  <meta name="keywords" content="VA IRRRL recoup calculator, VA streamline refinance calculator, IRRRL recoupment period, VA MAP rule calculator, VA IRRRL eligibility, 36 month recoupment">
+  <title>VA IRRRL Recoup Calculator 2026 | ShowMeRates Tools</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #003057; --navy-dark: #001F3D; --navy-deeper: #00152B;
+      --blue: #0071CE; --blue-light: #4DA3E8; --blue-pale: #E8F2FC;
+      --red: #D72638; --red-hover: #BF1F2E; --red-pale: #FDEAEC;
+      --white: #FFFFFF; --off-white: #F5F7FA;
+      --gray-100: #EEF0F3; --gray-200: #D5D9E0; --gray-400: #9BA3AF; --gray-600: #5A6270; --gray-800: #2D3239;
+      --green: #1B874B; --green-pale: #E8F5EE;
+      --amber: #F5A623; --amber-pale: #FFF6E6;
+      --shadow-sm: 0 1px 3px rgba(0,48,87,0.07);
+      --shadow-md: 0 4px 12px rgba(0,48,87,0.10);
+      --shadow-lg: 0 8px 28px rgba(0,48,87,0.14);
+      --radius: 8px; --radius-lg: 12px; --transition: 0.25s ease;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      font-family: 'Source Sans 3', -apple-system, sans-serif;
+      color: var(--gray-800); -webkit-font-smoothing: antialiased;
+      line-height: 1.5; background: var(--white);
+    }
+    a { text-decoration: none; }
+
+    /* HEADER */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(0,31,61,0.97);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      height: 68px; padding: 0 28px;
+      display: flex; align-items: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1140px; width: 100%; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header-logo-text {
+      font-size: 22px; font-weight: 800; color: var(--white);
+      letter-spacing: -0.5px; line-height: 1;
+    }
+    .header-logo-text span { color: var(--blue-light); }
+    .header-logo-sub {
+      font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5);
+      text-transform: uppercase; letter-spacing: 1.5px; margin-top: 2px;
+    }
+    .header-nav { display: flex; align-items: center; gap: 28px; }
+    .header-nav a {
+      color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 600;
+      transition: color var(--transition); letter-spacing: 0.2px;
+    }
+    .header-nav a:hover { color: var(--white); }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .header-phone {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--white); font-size: 15px; font-weight: 700;
+    }
+    .header-phone:hover { color: var(--blue-light); }
+    .header-cta {
+      background: var(--red); color: var(--white);
+      padding: 9px 22px; border-radius: 6px;
+      font-size: 13px; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.5px; transition: all var(--transition);
+      box-shadow: 0 2px 8px rgba(215,38,56,0.3);
+    }
+    .header-cta:hover { background: var(--red-hover); transform: translateY(-1px); }
+    .header-nmls { color: rgba(255,255,255,0.35); font-size: 10px; }
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer; padding: 4px;
+      flex-direction: column; gap: 5px;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px; background: #fff;
+      border-radius: 2px; transition: all 0.3s ease;
+    }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .mobile-menu {
+      display: none; position: fixed; top: 60px; left: 0; right: 0; z-index: 999;
+      background: rgba(0,21,43,0.98); padding: 20px 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      flex-direction: column;
+    }
+    .mobile-menu.active { display: flex; }
+    .mobile-menu a {
+      color: rgba(255,255,255,0.85); font-size: 16px; font-weight: 600;
+      padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    @media (max-width: 768px) {
+      .header { padding: 0 16px; height: 60px; }
+      .header-nav, .header-nmls { display: none; }
+      .header-phone span { display: none; }
+      .hamburger { display: flex; }
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb {
+      background: var(--off-white);
+      padding: 92px 24px 16px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .breadcrumb-inner {
+      max-width: 1040px; margin: 0 auto;
+      font-size: 13px; color: var(--gray-600);
+    }
+    .breadcrumb a { color: var(--blue); font-weight: 600; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { color: var(--gray-400); margin: 0 8px; }
+
+    /* HERO */
+    .calc-hero {
+      background: linear-gradient(170deg, var(--navy-dark) 0%, var(--navy) 50%, #004A8F 100%);
+      padding: 48px 24px;
+      position: relative; overflow: hidden;
+      text-align: center;
+    }
+    .calc-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(0,113,206,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .calc-hero-inner { max-width: 760px; margin: 0 auto; position: relative; z-index: 1; }
+    .calc-hero-eyebrow {
+      display: inline-block;
+      background: rgba(0,113,206,0.18);
+      border: 1px solid rgba(77,163,232,0.35);
+      color: var(--blue-light);
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      padding: 6px 14px; border-radius: 100px; margin-bottom: 16px;
+    }
+    .calc-hero h1 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: clamp(28px, 4vw, 38px);
+      font-weight: 900; line-height: 1.2;
+      color: var(--white); letter-spacing: -0.3px;
+      margin-bottom: 14px;
+    }
+    .calc-hero h1 span { color: var(--blue-light); }
+    .calc-hero p {
+      font-size: 16px; line-height: 1.6;
+      color: rgba(255,255,255,0.8);
+      max-width: 580px; margin: 0 auto;
+    }
+
+    /* CALCULATOR */
+    .calc-section {
+      padding: 40px 24px 60px;
+      background: var(--off-white);
+    }
+    .calc-inner { max-width: 760px; margin: 0 auto; }
+    .calc-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+
+    /* FORM */
+    .calc-form { padding: 32px 28px; }
+    .calc-form-section {
+      padding-bottom: 24px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .calc-form-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .calc-section-title {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 16px; font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .calc-section-title .num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px;
+      background: var(--blue-pale); color: var(--blue);
+      border-radius: 50%;
+      font-size: 13px; font-weight: 800;
+      font-family: 'Source Sans 3', sans-serif;
+    }
+    .calc-section-help {
+      font-size: 13px; color: var(--gray-600);
+      margin-bottom: 16px;
+      padding-left: 32px;
+    }
+    .calc-form-row { margin-bottom: 18px; }
+    .calc-form-row:last-child { margin-bottom: 0; }
+    .calc-form-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    }
+    @media (max-width: 600px) {
+      .calc-form-grid { grid-template-columns: 1fr; }
+    }
+    .calc-label {
+      display: block;
+      font-size: 13px; font-weight: 700;
+      color: var(--navy); margin-bottom: 6px;
+    }
+    .calc-input-wrap {
+      position: relative;
+    }
+    .calc-input-prefix {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--gray-400); font-weight: 700; font-size: 15px;
+      pointer-events: none;
+    }
+    .calc-input-suffix {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      color: var(--gray-400); font-weight: 700; font-size: 14px;
+      pointer-events: none;
+    }
+    .calc-input {
+      width: 100%;
+      padding: 12px 14px 12px 30px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 16px; font-weight: 600;
+      color: var(--gray-800);
+      background: var(--white);
+      transition: all var(--transition);
+      outline: none;
+      -moz-appearance: textfield;
+    }
+    .calc-input::-webkit-outer-spin-button,
+    .calc-input::-webkit-inner-spin-button {
+      -webkit-appearance: none; margin: 0;
+    }
+    .calc-input.has-suffix { padding-left: 14px; padding-right: 38px; }
+    .calc-input.no-prefix { padding-left: 14px; }
+    .calc-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(0,113,206,0.12);
+    }
+
+    /* TOGGLE PILLS */
+    .calc-pills {
+      display: grid; gap: 8px;
+      grid-template-columns: 1fr 1fr;
+    }
+    .calc-pill {
+      padding: 12px 16px;
+      background: var(--off-white);
+      border: 2px solid var(--gray-100);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 14px; font-weight: 700;
+      color: var(--gray-800);
+      transition: all var(--transition);
+      text-align: center;
+    }
+    .calc-pill:hover { border-color: var(--blue); background: var(--blue-pale); }
+    .calc-pill.active {
+      border-color: var(--blue); background: var(--blue-pale);
+      color: var(--navy);
+    }
+    .calc-pill small {
+      display: block;
+      font-size: 11px; font-weight: 600;
+      color: var(--gray-600);
+      margin-top: 2px;
+      text-transform: uppercase; letter-spacing: 0.3px;
+    }
+
+    /* EXEMPT CHECKBOX */
+    .calc-exempt {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px;
+      background: var(--green-pale);
+      border: 1.5px solid rgba(27,135,75,0.2);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .calc-exempt:hover { background: rgba(232,245,238,0.7); }
+    .calc-exempt input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--green); }
+    .calc-exempt-text { font-size: 13px; font-weight: 600; color: var(--gray-800); }
+    .calc-exempt-text strong { color: var(--green); }
+
+    /* RESULT */
+    .calc-result {
+      padding: 32px 28px;
+      color: var(--white);
+      position: relative; overflow: hidden;
+      transition: background 0.4s ease;
+    }
+    .calc-result.pass {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    }
+    .calc-result.fail {
+      background: linear-gradient(135deg, #6B1E2A 0%, #4A1219 100%);
+    }
+    .calc-result::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 20%, rgba(0,113,206,0.18) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .calc-result.fail::before {
+      background: radial-gradient(ellipse at 80% 20%, rgba(215,38,56,0.22) 0%, transparent 60%);
+    }
+    .calc-result-inner { position: relative; z-index: 1; }
+    .calc-result-status {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 11px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1.2px;
+      margin-bottom: 14px;
+    }
+    .calc-result.pass .calc-result-status {
+      background: rgba(27,135,75,0.25);
+      border: 1px solid rgba(27,135,75,0.4);
+      color: #6EE8A4;
+    }
+    .calc-result.fail .calc-result-status {
+      background: rgba(215,38,56,0.25);
+      border: 1px solid rgba(215,38,56,0.4);
+      color: #FF9BA8;
+    }
+    .calc-result-label {
+      font-size: 12px; font-weight: 700;
+      color: var(--blue-light);
+      text-transform: uppercase; letter-spacing: 1.5px;
+      margin-bottom: 4px;
+    }
+    .calc-result.fail .calc-result-label { color: #FF9BA8; }
+    .calc-result-amount {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: clamp(40px, 7vw, 56px); font-weight: 900;
+      color: var(--white); line-height: 1;
+      letter-spacing: -1px;
+      margin-bottom: 14px;
+    }
+    .calc-result-amount .unit {
+      font-size: 0.4em; font-weight: 700;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0;
+      margin-left: 4px;
+    }
+    .calc-result-summary {
+      font-size: 15px; color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .calc-result-summary strong { color: var(--white); font-weight: 700; }
+    .calc-result-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    @media (max-width: 500px) {
+      .calc-result-stats { grid-template-columns: 1fr; }
+    }
+    .calc-stat-label {
+      font-size: 12px; color: rgba(255,255,255,0.6);
+      text-transform: uppercase; letter-spacing: 0.8px;
+      font-weight: 700; margin-bottom: 4px;
+    }
+    .calc-stat-value {
+      font-size: 18px; font-weight: 800;
+      color: var(--white);
+    }
+    .calc-stat-value.green { color: #6EE8A4; }
+    .calc-stat-value.red { color: #FF9BA8; }
+
+    /* WARNING BOX (compliance issues) */
+    .calc-warnings {
+      padding: 0 28px;
+    }
+    .calc-warning {
+      background: var(--amber-pale);
+      border-left: 4px solid var(--amber);
+      padding: 14px 18px;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin-top: 18px;
+      display: flex; gap: 12px; align-items: flex-start;
+    }
+    .calc-warning.error {
+      background: var(--red-pale);
+      border-left-color: var(--red);
+    }
+    .calc-warning-icon { flex-shrink: 0; }
+    .calc-warning-text { font-size: 13px; color: var(--gray-800); line-height: 1.5; }
+    .calc-warning-text strong { color: var(--navy); font-weight: 700; }
+    .calc-warning-text a { color: var(--blue); font-weight: 700; }
+
+    /* LEAD CAPTURE */
+    .calc-lead {
+      background: var(--white);
+      padding: 28px;
+      border-top: 1px solid var(--gray-100);
+      margin-top: 20px;
+    }
+    .calc-lead h3 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--navy); margin-bottom: 6px;
+    }
+    .calc-lead p {
+      font-size: 14px; color: var(--gray-600);
+      margin-bottom: 18px;
+    }
+    .calc-lead-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .calc-lead-row.single { grid-template-columns: 1fr; }
+    .calc-lead-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 15px; color: var(--gray-800);
+      background: var(--white);
+      transition: border var(--transition);
+      outline: none;
+    }
+    .calc-lead-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(0,113,206,0.12);
+    }
+    .calc-lead-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 15px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all var(--transition);
+      box-shadow: 0 4px 14px rgba(215,38,56,0.3);
+      margin-top: 12px;
+    }
+    .calc-lead-btn:hover { background: var(--red-hover); transform: translateY(-1px); }
+    .calc-lead-disclaimer {
+      font-size: 11px; color: var(--gray-400);
+      line-height: 1.5; margin-top: 12px;
+    }
+    .calc-lead-disclaimer a { color: var(--blue); }
+    .calc-lead-thanks {
+      display: none;
+      background: var(--green-pale);
+      border: 1.5px solid rgba(27,135,75,0.25);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+    }
+    .calc-lead-thanks.active { display: block; }
+    .calc-lead-thanks h4 {
+      color: var(--green); font-size: 17px; margin-bottom: 6px;
+    }
+    .calc-lead-thanks p {
+      font-size: 14px; color: var(--gray-800); margin: 0;
+    }
+
+    /* EXPLAINER */
+    .explainer-section {
+      padding: 60px 24px; background: var(--white);
+    }
+    .explainer-inner { max-width: 760px; margin: 0 auto; }
+    .explainer-section h2 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 28px; font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 12px; letter-spacing: -0.3px;
+    }
+    .explainer-section .intro {
+      font-size: 17px; color: var(--gray-600);
+      margin-bottom: 32px; line-height: 1.7;
+    }
+    .explainer-section h3 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--navy);
+      margin-top: 32px; margin-bottom: 12px;
+    }
+    .explainer-section p {
+      font-size: 16px; line-height: 1.7;
+      color: var(--gray-800);
+      margin-bottom: 14px;
+    }
+    .check-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 24px;
+    }
+    .check-list li {
+      padding: 12px 16px 12px 44px;
+      background: var(--off-white);
+      border-radius: var(--radius);
+      margin-bottom: 8px;
+      font-size: 15px; line-height: 1.5;
+      color: var(--gray-800);
+      position: relative;
+    }
+    .check-list li::before {
+      content: '';
+      position: absolute; left: 14px; top: 16px;
+      width: 20px; height: 20px;
+      background: var(--green);
+      border-radius: 50%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpath d='M5 12l5 5L20 7'/%3E%3C/svg%3E");
+      background-position: center; background-repeat: no-repeat;
+      background-size: 12px;
+    }
+    .formula-box {
+      background: var(--navy);
+      color: var(--white);
+      padding: 20px 24px;
+      border-radius: var(--radius);
+      font-family: 'Source Sans 3', monospace;
+      margin: 16px 0 24px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+    .formula-box .formula {
+      font-size: 16px; font-weight: 700;
+      color: var(--blue-light);
+      margin-bottom: 10px;
+    }
+    .formula-box small {
+      color: rgba(255,255,255,0.6);
+      font-size: 13px; line-height: 1.6;
+      display: block;
+      margin-top: 6px;
+    }
+
+    /* BOTTOM CTA */
+    .bottom-cta {
+      padding: 56px 24px; background: var(--navy);
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .bottom-cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(0,113,206,0.1) 0%, transparent 70%);
+    }
+    .bottom-cta-inner { position: relative; z-index: 1; }
+    .bottom-cta h2 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 28px; font-weight: 700;
+      color: var(--white); margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+    .bottom-cta p {
+      color: rgba(255,255,255,0.7); font-size: 16px;
+      margin-bottom: 24px;
+      max-width: 520px; margin-left: auto; margin-right: auto;
+    }
+    .btn-primary {
+      display: inline-block; background: var(--red); color: var(--white);
+      padding: 16px 36px; border-radius: var(--radius);
+      font-size: 15px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      transition: all var(--transition);
+      box-shadow: 0 4px 14px rgba(215,38,56,0.3);
+    }
+    .btn-primary:hover { background: var(--red-hover); transform: translateY(-1px); }
+
+    /* COMPLIANCE */
+    .compliance {
+      background: var(--navy-deeper); padding: 32px 24px; text-align: center;
+    }
+    .compliance-inner { max-width: 800px; margin: 0 auto; }
+    .compliance p { font-size: 11px; color: rgba(255,255,255,0.5); line-height: 1.8; }
+    .compliance a { color: var(--blue-light); }
+    .compliance a:hover { text-decoration: underline; }
+    .compliance-ehl {
+      margin-top: 14px; font-size: 11px; color: rgba(255,255,255,0.5);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="/">
+      <div>
+        <div class="header-logo-text">Show<span>Me</span>Rates</div>
+        <div class="header-logo-sub">Tools</div>
+      </div>
+    </a>
+    <nav class="header-nav">
+      <a href="/">Calculators</a>
+      <a href="https://showmerates.com">Main Site</a>
+      <a href="https://showmerates.com/va-loan-resources">Resources</a>
+    </nav>
+    <div class="header-right">
+      <a class="header-phone" href="tel:+18447371455">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.81.36 1.6.68 2.35a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.75.32 1.54.55 2.35.68A2 2 0 0122 16.92z" stroke="#fff" stroke-width="2"/></svg>
+        <span>(844) 737-1455</span>
+      </a>
+      <a class="header-cta" href="https://showmerates.com/#smrFormCard">Get My Rate</a>
+      <span class="header-nmls">NMLS# 1416824</span>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/">Calculators</a>
+  <a href="https://showmerates.com">Main Site</a>
+  <a href="https://showmerates.com/va-loan-resources">Resources</a>
+  <a href="tel:+18447371455">(844) 737-1455</a>
+</div>
+
+<!-- BREADCRUMB -->
+<nav class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="/">Tools</a>
+    <span>&rsaquo;</span>
+    VA IRRRL Recoup Calculator
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="calc-hero">
+  <div class="calc-hero-inner">
+    <div class="calc-hero-eyebrow">2026 VA IRRRL Recoup Calculator</div>
+    <h1>Does Your VA Streamline<br><span>Pass the MAP Rule?</span></h1>
+    <p>The VA requires your refinance costs to recoup within 36 months &mdash; or your IRRRL won't qualify. This calculator follows the official VA MAP Rule formula exactly.</p>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="calc-section">
+  <div class="calc-inner">
+    <div class="calc-card">
+
+      <div class="calc-form">
+
+        <!-- 1. CURRENT LOAN -->
+        <div class="calc-form-section">
+          <h2 class="calc-section-title"><span class="num">1</span>Your Current VA Loan</h2>
+          <p class="calc-section-help">Your existing VA mortgage that you're refinancing.</p>
+
+          <div class="calc-form-grid">
+            <div class="calc-form-row">
+              <label class="calc-label" for="currentBalance">Current Loan Balance</label>
+              <div class="calc-input-wrap">
+                <span class="calc-input-prefix">$</span>
+                <input type="number" class="calc-input" id="currentBalance" value="350000" min="0" step="1000">
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="currentRate">Current Interest Rate</label>
+              <div class="calc-input-wrap">
+                <input type="number" class="calc-input has-suffix no-prefix" id="currentRate" value="7.25" min="0" step="0.125">
+                <span class="calc-input-suffix">%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc-form-row">
+            <label class="calc-label" for="currentTerm">Years Remaining on Current Loan</label>
+            <div class="calc-input-wrap">
+              <input type="number" class="calc-input has-suffix no-prefix" id="currentTerm" value="28" min="1" max="30" step="1">
+              <span class="calc-input-suffix">years</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. NEW IRRRL -->
+        <div class="calc-form-section">
+          <h2 class="calc-section-title"><span class="num">2</span>Your New IRRRL</h2>
+          <p class="calc-section-help">The new VA Streamline Refinance you're considering.</p>
+
+          <div class="calc-form-grid">
+            <div class="calc-form-row">
+              <label class="calc-label" for="newRate">New Interest Rate</label>
+              <div class="calc-input-wrap">
+                <input type="number" class="calc-input has-suffix no-prefix" id="newRate" value="5.75" min="0" step="0.125">
+                <span class="calc-input-suffix">%</span>
+              </div>
+            </div>
+            <div class="calc-form-row">
+              <label class="calc-label" for="newTerm">New Loan Term</label>
+              <div class="calc-input-wrap">
+                <input type="number" class="calc-input has-suffix no-prefix" id="newTerm" value="30" min="10" max="30" step="1">
+                <span class="calc-input-suffix">years</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc-form-row">
+            <label class="calc-label">Loan Type</label>
+            <div class="calc-pills">
+              <button class="calc-pill active" data-loan-type="fixed-to-fixed">Fixed to Fixed<small>Most common</small></button>
+              <button class="calc-pill" data-loan-type="other">ARM or Fixed-to-ARM<small>Different rules apply</small></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. CLOSING COSTS -->
+        <div class="calc-form-section">
+          <h2 class="calc-section-title"><span class="num">3</span>Closing Costs</h2>
+          <p class="calc-section-help">Allowable costs only. Per VA MAP Rule, taxes, prepaid insurance, escrow amounts, and the VA funding fee are excluded from the recoup calculation.</p>
+
+          <div class="calc-form-row">
+            <label class="calc-label" for="closingCosts">Total Recoupable Closing Costs</label>
+            <div class="calc-input-wrap">
+              <span class="calc-input-prefix">$</span>
+              <input type="number" class="calc-input" id="closingCosts" value="6000" min="0" step="100">
+            </div>
+          </div>
+
+          <div class="calc-form-row">
+            <label class="calc-exempt" for="exempt">
+              <input type="checkbox" id="exempt">
+              <div>
+                <div class="calc-exempt-text">I am <strong>exempt</strong> from the VA funding fee (disability rating, Purple Heart, surviving spouse)</div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RESULT -->
+      <div class="calc-result pass" id="calcResult">
+        <div class="calc-result-inner">
+          <div class="calc-result-status" id="resultStatus">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+            <span id="resultStatusText">Passes 36-Month Recoup</span>
+          </div>
+          <div class="calc-result-label">Recoupment Period</div>
+          <div class="calc-result-amount" id="resultAmount">26<span class="unit">months</span></div>
+          <div class="calc-result-summary" id="resultSummary">
+            Your recoupable closing costs are paid back through monthly savings in <strong>26 months</strong>. The VA's MAP Rule requires this to be 36 months or less &mdash; <strong>your loan qualifies.</strong>
+          </div>
+          <div class="calc-result-stats">
+            <div>
+              <div class="calc-stat-label">Monthly P&amp;I Savings</div>
+              <div class="calc-stat-value green" id="statSavings">$229</div>
+            </div>
+            <div>
+              <div class="calc-stat-label">Total Loan Amount</div>
+              <div class="calc-stat-value" id="statNewLoan">$357,750</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WARNINGS -->
+      <div class="calc-warnings" id="calcWarnings"></div>
+
+      <!-- LEAD CAPTURE -->
+      <div class="calc-lead">
+        <div id="leadForm">
+          <h3>Want this in writing?</h3>
+          <p>Get a personalized PDF report with your recoup analysis, MAP Rule compliance check, and next steps &mdash; emailed directly to you. No spam, no obligation.</p>
+          <div class="calc-lead-row">
+            <input type="text" class="calc-lead-input" id="leadFirstName" placeholder="First name">
+            <input type="text" class="calc-lead-input" id="leadLastName" placeholder="Last name">
+          </div>
+          <div class="calc-lead-row single">
+            <input type="email" class="calc-lead-input" id="leadEmail" placeholder="Email address">
+          </div>
+          <div class="calc-lead-row single">
+            <input type="tel" class="calc-lead-input" id="leadPhone" placeholder="Phone (optional)">
+          </div>
+          <button class="calc-lead-btn" id="leadSubmit">Email Me My Report &rarr;</button>
+          <p class="calc-lead-disclaimer">
+            By submitting, you consent to receive emails and calls/texts from Terry Roberts (NMLS# 397987) at E Mortgage Capital, Inc. (NMLS# 1416824) about your VA mortgage inquiry. Consent is not required to purchase. Msg &amp; data rates may apply. Reply STOP to opt out.
+            <a href="https://showmerates.com/privacy-policy" target="_blank">Privacy Policy</a>.
+          </p>
+        </div>
+        <div class="calc-lead-thanks" id="leadThanks">
+          <h4>Thanks! Your report is on the way.</h4>
+          <p>Check your email in the next few minutes. If you don't see it, check your spam folder or call Terry directly at <a href="tel:+18447371455">(844) 737-1455</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPLAINER -->
+<section class="explainer-section">
+  <div class="explainer-inner">
+    <h2>The VA MAP Rule, In Plain English</h2>
+    <p class="intro">The VA Interest Rate Reduction Refinance Loan (IRRRL) is one of the simplest refinances in the mortgage industry &mdash; but only if it passes the VA's MAP Rule (38 U.S.C. &sect; 3709). The MAP Rule is what stops lenders from "churning" Veterans into bad refinances. Here's what your loan has to clear.</p>
+
+    <h3>The 36-Month Recoup Test</h3>
+    <p>The single most important rule. Your recoupable closing costs, divided by your monthly principal-and-interest savings, must equal 36 months or less. If it takes longer than 36 months to break even, <strong>the VA will not guarantee the loan</strong> &mdash; meaning most lenders won't approve it.</p>
+
+    <div class="formula-box">
+      <div class="formula">Recoupment (months) = Recoupable Closing Costs &divide; Monthly P&amp;I Savings</div>
+      <small>If the result is &le; 36 months, the loan passes. If it's &gt; 36 months, it fails and is ineligible.</small>
+    </div>
+
+    <h3>What Counts (and What Doesn't) in the Recoup Calc</h3>
+    <p>This is where most online IRRRL calculators get it wrong. The VA explicitly excludes certain costs from the recoupment calculation:</p>
+    <ul class="check-list">
+      <li><strong>Excluded:</strong> VA funding fee (paid under chapter 37)</li>
+      <li><strong>Excluded:</strong> Property taxes (current and prepaid)</li>
+      <li><strong>Excluded:</strong> Homeowners insurance (prepaid)</li>
+      <li><strong>Excluded:</strong> Amounts held in escrow at closing</li>
+      <li><strong>Excluded:</strong> HOA fees, special assessments</li>
+      <li><strong>Included:</strong> Lender fees, origination charges, points</li>
+      <li><strong>Included:</strong> Title services, recording fees, attorney fees</li>
+      <li><strong>Included:</strong> Appraisal (if required for your loan type)</li>
+    </ul>
+
+    <h3>Other IRRRL Requirements You Need to Pass</h3>
+    <p>The 36-month recoup is the big one, but it's not the only test. To qualify for an IRRRL, you must also meet these criteria:</p>
+    <ul class="check-list">
+      <li><strong>Seasoning &mdash; 210 days:</strong> At least 210 days must have passed since the first payment due date on your current VA loan.</li>
+      <li><strong>Seasoning &mdash; 6 payments:</strong> You must have made at least six consecutive monthly payments on your existing loan.</li>
+      <li><strong>Rate reduction (fixed-to-fixed):</strong> The new rate must usually be at least 0.50 percentage points lower than your current rate.</li>
+      <li><strong>Existing VA loan required:</strong> An IRRRL only refinances an existing VA loan. You can't IRRRL out of a conventional or FHA loan.</li>
+      <li><strong>Net Tangible Benefit:</strong> The loan must provide a measurable benefit to you &mdash; lower payment, lower rate, or term reduction.</li>
+    </ul>
+
+    <h3>Special Cases the Standard Calculation Doesn't Cover</h3>
+    <p><strong>ARM-to-fixed and term reductions:</strong> If you're refinancing from an ARM to a fixed rate or shortening your loan term, the rate reduction rule may not apply &mdash; but the 36-month recoup still does.</p>
+    <p><strong>Payment-stays-the-same scenarios:</strong> If your new P&amp;I payment is the same or higher (rare), you can still qualify only if you incur no fees or closing costs other than taxes, escrow, and the funding fee.</p>
+    <p><strong>Energy Efficient Mortgages (EEM):</strong> Costs added for EEM improvements are excluded from the recoup calc since they "pay for themselves" through energy savings.</p>
+
+    <h3>Real Talk From Terry</h3>
+    <p>I've seen Veterans get sold on IRRRLs that "barely pass" recoup at 35 months. Technically eligible, but practically a bad deal &mdash; you're paying $6,000 in costs to save $170 a month. If you're going to refinance, aim for a recoup period under 24 months. That's when an IRRRL really starts saving you real money. Anything over 30 months, ask yourself if it's worth tying up capital that long.</p>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta">
+  <div class="bottom-cta-inner">
+    <h2>Ready For a Real IRRRL Quote?</h2>
+    <p>If your numbers look good, the next step is a free, no-obligation IRRRL quote with real rates and actual closing costs. Takes 60 seconds.</p>
+    <a href="https://showmerates.com/#smrFormCard" class="btn-primary">Get My IRRRL Quote &rarr;</a>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section class="compliance">
+  <div class="compliance-inner">
+    <p>
+      ShowMeRates.com is operated by E Mortgage Capital, Inc., NMLS# 1416824, 3750 S Susan Street, Santa Ana, California 92704.<br>
+      <a href="https://nmlsconsumeraccess.org" target="_blank" rel="noopener">nmlsconsumeraccess.org</a> &middot; Equal Housing Lender &middot; Licensed in 48 states<br>
+      This calculator is for informational and educational purposes only and does not constitute a loan estimate, commitment to lend, or offer of credit. All examples are hypothetical. Actual rates, terms, and fees will vary based on individual qualifications. Recoupment calculation methodology follows VA Circular 26-19-22 and 38 U.S.C. &sect; 3709 as currently in effect.<br>
+      Not endorsed or sponsored by the Dept. of Veterans Affairs or any government agency.<br>
+      <a href="https://showmerates.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a> &middot; <a href="https://showmerates.com/privacy-policy" target="_blank" rel="noopener">Terms of Use</a> &middot; <a href="https://showmerates.com/licenses" target="_blank" rel="noopener">Licensing</a>
+    </p>
+    <div class="compliance-ehl">
+      <svg width="20" height="18" viewBox="0 0 20 18" fill="none"><path d="M10 0L0 8h3v10h14V8h3L10 0zM7 14v-4h6v4H7z" fill="rgba(255,255,255,0.4)"/></svg>
+      Equal Housing Lender
+    </div>
+  </div>
+</section>
+
+<script>
+(function() {
+  var state = {
+    currentBalance: 350000,
+    currentRate: 7.25,
+    currentTerm: 28,
+    newRate: 5.75,
+    newTerm: 30,
+    closingCosts: 6000,
+    loanType: 'fixed-to-fixed',
+    exempt: false
+  };
+
+  // VA IRRRL funding fee = 0.50% for all use (financed into loan)
+  var IRRRL_FUNDING_FEE_RATE = 0.005;
+
+  // Standard amortization PI calculation
+  function calcMonthlyPI(principal, annualRatePct, years) {
+    if (annualRatePct <= 0 || years <= 0 || principal <= 0) return 0;
+    var monthlyRate = (annualRatePct / 100) / 12;
+    var n = years * 12;
+    var pi = principal * (monthlyRate * Math.pow(1 + monthlyRate, n)) /
+             (Math.pow(1 + monthlyRate, n) - 1);
+    return pi;
+  }
+
+  function formatCurrency(n) {
+    var rounded = Math.round(n);
+    return '$' + rounded.toLocaleString('en-US');
+  }
+
+  function render() {
+    // Calculate new loan amount (current balance + financed VA funding fee, if not exempt)
+    var fundingFee = state.exempt ? 0 : state.currentBalance * IRRRL_FUNDING_FEE_RATE;
+    var newLoanAmount = state.currentBalance + fundingFee + state.closingCosts;
+
+    // Note: per VA convention, closing costs are typically financed into the loan for IRRRL.
+    // We'll calculate the new P&I using the full new loan amount.
+
+    var currentPI = calcMonthlyPI(state.currentBalance, state.currentRate, state.currentTerm);
+    var newPI = calcMonthlyPI(newLoanAmount, state.newRate, state.newTerm);
+    var monthlySavings = currentPI - newPI;
+
+    // Recoupment per VA MAP Rule:
+    // recoupable closing costs (excluding funding fee, taxes, escrow, insurance, HOA)
+    // divided by monthly P&I reduction
+    var recoupMonths = monthlySavings > 0 ? state.closingCosts / monthlySavings : Infinity;
+
+    // Render
+    var resultEl = document.getElementById('calcResult');
+    var statusEl = document.getElementById('resultStatus');
+    var statusTextEl = document.getElementById('resultStatusText');
+    var amountEl = document.getElementById('resultAmount');
+    var summaryEl = document.getElementById('resultSummary');
+    var savingsEl = document.getElementById('statSavings');
+    var newLoanEl = document.getElementById('statNewLoan');
+
+    newLoanEl.textContent = formatCurrency(newLoanAmount);
+
+    if (monthlySavings <= 0) {
+      // No savings - automatic fail
+      resultEl.classList.remove('pass');
+      resultEl.classList.add('fail');
+      statusEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg><span>Does Not Qualify</span>';
+      amountEl.innerHTML = 'N/A';
+      savingsEl.textContent = formatCurrency(monthlySavings);
+      savingsEl.className = 'calc-stat-value red';
+      summaryEl.innerHTML = 'Your new payment is the <strong>same or higher</strong> than your current payment, so there\'s no monthly savings to recoup costs against. This IRRRL would not provide a tangible benefit and would not pass VA requirements.';
+    } else if (!isFinite(recoupMonths) || recoupMonths > 36) {
+      // Fails the 36-month rule
+      resultEl.classList.remove('pass');
+      resultEl.classList.add('fail');
+      statusEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg><span>Fails 36-Month Rule</span>';
+      var displayMonths = isFinite(recoupMonths) ? Math.ceil(recoupMonths) : '36+';
+      amountEl.innerHTML = displayMonths + '<span class="unit">months</span>';
+      savingsEl.textContent = formatCurrency(monthlySavings);
+      savingsEl.className = 'calc-stat-value';
+      summaryEl.innerHTML = 'Your recoup period is <strong>' + displayMonths + ' months</strong> &mdash; longer than the VA\'s 36-month limit. <strong>This IRRRL would not qualify under the MAP Rule.</strong> To pass: lower your closing costs, increase the rate reduction, or both.';
+    } else {
+      // Passes
+      resultEl.classList.remove('fail');
+      resultEl.classList.add('pass');
+      statusEl.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg><span>Passes 36-Month Recoup</span>';
+      var months = Math.ceil(recoupMonths);
+      amountEl.innerHTML = months + '<span class="unit">months</span>';
+      savingsEl.textContent = formatCurrency(monthlySavings);
+      savingsEl.className = 'calc-stat-value green';
+
+      var qualityNote = '';
+      if (months <= 18) {
+        qualityNote = ' This is an <strong>excellent</strong> recoup period.';
+      } else if (months <= 24) {
+        qualityNote = ' This is a <strong>strong</strong> recoup period.';
+      } else if (months <= 30) {
+        qualityNote = ' This is a <strong>solid</strong> recoup period.';
+      } else {
+        qualityNote = ' This passes, but it\'s close to the 36-month ceiling &mdash; worth reviewing the math with a specialist.';
+      }
+      summaryEl.innerHTML = 'Your recoupable closing costs are paid back through monthly savings in <strong>' + months + ' months</strong>. The VA requires this to be 36 months or less &mdash; <strong>your loan qualifies.</strong>' + qualityNote;
+    }
+
+    renderWarnings(monthlySavings, recoupMonths);
+  }
+
+  function renderWarnings(monthlySavings, recoupMonths) {
+    var container = document.getElementById('calcWarnings');
+    container.innerHTML = '';
+    var warnings = [];
+
+    // Rate reduction check (fixed-to-fixed only)
+    if (state.loanType === 'fixed-to-fixed') {
+      var rateDiff = state.currentRate - state.newRate;
+      if (rateDiff < 0.5 && rateDiff >= 0) {
+        warnings.push({
+          type: 'error',
+          html: '<strong>Rate reduction too small.</strong> For fixed-to-fixed IRRRLs, the new rate must be at least 0.50 percentage points lower than your current rate. Your reduction is only ' + rateDiff.toFixed(3) + '%. Most lenders will not approve this loan.'
+        });
+      } else if (rateDiff < 0) {
+        warnings.push({
+          type: 'error',
+          html: '<strong>New rate is higher.</strong> Your new rate is higher than your current rate. A fixed-to-fixed IRRRL requires the new rate to be lower &mdash; this loan would not qualify.'
+        });
+      }
+    }
+
+    // Term extension warning
+    if (state.newTerm > state.currentTerm + 2) {
+      warnings.push({
+        type: 'warning',
+        html: '<strong>Term extension alert.</strong> You\'re extending your loan by ' + (state.newTerm - state.currentTerm) + ' years. Even if monthly payments drop, your total interest paid over the life of the loan may be significantly higher. <a href="https://showmerates.com/#smrFormCard">Talk with a specialist</a> about whether this is the right move.'
+      });
+    }
+
+    // Close-to-failing recoup
+    if (isFinite(recoupMonths) && recoupMonths > 30 && recoupMonths <= 36) {
+      warnings.push({
+        type: 'warning',
+        html: '<strong>Close to the limit.</strong> Your recoup is ' + Math.ceil(recoupMonths) + ' months &mdash; technically passing, but tight. If closing costs shift even slightly during processing, you could fail. Worth a conversation before proceeding.'
+      });
+    }
+
+    // High closing costs relative to savings
+    if (state.closingCosts > 8000 && monthlySavings > 0 && monthlySavings < 250) {
+      warnings.push({
+        type: 'warning',
+        html: '<strong>Heads up:</strong> $' + state.closingCosts.toLocaleString() + ' in closing costs is on the higher end for an IRRRL. With current savings of $' + Math.round(monthlySavings) + '/month, you may want to shop closing costs across lenders or ask about a no-cost IRRRL option.'
+      });
+    }
+
+    container.innerHTML = warnings.map(function(w) {
+      var iconColor = w.type === 'error' ? '#D72638' : '#F5A623';
+      return '<div class="calc-warning ' + (w.type === 'error' ? 'error' : '') + '">' +
+        '<div class="calc-warning-icon">' +
+          '<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 22h20L12 2zM12 9v6M12 18h.01" stroke="' + iconColor + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
+        '</div>' +
+        '<div class="calc-warning-text">' + w.html + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // Loan type pills
+  document.querySelectorAll('[data-loan-type]').forEach(function(pill) {
+    pill.addEventListener('click', function() {
+      document.querySelectorAll('[data-loan-type]').forEach(function(p) { p.classList.remove('active'); });
+      pill.classList.add('active');
+      state.loanType = pill.dataset.loanType;
+      render();
+    });
+  });
+
+  // Input listeners
+  var inputs = [
+    ['currentBalance', 'currentBalance'],
+    ['currentRate', 'currentRate'],
+    ['currentTerm', 'currentTerm'],
+    ['newRate', 'newRate'],
+    ['newTerm', 'newTerm'],
+    ['closingCosts', 'closingCosts']
+  ];
+  inputs.forEach(function(pair) {
+    document.getElementById(pair[0]).addEventListener('input', function(e) {
+      state[pair[1]] = parseFloat(e.target.value) || 0;
+      render();
+    });
+  });
+  document.getElementById('exempt').addEventListener('change', function(e) {
+    state.exempt = e.target.checked;
+    render();
+  });
+
+  // Lead capture
+  document.getElementById('leadSubmit').addEventListener('click', function() {
+    var firstName = document.getElementById('leadFirstName').value.trim();
+    var lastName = document.getElementById('leadLastName').value.trim();
+    var email = document.getElementById('leadEmail').value.trim();
+    var phone = document.getElementById('leadPhone').value.trim();
+
+    if (!firstName || !email) {
+      alert('Please enter at least your first name and email.');
+      return;
+    }
+
+    // Recompute for email
+    var fundingFee = state.exempt ? 0 : state.currentBalance * IRRRL_FUNDING_FEE_RATE;
+    var newLoanAmount = state.currentBalance + fundingFee + state.closingCosts;
+    var currentPI = calcMonthlyPI(state.currentBalance, state.currentRate, state.currentTerm);
+    var newPI = calcMonthlyPI(newLoanAmount, state.newRate, state.newTerm);
+    var monthlySavings = currentPI - newPI;
+    var recoupMonths = monthlySavings > 0 ? state.closingCosts / monthlySavings : Infinity;
+    var passes = monthlySavings > 0 && recoupMonths <= 36;
+
+    var subject = 'VA IRRRL Recoup Report Request — ' + firstName + ' ' + lastName;
+    var body =
+      'New VA IRRRL Recoup Calculator lead from tools.showmerates.com:\n\n' +
+      '=== CONTACT ===\n' +
+      'Name: ' + firstName + ' ' + lastName + '\n' +
+      'Email: ' + email + '\n' +
+      'Phone: ' + (phone || '(not provided)') + '\n\n' +
+      '=== CURRENT VA LOAN ===\n' +
+      'Current Balance: ' + formatCurrency(state.currentBalance) + '\n' +
+      'Current Rate: ' + state.currentRate + '%\n' +
+      'Years Remaining: ' + state.currentTerm + '\n' +
+      'Current P&I: ' + formatCurrency(currentPI) + '\n\n' +
+      '=== NEW IRRRL ===\n' +
+      'New Rate: ' + state.newRate + '%\n' +
+      'New Term: ' + state.newTerm + ' years\n' +
+      'Loan Type: ' + (state.loanType === 'fixed-to-fixed' ? 'Fixed to Fixed' : 'ARM/Fixed-to-ARM') + '\n' +
+      'Funding Fee Exempt: ' + (state.exempt ? 'YES' : 'No') + '\n' +
+      'Funding Fee Amount: ' + formatCurrency(fundingFee) + '\n' +
+      'Recoupable Closing Costs: ' + formatCurrency(state.closingCosts) + '\n' +
+      'New Loan Amount: ' + formatCurrency(newLoanAmount) + '\n' +
+      'New P&I: ' + formatCurrency(newPI) + '\n\n' +
+      '=== RESULT ===\n' +
+      'Monthly P&I Savings: ' + formatCurrency(monthlySavings) + '\n' +
+      'Recoup Period: ' + (isFinite(recoupMonths) ? Math.ceil(recoupMonths) + ' months' : 'N/A') + '\n' +
+      'MAP Rule Compliance: ' + (passes ? 'PASS' : 'FAIL') + '\n\n' +
+      'Submitted: ' + new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CST';
+
+    var mailtoLink = 'mailto:troberts@emortgagecapital.com?subject=' +
+                     encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+
+    window.location.href = mailtoLink;
+
+    document.getElementById('leadForm').style.display = 'none';
+    document.getElementById('leadThanks').classList.add('active');
+  });
+
+  // Hamburger
+  var hamburger = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', function() {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+    });
+  }
+
+  render();
+})();
+</script>
+
+</body>
+</html>
