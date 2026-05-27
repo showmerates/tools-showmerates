@@ -30,6 +30,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+
+  <!-- EmailJS SDK for silent lead delivery -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function() {
+      if (typeof emailjs !== 'undefined') {
+        emailjs.init({ publicKey: 'HO3i3eS7N94c6o1LA' });
+      }
+    })();
+  </script>
   <style>
     :root {
       --navy: #003057; --navy-dark: #001F3D; --navy-deeper: #00152B;
@@ -1107,7 +1117,7 @@
             <input type="email" class="calc-lead-input" id="leadEmail" placeholder="Email address">
           </div>
           <div class="calc-lead-row single">
-            <input type="tel" class="calc-lead-input" id="leadPhone" placeholder="Phone (optional)">
+            <input type="tel" class="calc-lead-input" id="leadPhone" placeholder="Phone">
           </div>
           <button class="calc-lead-btn" id="leadSubmit">Email Me My Report &rarr;</button>
           <p class="calc-lead-disclaimer">
@@ -1669,6 +1679,13 @@
       return;
     }
 
+    // Validate email format
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert('Please enter a valid email address (example: john@example.com).');
+      return;
+    }
+
     var c = calculate();
 
     var debtList = '';
@@ -1710,11 +1727,53 @@
       'Estimated Cash Benefit at Close: ' + formatCurrency(c.totalCashBenefit) + '\n\n' +
       'Submitted: ' + new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CST';
 
+    // === STEP 1: Fire EmailJS silently to capture the lead immediately ===
+    // (This ensures Terry gets the lead even if user closes the mailto popup)
+    if (typeof emailjs !== 'undefined') {
+      var emailJsParams = {
+        // Standard contact fields (most common EmailJS template variable names)
+        first_name: firstName,
+        last_name: lastName,
+        full_name: firstName + ' ' + lastName,
+        email: email,
+        from_email: email,
+        reply_to: email,
+        phone: phone || '(not provided)',
+        // Source identification
+        source: 'tools.showmerates.com / Cash-Out Calculator',
+        calculator: 'VA Cash-Out Refinance True Savings',
+        submitted_at: new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CST',
+        // Subject + full message body (fallback if template uses {{subject}} / {{message}})
+        subject: subject,
+        message: body,
+        // Loan summary for quick scanning in email
+        current_balance: formatCurrency(state.currentBalance),
+        current_rate: state.currentRate + '%',
+        new_rate: state.newRate + '%',
+        new_loan_amount: formatCurrency(c.newLoanAmount),
+        monthly_savings: (c.totalMonthlySavings >= 0 ? '+' : '-') + formatCurrency(Math.abs(c.totalMonthlySavings)) + '/mo',
+        year1_savings: (c.year1Savings >= 0 ? '+' : '-') + formatCurrency(Math.abs(c.year1Savings)),
+        ltv: c.ltv.toFixed(1) + '%'
+      };
+
+      emailjs.send('service_wcnn8r3', 'ShowMeRatesLead_t8r0v26', emailJsParams)
+        .then(function(response) {
+          console.log('Lead sent via EmailJS:', response.status, response.text);
+        })
+        .catch(function(error) {
+          console.error('EmailJS error (lead may have been lost):', error);
+        });
+    } else {
+      console.warn('EmailJS SDK not loaded — lead capture relies on mailto only');
+    }
+
+    // === STEP 2: Open mailto popup so user can email themselves a copy ===
     var mailtoLink = 'mailto:troberts@emortgagecapital.com?subject=' +
                      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 
     window.location.href = mailtoLink;
 
+    // === STEP 3: Show success screen ===
     document.getElementById('leadForm').style.display = 'none';
     document.getElementById('leadThanks').classList.add('active');
   });
