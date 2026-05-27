@@ -17,6 +17,8 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Free VA Loan Calculators - Built by a Marine, for Veterans">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:secure_url" content="https://tools.showmerates.com/og-image.jpg">
   <meta property="og:url" content="https://tools.showmerates.com/va-irrrl-recoup.html">
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -28,6 +30,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+
+  <!-- EmailJS SDK for silent lead delivery -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function() {
+      if (typeof emailjs !== 'undefined') {
+        emailjs.init({ publicKey: 'HO3i3eS7N94c6o1LA' });
+      }
+    })();
+  </script>
   <style>
     :root {
       --navy: #003057; --navy-dark: #001F3D; --navy-deeper: #00152B;
@@ -808,7 +820,7 @@
             <input type="email" class="calc-lead-input" id="leadEmail" placeholder="Email address">
           </div>
           <div class="calc-lead-row single">
-            <input type="tel" class="calc-lead-input" id="leadPhone" placeholder="Phone (optional)">
+            <input type="tel" class="calc-lead-input" id="leadPhone" placeholder="Phone">
           </div>
           <button class="calc-lead-btn" id="leadSubmit">Email Me My Report &rarr;</button>
           <p class="calc-lead-disclaimer">
@@ -1100,6 +1112,13 @@
       return;
     }
 
+    // Validate email format
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert('Please enter a valid email address (example: john@example.com).');
+      return;
+    }
+
     // Recompute for email
     var fundingFee = state.exempt ? 0 : state.currentBalance * IRRRL_FUNDING_FEE_RATE;
     var newLoanAmount = state.currentBalance + fundingFee + state.closingCosts;
@@ -1116,31 +1135,82 @@
       'Name: ' + firstName + ' ' + lastName + '\n' +
       'Email: ' + email + '\n' +
       'Phone: ' + (phone || '(not provided)') + '\n\n' +
-      '=== CURRENT VA LOAN ===\n' +
-      'Current Balance: ' + formatCurrency(state.currentBalance) + '\n' +
-      'Current Rate: ' + state.currentRate + '%\n' +
-      'Years Remaining: ' + state.currentTerm + '\n' +
-      'Current P&I: ' + formatCurrency(currentPI) + '\n\n' +
-      '=== NEW IRRRL ===\n' +
-      'New Rate: ' + state.newRate + '%\n' +
-      'New Term: ' + state.newTerm + ' years\n' +
-      'Loan Type: ' + (state.loanType === 'fixed-to-fixed' ? 'Fixed to Fixed' : 'ARM/Fixed-to-ARM') + '\n' +
-      'Funding Fee Exempt: ' + (state.exempt ? 'YES' : 'No') + '\n' +
-      'Funding Fee Amount: ' + formatCurrency(fundingFee) + '\n' +
-      'Recoupable Closing Costs: ' + formatCurrency(state.closingCosts) + '\n' +
-      'New Loan Amount: ' + formatCurrency(newLoanAmount) + '\n' +
-      'New P&I: ' + formatCurrency(newPI) + '\n\n' +
+      '=== SECTION 1: YOUR CURRENT VA LOAN ===\n' +
+      'Current Loan Balance: ' + formatCurrency(state.currentBalance) + '\n' +
+      'Current Interest Rate: ' + state.currentRate + '%\n' +
+      'Years Remaining on Current Loan: ' + state.currentTerm + '\n' +
+      'Current P&I (calculated): ' + formatCurrency(currentPI) + '/mo\n\n' +
+      '=== SECTION 2: YOUR NEW IRRRL ===\n' +
+      'New Interest Rate: ' + state.newRate + '%\n' +
+      'New Loan Term: ' + state.newTerm + ' years\n' +
+      'Loan Type: ' + (state.loanType === 'fixed-to-fixed' ? 'Fixed to Fixed' : 'ARM or Fixed-to-ARM') + '\n' +
+      'New P&I (calculated): ' + formatCurrency(newPI) + '/mo\n' +
+      'New Loan Amount (calculated): ' + formatCurrency(newLoanAmount) + '\n\n' +
+      '=== SECTION 3: CLOSING COSTS ===\n' +
+      'Total Recoupable Closing Costs: ' + formatCurrency(state.closingCosts) + '\n' +
+      'Funding Fee Exempt: ' + (state.exempt ? 'YES (disability/Purple Heart/surviving spouse)' : 'No') + '\n' +
+      'Funding Fee Amount (calculated): ' + formatCurrency(fundingFee) + '\n\n' +
       '=== RESULT ===\n' +
-      'Monthly P&I Savings: ' + formatCurrency(monthlySavings) + '\n' +
+      'Monthly P&I Savings: ' + formatCurrency(monthlySavings) + '/mo\n' +
       'Recoup Period: ' + (isFinite(recoupMonths) ? Math.ceil(recoupMonths) + ' months' : 'N/A') + '\n' +
-      'MAP Rule Compliance: ' + (passes ? 'PASS' : 'FAIL') + '\n\n' +
+      'VA MAP Rule (36-month limit): ' + (passes ? 'PASS' : 'FAIL') + '\n\n' +
       'Submitted: ' + new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CST';
 
+    // === STEP 1: Fire EmailJS silently to capture the lead immediately ===
+    // (This ensures Terry gets the lead even if user closes the mailto popup)
+    if (typeof emailjs !== 'undefined') {
+      var emailJsParams = {
+        // Standard contact fields (most common EmailJS template variable names)
+        first_name: firstName,
+        last_name: lastName,
+        full_name: firstName + ' ' + lastName,
+        email: email,
+        from_email: email,
+        reply_to: email,
+        phone: phone || '(not provided)',
+        // Source identification
+        source: 'tools.showmerates.com / VA IRRRL Recoup Calculator',
+        calculator: 'VA IRRRL Recoup (MAP Rule)',
+        submitted_at: new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CST',
+        // Subject + full message body (fallback if template uses {{subject}} / {{message}})
+        subject: subject,
+        message: body,
+        // Calculator-specific summary for quick scanning in email
+        current_balance: formatCurrency(state.currentBalance),
+        current_rate: state.currentRate + '%',
+        current_pi: formatCurrency(currentPI) + '/mo',
+        years_remaining: state.currentTerm,
+        new_rate: state.newRate + '%',
+        new_term: state.newTerm + ' years',
+        loan_type: state.loanType === 'fixed-to-fixed' ? 'Fixed to Fixed' : 'ARM/Fixed-to-ARM',
+        funding_fee_exempt: state.exempt ? 'YES' : 'No',
+        funding_fee_amount: formatCurrency(fundingFee),
+        closing_costs: formatCurrency(state.closingCosts),
+        new_loan_amount: formatCurrency(newLoanAmount),
+        new_pi: formatCurrency(newPI) + '/mo',
+        monthly_savings: formatCurrency(monthlySavings) + '/mo',
+        recoup_period: isFinite(recoupMonths) ? Math.ceil(recoupMonths) + ' months' : 'N/A',
+        map_rule_compliance: passes ? 'PASS' : 'FAIL'
+      };
+
+      emailjs.send('service_wcnn8r3', 'ShowMeRatesLead_t8r0v26', emailJsParams)
+        .then(function(response) {
+          console.log('Lead sent via EmailJS:', response.status, response.text);
+        })
+        .catch(function(error) {
+          console.error('EmailJS error (lead may have been lost):', error);
+        });
+    } else {
+      console.warn('EmailJS SDK not loaded — lead capture relies on mailto only');
+    }
+
+    // === STEP 2: Open mailto popup so user can email themselves a copy ===
     var mailtoLink = 'mailto:troberts@emortgagecapital.com?subject=' +
                      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 
     window.location.href = mailtoLink;
 
+    // === STEP 3: Show thank you state ===
     document.getElementById('leadForm').style.display = 'none';
     document.getElementById('leadThanks').classList.add('active');
   });
