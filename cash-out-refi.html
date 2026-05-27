@@ -268,6 +268,16 @@
       border-color: var(--blue);
       box-shadow: 0 0 0 3px rgba(0,113,206,0.12);
     }
+    .calc-input::placeholder,
+    .debt-input::placeholder {
+      color: var(--gray-400);
+      font-weight: 500;
+      opacity: 1; /* Firefox renders placeholders at 0.54 opacity by default */
+    }
+    .calc-input::-webkit-input-placeholder,
+    .debt-input::-webkit-input-placeholder { color: var(--gray-400); font-weight: 500; }
+    .calc-input::-moz-placeholder,
+    .debt-input::-moz-placeholder { color: var(--gray-400); font-weight: 500; opacity: 1; }
 
     /* DEBTS REPEATER */
     .debt-list {
@@ -420,6 +430,24 @@
     }
     .calc-result.lose {
       background: linear-gradient(135deg, #6B1E2A 0%, #4A1219 100%);
+    }
+    .calc-result.empty {
+      background: linear-gradient(135deg, #4A5568 0%, #2D3748 100%);
+    }
+    .calc-result.empty .calc-result-headline {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+    .calc-result.empty .calc-result-stats {
+      display: none;
+    }
+    .calc-result.empty .calc-result-empty-icon {
+      width: 48px; height: 48px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
     }
     .calc-result::before {
       content: ''; position: absolute; inset: 0;
@@ -888,13 +916,13 @@
               <label class="calc-label" for="currentBalance">Current Mortgage Balance</label>
               <div class="calc-input-wrap">
                 <span class="calc-input-prefix">$</span>
-                <input type="number" class="calc-input" id="currentBalance" value="280000" min="0" step="1000">
+                <input type="number" class="calc-input" id="currentBalance" placeholder="280000" min="0" step="1000">
               </div>
             </div>
             <div class="calc-form-row">
               <label class="calc-label" for="currentRate">Current Interest Rate</label>
               <div class="calc-input-wrap">
-                <input type="number" class="calc-input has-suffix no-prefix" id="currentRate" value="7.25" min="0" step="0.125">
+                <input type="number" class="calc-input has-suffix no-prefix" id="currentRate" placeholder="7.25" min="0" step="0.125">
                 <span class="calc-input-suffix">%</span>
               </div>
             </div>
@@ -902,14 +930,14 @@
               <label class="calc-label" for="currentPI">Current P&amp;I Payment <span class="calc-label-help">(principal &amp; interest only)</span></label>
               <div class="calc-input-wrap">
                 <span class="calc-input-prefix">$</span>
-                <input type="number" class="calc-input" id="currentPI" value="2046" min="0" step="10">
+                <input type="number" class="calc-input" id="currentPI" placeholder="2046" min="0" step="10">
               </div>
             </div>
             <div class="calc-form-row">
               <label class="calc-label" for="currentEscrow">Current Escrow Payment <span class="calc-label-help">(taxes + insurance)</span></label>
               <div class="calc-input-wrap">
                 <span class="calc-input-prefix">$</span>
-                <input type="number" class="calc-input" id="currentEscrow" value="450" min="0" step="10">
+                <input type="number" class="calc-input" id="currentEscrow" placeholder="450" min="0" step="10">
               </div>
             </div>
           </div>
@@ -924,14 +952,14 @@
             <div class="calc-form-row">
               <label class="calc-label" for="newRate">New Interest Rate</label>
               <div class="calc-input-wrap">
-                <input type="number" class="calc-input has-suffix no-prefix" id="newRate" value="5.875" min="0" step="0.125">
+                <input type="number" class="calc-input has-suffix no-prefix" id="newRate" placeholder="5.875" min="0" step="0.125">
                 <span class="calc-input-suffix">%</span>
               </div>
             </div>
             <div class="calc-form-row">
               <label class="calc-label" for="newTerm">New Loan Term</label>
               <div class="calc-input-wrap">
-                <input type="number" class="calc-input has-suffix no-prefix" id="newTerm" value="30" min="10" max="30" step="1">
+                <input type="number" class="calc-input has-suffix no-prefix" id="newTerm" placeholder="30" min="10" max="30" step="1">
                 <span class="calc-input-suffix">years</span>
               </div>
             </div>
@@ -939,14 +967,14 @@
               <label class="calc-label" for="closingCosts">Closing Costs <span class="calc-label-help">(excluding funding fee)</span></label>
               <div class="calc-input-wrap">
                 <span class="calc-input-prefix">$</span>
-                <input type="number" class="calc-input" id="closingCosts" value="6500" min="0" step="100">
+                <input type="number" class="calc-input" id="closingCosts" placeholder="6500" min="0" step="100">
               </div>
             </div>
             <div class="calc-form-row">
               <label class="calc-label" for="appraisedValue">Home Appraised Value</label>
               <div class="calc-input-wrap">
                 <span class="calc-input-prefix">$</span>
-                <input type="number" class="calc-input" id="appraisedValue" value="425000" min="0" step="1000">
+                <input type="number" class="calc-input" id="appraisedValue" placeholder="425000" min="0" step="1000">
               </div>
             </div>
           </div>
@@ -958,7 +986,7 @@
             </label>
             <div class="calc-input-wrap">
               <span class="calc-input-prefix">$</span>
-              <input type="number" class="calc-input" id="newLoanAmount" value="318500" min="0" step="1000">
+              <input type="number" class="calc-input" id="newLoanAmount" placeholder="318500" min="0" step="1000">
             </div>
             <p id="newLoanAmountHint" style="font-size: 12px; color: var(--gray-600); margin-top: 6px; line-height: 1.5;">
               Defaults to current balance + debts to consolidate + closing costs + funding fee. Capped at home appraised value.
@@ -993,7 +1021,8 @@
             <div class="debt-headers-spacer"></div>
           </div>
           <div class="debt-list" id="debtList"></div>
-          <button type="button" class="debt-add-btn" id="addDebtBtn">+ Add Another Debt</button>
+          <p id="noDebtsHint" style="font-size: 13px; color: var(--gray-400); font-style: italic; text-align: center; padding: 12px 0;">No debts added yet. Skip this section if you don't have high-interest debt to consolidate &mdash; or add one below.</p>
+          <button type="button" class="debt-add-btn" id="addDebtBtn">+ Add a Debt</button>
         </div>
 
       </div>
@@ -1168,23 +1197,20 @@
   var VA_FUNDING_FEE_SUBSEQUENT = 0.0330;
 
   var state = {
-    currentBalance: 280000,
-    currentRate: 7.25,
-    currentPI: 2046,
-    currentEscrow: 450,
-    newRate: 5.875,
-    newTerm: 30,
-    closingCosts: 6500,
-    appraisedValue: 425000,
-    newLoanAmount: 318500,
+    currentBalance: 0,
+    currentRate: 0,
+    currentPI: 0,
+    currentEscrow: 0,
+    newRate: 0,
+    newTerm: 0,
+    closingCosts: 0,
+    appraisedValue: 0,
+    newLoanAmount: 0,
     newLoanAmountIsAuto: true,  // when true, recalc automatically; when false, user has overridden
     subsequentUse: false,
     exempt: false,
-    debts: [
-      { id: 1, name: 'Credit Cards', balance: 18000, payment: 540, rate: 22 },
-      { id: 2, name: 'Auto Loan', balance: 14000, payment: 380, rate: 8.5 }
-    ],
-    nextDebtId: 3
+    debts: [],
+    nextDebtId: 1
   };
 
   function calcMonthlyPI(principal, annualRatePct, years) {
@@ -1214,15 +1240,15 @@
         '<div class="debt-row" data-debt-id="' + d.id + '">' +
           '<div class="debt-name-wrap">' +
             '<div class="debt-mobile-label">Type of Debt</div>' +
-            '<input type="text" class="debt-input debt-name" value="' + (d.name || '') + '" placeholder="Debt name (e.g. Visa)">' +
+            '<input type="text" class="debt-input debt-name" value="' + (d.name || '') + '" placeholder="e.g. Credit Card, Auto Loan">' +
           '</div>' +
           '<div class="debt-input-wrap dollar">' +
             '<div class="debt-mobile-label">Current Balance</div>' +
-            '<input type="number" class="debt-input debt-balance" value="' + (d.balance || 0) + '" min="0" step="100" placeholder="Balance">' +
+            '<input type="number" class="debt-input debt-balance" value="' + (d.balance || '') + '" min="0" step="100" placeholder="Balance">' +
           '</div>' +
           '<div class="debt-input-wrap dollar">' +
             '<div class="debt-mobile-label">Min Payment</div>' +
-            '<input type="number" class="debt-input debt-payment" value="' + (d.payment || 0) + '" min="0" step="10" placeholder="Pmt">' +
+            '<input type="number" class="debt-input debt-payment" value="' + (d.payment || '') + '" min="0" step="10" placeholder="Pmt">' +
           '</div>' +
           '<button type="button" class="debt-remove" data-remove-id="' + d.id + '" aria-label="Remove">' +
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>' +
@@ -1230,6 +1256,16 @@
         '</div>';
     });
     container.innerHTML = html;
+
+    // Toggle the empty hint + button label based on whether we have debts
+    var noDebtsHint = document.getElementById('noDebtsHint');
+    var addBtn = document.getElementById('addDebtBtn');
+    if (noDebtsHint) {
+      noDebtsHint.style.display = state.debts.length === 0 ? 'block' : 'none';
+    }
+    if (addBtn) {
+      addBtn.textContent = state.debts.length === 0 ? '+ Add a Debt' : '+ Add Another Debt';
+    }
 
     // Bind inputs
     container.querySelectorAll('.debt-row').forEach(function(row) {
@@ -1345,9 +1381,10 @@
   }
 
   function render() {
-    // Sync the newLoanAmount field if in auto mode
+    // Sync the newLoanAmount field if in auto mode AND we have enough input to compute
     var loanAmountInput = document.getElementById('newLoanAmount');
-    if (state.newLoanAmountIsAuto) {
+    var canAutoCompute = state.currentBalance > 0 && state.closingCosts > 0;
+    if (state.newLoanAmountIsAuto && canAutoCompute) {
       var autoAmount = computeAutoLoanAmount();
       // Cap at appraised value if needed
       if (state.appraisedValue > 0 && autoAmount > state.appraisedValue) {
@@ -1366,7 +1403,9 @@
     // Update hint text
     var hintEl = document.getElementById('newLoanAmountHint');
     if (hintEl) {
-      if (state.newLoanAmountIsAuto) {
+      if (state.appraisedValue <= 0) {
+        hintEl.innerHTML = 'Defaults to current balance + debts to consolidate + closing costs + funding fee. Capped at home appraised value.';
+      } else if (state.newLoanAmountIsAuto) {
         hintEl.innerHTML = 'Defaults to current balance + debts to consolidate + closing costs + funding fee. Capped at home appraised value (' + formatCurrency(state.appraisedValue) + '). <a href="#" id="resetLoanAmount" style="color: var(--blue); font-weight: 700;">Edit manually</a>';
       } else {
         hintEl.innerHTML = '<strong style="color: var(--navy);">Manual override active.</strong> <a href="#" id="resetLoanAmount" style="color: var(--blue); font-weight: 700;">Reset to auto-calculated</a> &nbsp;&middot;&nbsp; Capped at home appraised value (' + formatCurrency(state.appraisedValue) + ')';
@@ -1383,12 +1422,44 @@
 
     var c = calculate();
 
-    // Headline
+    // EMPTY STATE: if not enough core values filled in, show prompt instead of calculations
+    var hasCoreInputs = state.currentBalance > 0 && state.currentPI > 0 && state.newRate > 0 && state.newTerm > 0 && state.appraisedValue > 0;
+
     var resultEl = document.getElementById('calcResult');
     var statusEl = document.getElementById('resultStatus');
     var labelEl = document.getElementById('resultLabel');
     var amountEl = document.getElementById('resultAmount');
     var subEl = document.getElementById('resultSub');
+
+    if (!hasCoreInputs) {
+      resultEl.className = 'calc-result empty';
+      statusEl.innerHTML = '<div class="calc-result-empty-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 5v14M5 12h14" stroke="rgba(255,255,255,0.7)" stroke-width="2.5" stroke-linecap="round"/></svg></div>';
+      statusEl.style.background = 'transparent';
+      statusEl.style.border = 'none';
+      statusEl.style.padding = '0';
+      labelEl.textContent = '';
+      amountEl.innerHTML = 'Fill in your numbers above';
+      amountEl.className = 'calc-result-amount';
+      amountEl.style.fontSize = 'clamp(20px, 3vw, 28px)';
+      subEl.innerHTML = 'Enter your current loan info, the new VA refi terms, and any debts you want to consolidate to see your true savings.';
+      subEl.style.color = 'rgba(255,255,255,0.7)';
+
+      // Clear breakdown sections too
+      document.getElementById('beforeRows').innerHTML = '';
+      document.getElementById('afterRows').innerHTML = '';
+      document.getElementById('savingsRows').innerHTML = '';
+      document.getElementById('cashOutRows').innerHTML = '<div class="cash-card-row" style="color: var(--gray-400); font-style: italic;"><span>Fill in the form above to see your closing breakdown</span></div>';
+      document.getElementById('cashInRows').innerHTML = '<div class="cash-card-row" style="color: var(--gray-400); font-style: italic;"><span>&nbsp;</span></div>';
+      document.getElementById('warningBox').innerHTML = '';
+      return;
+    }
+
+    // Restore styles in case we just came out of empty state
+    statusEl.style.background = '';
+    statusEl.style.border = '';
+    statusEl.style.padding = '';
+    amountEl.style.fontSize = '';
+    subEl.style.color = '';
 
     if (c.totalMonthlySavings > 0) {
       resultEl.className = 'calc-result win';
