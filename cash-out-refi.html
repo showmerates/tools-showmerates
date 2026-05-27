@@ -951,6 +951,20 @@
             </div>
           </div>
 
+          <div class="calc-form-row" style="margin-top: 14px;">
+            <label class="calc-label" for="newLoanAmount">
+              New Loan Amount
+              <span class="calc-label-help">(auto-calculated &mdash; edit to add cash-out or reduce)</span>
+            </label>
+            <div class="calc-input-wrap">
+              <span class="calc-input-prefix">$</span>
+              <input type="number" class="calc-input" id="newLoanAmount" value="318500" min="0" step="1000">
+            </div>
+            <p id="newLoanAmountHint" style="font-size: 12px; color: var(--gray-600); margin-top: 6px; line-height: 1.5;">
+              Defaults to current balance + debts to consolidate + closing costs + funding fee. Capped at home appraised value.
+            </p>
+          </div>
+
           <div class="calc-form-grid">
             <div class="calc-form-row">
               <label class="calc-check" for="subsequentUse">
@@ -1114,7 +1128,7 @@
     <p>If you plan to sell within 2-3 years, you may not recoup the closing costs through monthly savings.</p>
 
     <h3>The VA-Specific Advantages</h3>
-    <p>VA cash-out has a few real edges over conventional cash-out: no PMI ever (saves $100-300/month vs conventional), more lenient credit/DTI underwriting, and the funding fee (which is higher than a purchase but financed into the loan). Many lenders cap conventional cash-out at 80% LTV, while VA programs technically allow up to 100% (most lenders impose 90% overlays in 2026 but we are able to finance up to 100% in most cases). That higher allowable LTV means more cash available, more debts payable, more potential consolidation savings.</p>
+    <p>VA cash-out has a few real edges over conventional cash-out: no PMI ever (saves $100-300/month vs conventional), more lenient credit/DTI underwriting, and the funding fee (which is higher than a purchase but financed into the loan). Many lenders cap conventional cash-out at 80% LTV, while VA programs technically allow up to 100% (most lenders impose 90% overlays in 2026). That higher allowable LTV means more cash available, more debts payable, more potential consolidation savings.</p>
     <p>If you're exempt from the funding fee due to a service-connected disability, your VA cash-out beats conventional cash-out by a wide margin &mdash; you skip the largest single cost.</p>
 
     <h3>Real Talk From an LO</h3>
