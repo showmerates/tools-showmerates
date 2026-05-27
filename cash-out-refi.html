@@ -17,6 +17,8 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Free VA Loan Calculators - Built by a Marine, for Veterans">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:secure_url" content="https://tools.showmerates.com/og-image.jpg">
   <meta property="og:url" content="https://tools.showmerates.com/cash-out-refi.html">
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -271,6 +273,22 @@
     .debt-list {
       display: grid; gap: 8px;
     }
+    .debt-headers {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr auto;
+      gap: 8px;
+      padding: 0 10px;
+      margin-bottom: 8px;
+    }
+    .debt-headers > div {
+      font-size: 11px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--gray-600);
+    }
+    .debt-headers-spacer { width: 32px; }
+    @media (max-width: 700px) {
+      .debt-headers { display: none; }
+    }
     .debt-row {
       display: grid;
       grid-template-columns: 2fr 1fr 1fr auto;
@@ -281,10 +299,18 @@
       border-radius: var(--radius);
       border: 1px solid var(--gray-100);
     }
+    .debt-mobile-label {
+      display: none;
+      font-size: 10px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--gray-600);
+      margin-bottom: 4px;
+    }
     @media (max-width: 700px) {
       .debt-row { grid-template-columns: 1fr 1fr; }
       .debt-row .debt-name-wrap { grid-column: 1 / -1; }
       .debt-row .debt-remove { grid-column: 1 / -1; justify-self: end; }
+      .debt-mobile-label { display: block; }
     }
     .debt-input {
       width: 100%;
@@ -308,11 +334,13 @@
     .debt-input-wrap { position: relative; }
     .debt-input-wrap.dollar { padding-left: 0; }
     .debt-input-wrap.dollar .debt-input { padding-left: 22px; }
+    .debt-input-wrap.dollar .debt-input { position: relative; }
     .debt-input-wrap.dollar::before {
       content: '$';
       position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
       color: var(--gray-400); font-weight: 700;
       pointer-events: none;
+      z-index: 1;
     }
     .debt-input-wrap.percent .debt-input { padding-right: 22px; }
     .debt-input-wrap.percent::after {
@@ -320,6 +348,13 @@
       position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
       color: var(--gray-400); font-weight: 700;
       pointer-events: none;
+    }
+    /* On mobile, when the label is visible inside the wrap, anchor the $ to the input not the wrap */
+    @media (max-width: 700px) {
+      .debt-input-wrap.dollar { position: relative; }
+      .debt-input-wrap.dollar::before {
+        top: auto; bottom: 18px; transform: none;
+      }
     }
     .debt-remove {
       background: var(--white);
@@ -937,6 +972,12 @@
           <h2 class="calc-section-title"><span class="num">3</span>High-Interest Debts to Pay Off</h2>
           <p class="calc-section-help">Add any credit cards, personal loans, or HELOCs you want to pay off with cash-out proceeds. The savings on these can be the biggest win.</p>
 
+          <div class="debt-headers">
+            <div>Type of Debt</div>
+            <div>Current Balance</div>
+            <div>Current Minimum Payment</div>
+            <div class="debt-headers-spacer"></div>
+          </div>
           <div class="debt-list" id="debtList"></div>
           <button type="button" class="debt-add-btn" id="addDebtBtn">+ Add Another Debt</button>
         </div>
@@ -1073,7 +1114,7 @@
     <p>If you plan to sell within 2-3 years, you may not recoup the closing costs through monthly savings.</p>
 
     <h3>The VA-Specific Advantages</h3>
-    <p>VA cash-out has a few real edges over conventional cash-out: no PMI ever (saves $100-300/month vs conventional), more lenient credit/DTI underwriting, and the funding fee (which is higher than a purchase but financed into the loan). Many lenders cap conventional cash-out at 80% LTV, while VA programs technically allow up to 100% (most lenders impose 90% overlays in 2026). That higher allowable LTV means more cash available, more debts payable, more potential consolidation savings.</p>
+    <p>VA cash-out has a few real edges over conventional cash-out: no PMI ever (saves $100-300/month vs conventional), more lenient credit/DTI underwriting, and the funding fee (which is higher than a purchase but financed into the loan). Many lenders cap conventional cash-out at 80% LTV, while VA programs technically allow up to 100% (most lenders impose 90% overlays in 2026 but we are able to finance up to 100% in most cases). That higher allowable LTV means more cash available, more debts payable, more potential consolidation savings.</p>
     <p>If you're exempt from the funding fee due to a service-connected disability, your VA cash-out beats conventional cash-out by a wide margin &mdash; you skip the largest single cost.</p>
 
     <h3>Real Talk From an LO</h3>
@@ -1156,12 +1197,15 @@
       html +=
         '<div class="debt-row" data-debt-id="' + d.id + '">' +
           '<div class="debt-name-wrap">' +
+            '<div class="debt-mobile-label">Type of Debt</div>' +
             '<input type="text" class="debt-input debt-name" value="' + (d.name || '') + '" placeholder="Debt name (e.g. Visa)">' +
           '</div>' +
           '<div class="debt-input-wrap dollar">' +
+            '<div class="debt-mobile-label">Current Balance</div>' +
             '<input type="number" class="debt-input debt-balance" value="' + (d.balance || 0) + '" min="0" step="100" placeholder="Balance">' +
           '</div>' +
           '<div class="debt-input-wrap dollar">' +
+            '<div class="debt-mobile-label">Min Payment</div>' +
             '<input type="number" class="debt-input debt-payment" value="' + (d.payment || 0) + '" min="0" step="10" placeholder="Pmt">' +
           '</div>' +
           '<button type="button" class="debt-remove" data-remove-id="' + d.id + '" aria-label="Remove">' +
