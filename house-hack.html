@@ -17,6 +17,8 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Free VA Loan Calculators - Built by a Marine, for Veterans">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:secure_url" content="https://tools.showmerates.com/og-image.jpg">
   <meta property="og:url" content="https://tools.showmerates.com/house-hack.html">
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -28,6 +30,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+
+  <!-- EmailJS SDK for silent lead delivery -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function() {
+      if (typeof emailjs !== 'undefined') {
+        emailjs.init({ publicKey: 'HO3i3eS7N94c6o1LA' });
+      }
+    })();
+  </script>
   <style>
     :root {
       --navy: #003057; --navy-dark: #001F3D; --navy-deeper: #00152B;
@@ -920,7 +932,7 @@
             <input type="email" class="calc-lead-input" id="leadEmail" placeholder="Email address">
           </div>
           <div class="calc-lead-row single">
-            <input type="tel" class="calc-lead-input" id="leadPhone" placeholder="Phone (optional)">
+            <input type="tel" class="calc-lead-input" id="leadPhone" placeholder="Phone">
           </div>
           <button class="calc-lead-btn" id="leadSubmit">Email Me My Report &rarr;</button>
           <p class="calc-lead-disclaimer">
@@ -1264,6 +1276,13 @@
       return;
     }
 
+    // Validate email format
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert('Please enter a valid email address (example: john@example.com).');
+      return;
+    }
+
     var loanAmount = state.purchasePrice - state.downPayment;
     var fundingFee = state.exempt ? 0 : loanAmount * VA_FUNDING_FEE_RATE;
     var totalLoan = loanAmount + fundingFee;
@@ -1275,12 +1294,13 @@
     var monthlyMaintenance = (state.purchasePrice * (state.maintenance / 100)) / 12;
     var totalCarrying = monthlyPI + monthlyTax + monthlyInsurance + monthlyMaintenance;
     var effectiveHousingCost = totalCarrying + monthlyVacancy - grossRent;
+    var cashFlowPositive = effectiveHousingCost < 0;
 
     var unitLabel = state.units === 2 ? 'Duplex' : (state.units === 3 ? 'Triplex' : 'Fourplex');
 
     var rentBreakdown = '';
     for (var i = 0; i < state.units; i++) {
-      rentBreakdown += '  Unit ' + (i + 1) + (i === 0 ? ' (YOU): $0' : ': ' + formatCurrency(state.rents[i])) + '\n';
+      rentBreakdown += '  Unit ' + (i + 1) + (i === 0 ? ' (YOU - owner-occupied): $0' : ': ' + formatCurrency(state.rents[i])) + '\n';
     }
 
     var subject = 'VA House Hack Report Request — ' + firstName + ' ' + lastName;
@@ -1290,33 +1310,82 @@
       'Name: ' + firstName + ' ' + lastName + '\n' +
       'Email: ' + email + '\n' +
       'Phone: ' + (phone || '(not provided)') + '\n\n' +
-      '=== PROPERTY ===\n' +
+      '=== SECTION 1: THE PROPERTY & LOAN ===\n' +
       'Property Type: ' + unitLabel + ' (' + state.units + ' units)\n' +
       'Purchase Price: ' + formatCurrency(state.purchasePrice) + '\n' +
       'Down Payment: ' + formatCurrency(state.downPayment) + '\n' +
       'Interest Rate: ' + state.interestRate + '%\n' +
       'Loan Term: ' + state.loanTerm + ' years\n' +
       'Funding Fee Exempt: ' + (state.exempt ? 'YES' : 'No') + '\n' +
-      'Total Loan: ' + formatCurrency(totalLoan) + '\n\n' +
-      '=== RENT PER UNIT ===\n' +
+      'Funding Fee Amount (calculated): ' + formatCurrency(fundingFee) + '\n' +
+      'Total Loan (calculated): ' + formatCurrency(totalLoan) + '\n\n' +
+      '=== SECTION 2: EXPECTED RENT PER UNIT ===\n' +
       rentBreakdown +
-      '  Gross Monthly Rent: ' + formatCurrency(grossRent) + '\n\n' +
-      '=== OPERATING ===\n' +
-      'Property Tax: ' + state.propertyTax + '%\n' +
+      '  Gross Monthly Rent (calculated): ' + formatCurrency(grossRent) + '\n\n' +
+      '=== SECTION 3: OPERATING COSTS ===\n' +
+      'Property Tax: ' + state.propertyTax + '% of price\n' +
       'Insurance: ' + formatCurrency(state.insurance) + '/yr\n' +
-      'Maintenance: ' + state.maintenance + '%\n' +
-      'Vacancy Allowance: ' + state.vacancy + '%\n\n' +
+      'Maintenance: ' + state.maintenance + '% of price\n' +
+      'Vacancy Allowance: ' + state.vacancy + '% of rent\n\n' +
       '=== RESULT ===\n' +
       'Monthly P&I: ' + formatCurrency(monthlyPI) + '\n' +
       'Total Monthly Carrying Cost: ' + formatCurrency(totalCarrying) + '\n' +
-      'Effective Monthly Housing Cost: ' + (effectiveHousingCost < 0 ? '+' + formatCurrency(-effectiveHousingCost) + ' (CASH FLOW POSITIVE)' : formatCurrency(effectiveHousingCost) + ' (paying)') + '\n\n' +
+      'Effective Monthly Housing Cost: ' + (cashFlowPositive ? '+' + formatCurrency(-effectiveHousingCost) + ' (CASH FLOW POSITIVE)' : formatCurrency(effectiveHousingCost) + ' (paying)') + '\n\n' +
       'Submitted: ' + new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CST';
 
+    // === STEP 1: Fire EmailJS silently to capture the lead immediately ===
+    // (This ensures Terry gets the lead even if user closes the mailto popup)
+    if (typeof emailjs !== 'undefined') {
+      var emailJsParams = {
+        // Standard contact fields (most common EmailJS template variable names)
+        first_name: firstName,
+        last_name: lastName,
+        full_name: firstName + ' ' + lastName,
+        email: email,
+        from_email: email,
+        reply_to: email,
+        phone: phone || '(not provided)',
+        // Source identification
+        source: 'tools.showmerates.com / House Hack Calculator',
+        calculator: 'VA House Hack (2-4 Unit Owner-Occupied)',
+        submitted_at: new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CST',
+        // Subject + full message body (universal template uses {{message}})
+        subject: subject,
+        message: body,
+        // Calculator-specific summary for quick scanning
+        property_type: unitLabel,
+        unit_count: state.units + ' units',
+        purchase_price: formatCurrency(state.purchasePrice),
+        down_payment: formatCurrency(state.downPayment),
+        interest_rate: state.interestRate + '%',
+        loan_term: state.loanTerm + ' years',
+        funding_fee_exempt: state.exempt ? 'YES' : 'No',
+        total_loan: formatCurrency(totalLoan),
+        gross_monthly_rent: formatCurrency(grossRent),
+        monthly_pi: formatCurrency(monthlyPI) + '/mo',
+        total_carrying_cost: formatCurrency(totalCarrying) + '/mo',
+        effective_housing_cost: cashFlowPositive ? '+' + formatCurrency(-effectiveHousingCost) + '/mo' : formatCurrency(effectiveHousingCost) + '/mo',
+        cash_flow_status: cashFlowPositive ? 'CASH FLOW POSITIVE' : 'Paying to live there'
+      };
+
+      emailjs.send('service_wcnn8r3', 'template_42rakfk', emailJsParams)
+        .then(function(response) {
+          console.log('Lead sent via EmailJS:', response.status, response.text);
+        })
+        .catch(function(error) {
+          console.error('EmailJS error (lead may have been lost):', error);
+        });
+    } else {
+      console.warn('EmailJS SDK not loaded — lead capture relies on mailto only');
+    }
+
+    // === STEP 2: Open mailto popup so user can email themselves a copy ===
     var mailtoLink = 'mailto:troberts@emortgagecapital.com?subject=' +
                      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 
     window.location.href = mailtoLink;
 
+    // === STEP 3: Show thank you state ===
     document.getElementById('leadForm').style.display = 'none';
     document.getElementById('leadThanks').classList.add('active');
   });
