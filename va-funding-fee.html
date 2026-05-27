@@ -17,6 +17,8 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Free VA Loan Calculators - Built by a Marine, for Veterans">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:secure_url" content="https://tools.showmerates.com/og-image.jpg">
   <meta property="og:url" content="https://tools.showmerates.com/va-funding-fee.html">
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -28,6 +30,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+
+  <!-- EmailJS SDK for silent lead delivery -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function() {
+      if (typeof emailjs !== 'undefined') {
+        emailjs.init({ publicKey: 'HO3i3eS7N94c6o1LA' });
+      }
+    })();
+  </script>
   <style>
     :root {
       --navy: #003057; --navy-dark: #001F3D; --navy-deeper: #00152B;
@@ -739,7 +751,7 @@
             <input type="email" class="calc-lead-input" id="leadEmail" placeholder="Email address">
           </div>
           <div class="calc-lead-row single">
-            <input type="tel" class="calc-lead-input" id="leadPhone" placeholder="Phone (optional)">
+            <input type="tel" class="calc-lead-input" id="leadPhone" placeholder="Phone">
           </div>
           <button class="calc-lead-btn" id="leadSubmit">Email Me My Report →</button>
           <p class="calc-lead-disclaimer">
@@ -1035,6 +1047,13 @@
       return;
     }
 
+    // Validate email format
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert('Please enter a valid email address (example: john@example.com).');
+      return;
+    }
+
     var rate = getRate();
     var loan = getBaseLoanAmount();
     var fee = loan * rate;
@@ -1063,12 +1082,54 @@
       'VA Funding Fee Amount: ' + formatCurrency(fee) + '\n\n' +
       'Submitted: ' + new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CST';
 
+    // === STEP 1: Fire EmailJS silently to capture the lead immediately ===
+    // (This ensures Terry gets the lead even if user closes the mailto popup)
+    if (typeof emailjs !== 'undefined') {
+      var emailJsParams = {
+        // Standard contact fields (most common EmailJS template variable names)
+        first_name: firstName,
+        last_name: lastName,
+        full_name: firstName + ' ' + lastName,
+        email: email,
+        from_email: email,
+        reply_to: email,
+        phone: phone || '(not provided)',
+        // Source identification
+        source: 'tools.showmerates.com / VA Funding Fee Calculator',
+        calculator: 'VA Funding Fee',
+        submitted_at: new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CST',
+        // Subject + full message body (fallback if template uses {{subject}} / {{message}})
+        subject: subject,
+        message: body,
+        // Calculator-specific summary for quick scanning in email
+        loan_type: loanTypeLabel,
+        purchase_price: state.loanType === 'purchase' ? formatCurrency(state.purchasePrice) : 'N/A',
+        down_payment: state.loanType === 'purchase' ? formatCurrency(state.downPayment) : 'N/A',
+        loan_amount: formatCurrency(loan),
+        va_usage: state.loanType !== 'irrrl' ? (state.priorUse === 'first' ? 'First Use' : 'Subsequent Use') : 'N/A (IRRRL)',
+        exemption: state.exempt ? 'YES (exempt)' : 'No',
+        funding_fee_rate: formatPercent(rate),
+        funding_fee_amount: formatCurrency(fee)
+      };
+
+      emailjs.send('service_wcnn8r3', 'ShowMeRatesLead_t8r0v26', emailJsParams)
+        .then(function(response) {
+          console.log('Lead sent via EmailJS:', response.status, response.text);
+        })
+        .catch(function(error) {
+          console.error('EmailJS error (lead may have been lost):', error);
+        });
+    } else {
+      console.warn('EmailJS SDK not loaded — lead capture relies on mailto only');
+    }
+
+    // === STEP 2: Open mailto popup so user can email themselves a copy ===
     var mailtoLink = 'mailto:troberts@emortgagecapital.com?subject=' +
                      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 
     window.location.href = mailtoLink;
 
-    // Show thank you state
+    // === STEP 3: Show thank you state ===
     document.getElementById('leadForm').style.display = 'none';
     document.getElementById('leadThanks').classList.add('active');
   });
