@@ -36,7 +36,10 @@
       --white: #FFFFFF; --off-white: #F5F7FA;
       --gray-100: #EEF0F3; --gray-200: #D5D9E0; --gray-400: #9BA3AF; --gray-600: #5A6270; --gray-800: #2D3239;
       --green: #1B874B;
-      --shadow-md: 0 4px 12px rgba(0,48,87,0.10); --shadow-lg: 0 8px 28px rgba(0,48,87,0.14);
+      --gold: #C9A961;
+      --shadow-sm: 0 1px 3px rgba(0,48,87,0.07);
+      --shadow-md: 0 4px 12px rgba(0,48,87,0.10);
+      --shadow-lg: 0 8px 28px rgba(0,48,87,0.14);
       --radius: 8px; --radius-lg: 12px; --transition: 0.25s ease;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,6 +47,7 @@
       font-family: 'Source Sans 3', -apple-system, sans-serif;
       color: var(--gray-800); -webkit-font-smoothing: antialiased;
       line-height: 1.5; background: var(--white);
+      scroll-behavior: smooth;
     }
     a { text-decoration: none; }
 
@@ -70,9 +74,7 @@
       font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5);
       text-transform: uppercase; letter-spacing: 1.5px; margin-top: 2px;
     }
-    .header-nav {
-      display: flex; align-items: center; gap: 28px; list-style: none;
-    }
+    .header-nav { display: flex; align-items: center; gap: 28px; list-style: none; }
     .header-nav a {
       color: rgba(255,255,255,0.8); font-size: 14px; font-weight: 600;
       transition: color var(--transition); letter-spacing: 0.2px;
@@ -130,7 +132,7 @@
     /* HERO */
     .hero {
       position: relative;
-      padding: 130px 24px 70px;
+      padding: 120px 24px 56px;
       background-image:
         linear-gradient(170deg, rgba(0,31,61,0.88) 0%, rgba(0,48,87,0.85) 50%, rgba(0,74,143,0.80) 100%),
         url('/veteran_family_va_loan.JPG');
@@ -148,13 +150,11 @@
       pointer-events: none;
     }
     .hero::after {
-      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 120px;
-      background: linear-gradient(to top, rgba(0,21,43,0.4), transparent);
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
+      background: linear-gradient(to top, var(--off-white), transparent);
       pointer-events: none;
     }
-    .hero-inner {
-      max-width: 860px; margin: 0 auto; position: relative; z-index: 1;
-    }
+    .hero-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
     .hero-eyebrow {
       display: inline-block;
       background: rgba(0,113,206,0.18);
@@ -168,94 +168,284 @@
       font-family: 'Merriweather', Georgia, serif;
       font-size: clamp(32px, 4.5vw, 48px);
       font-weight: 900; line-height: 1.18;
-      color: var(--white); letter-spacing: -0.3px; margin-bottom: 18px;
+      color: var(--white); letter-spacing: -0.3px; margin-bottom: 16px;
     }
     .hero h1 span { color: var(--blue-light); }
     .hero-sub {
-      font-size: 18px; line-height: 1.7; color: rgba(255,255,255,0.8);
-      max-width: 640px; margin: 0 auto 28px;
-    }
-    .hero-trust {
-      display: flex; justify-content: center; gap: 28px; flex-wrap: wrap;
-    }
-    .hero-trust-item {
-      display: flex; align-items: center; gap: 10px;
-      color: rgba(255,255,255,0.9); font-size: 14px; font-weight: 600;
-    }
-    .hero-trust-icon {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: rgba(0,113,206,0.25); border: 1px solid rgba(0,113,206,0.4);
-      display: flex; align-items: center; justify-content: center;
-    }
-    @media (max-width: 768px) {
-      .hero { padding: 100px 16px 50px; }
-      .hero-sub { font-size: 16px; }
-      .hero-trust { gap: 16px; }
+      font-size: 17px; line-height: 1.6; color: rgba(255,255,255,0.85);
+      max-width: 620px; margin: 0 auto 28px;
     }
 
-    /* TOOLS GRID */
-    .tools-section { padding: 80px 24px; background: var(--off-white); }
-    .tools-inner { max-width: 1140px; margin: 0 auto; }
-    .section-header { text-align: center; margin-bottom: 48px; }
-    .section-header h2 {
+    /* USE-CASE FILTER CHIPS */
+    .filter-chips {
+      display: flex; justify-content: center; gap: 10px;
+      flex-wrap: wrap;
+    }
+    .filter-chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.18);
+      color: var(--white);
+      padding: 10px 18px; border-radius: 100px;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.3px;
+      transition: all var(--transition);
+      cursor: pointer;
+    }
+    .filter-chip:hover {
+      background: rgba(0,113,206,0.25);
+      border-color: var(--blue-light);
+      transform: translateY(-1px);
+    }
+    .filter-chip-icon { width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
+    .filter-chip-icon svg { width: 16px; height: 16px; }
+
+    @media (max-width: 768px) {
+      .hero { padding: 90px 16px 40px; }
+      .hero-sub { font-size: 15px; }
+      .filter-chips { gap: 8px; }
+      .filter-chip { padding: 9px 14px; font-size: 12.5px; }
+    }
+
+    /* START HERE FEATURED CARD */
+    .start-here-section { background: var(--off-white); padding: 56px 24px 0; }
+    .start-here-inner { max-width: 1140px; margin: 0 auto; }
+    .start-here-label {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px;
+    }
+    .start-here-label::before {
+      content: ''; width: 32px; height: 2px;
+      background: var(--blue);
+    }
+    .start-here-label span {
+      font-size: 11px; font-weight: 800;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--blue);
+    }
+    .start-here-card {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+      border-radius: 14px;
+      padding: 40px 44px;
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: 32px;
+      align-items: center;
+      box-shadow: 0 12px 32px rgba(0,48,87,0.18);
+      position: relative;
+      overflow: hidden;
+      transition: all var(--transition);
+    }
+    .start-here-card::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 0% 0%, rgba(0,113,206,0.25) 0%, transparent 50%),
+        radial-gradient(ellipse at 100% 100%, rgba(77,163,232,0.12) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .start-here-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(0,48,87,0.22);
+    }
+    .start-here-icon {
+      width: 100px; height: 100px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 1;
+    }
+    .start-here-content { position: relative; z-index: 1; }
+    .start-here-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(201,169,97,0.15);
+      border: 1px solid rgba(201,169,97,0.4);
+      color: var(--gold);
+      font-size: 10px; font-weight: 800;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 100px;
+      margin-bottom: 10px;
+    }
+    .start-here-card h3 {
       font-family: 'Merriweather', Georgia, serif;
-      font-size: 32px; font-weight: 700; color: var(--navy);
-      margin-bottom: 10px; letter-spacing: -0.3px;
+      font-size: 28px; font-weight: 700;
+      color: var(--white); line-height: 1.2;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
     }
-    .section-header p {
-      color: var(--gray-600); font-size: 16px;
-      max-width: 580px; margin: 0 auto;
+    .start-here-card p {
+      font-size: 15px; line-height: 1.6;
+      color: rgba(255,255,255,0.75);
+      max-width: 540px;
     }
+    .start-here-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--red); color: var(--white);
+      padding: 14px 26px;
+      border-radius: var(--radius);
+      font-size: 14px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.6px;
+      box-shadow: 0 4px 16px rgba(215,38,56,0.4);
+      position: relative; z-index: 1;
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+    .start-here-cta:hover { background: var(--red-hover); transform: translateY(-1px); }
+    @media (max-width: 900px) {
+      .start-here-section { padding: 40px 16px 0; }
+      .start-here-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 32px 24px;
+        gap: 18px;
+      }
+      .start-here-icon { margin: 0 auto; width: 80px; height: 80px; }
+      .start-here-card h3 { font-size: 22px; }
+      .start-here-card p { font-size: 14px; margin: 0 auto; }
+      .start-here-cta { justify-self: center; }
+    }
+
+    /* TOOLS GROUPS */
+    .tools-section { padding: 48px 24px 72px; background: var(--off-white); }
+    .tools-inner { max-width: 1140px; margin: 0 auto; }
+
+    .tool-group { margin-top: 56px; }
+    .tool-group:first-of-type { margin-top: 48px; }
+
+    .tool-group-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 22px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .tool-group-title { display: flex; align-items: center; gap: 12px; }
+    .tool-group-title h2 {
+      font-family: 'Merriweather', Georgia, serif;
+      font-size: 24px; font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.2px;
+    }
+    .tool-group-title-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: var(--blue-pale);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .tool-group-count {
+      font-size: 12px; color: var(--gray-600);
+      font-weight: 600;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+
     .tools-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
+      gap: 20px;
+    }
+    .tools-grid.two-col {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 768px) {
+      .tools-grid.two-col { grid-template-columns: 1fr; }
     }
     .tool-card {
       background: var(--white);
-      border: 2px solid var(--gray-100);
+      border: 1.5px solid var(--gray-100);
       border-radius: var(--radius-lg);
-      padding: 32px 28px;
+      padding: 26px 24px 22px;
       transition: all var(--transition);
       display: flex; flex-direction: column;
+      position: relative;
+      overflow: hidden;
     }
-    .tool-card.available { cursor: pointer; }
-    .tool-card.available:hover {
+    .tool-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background var(--transition);
+    }
+    .tool-card:hover {
       border-color: var(--blue);
-      box-shadow: var(--shadow-lg);
-      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0,48,87,0.10);
+      transform: translateY(-3px);
     }
-    .tool-card.coming-soon { opacity: 0.75; }
+    .tool-card:hover::after {
+      background: linear-gradient(90deg, var(--blue) 0%, var(--blue-light) 100%);
+    }
+    .tool-card-top {
+      display: flex; align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .tool-icon {
+      width: 64px; height: 64px;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--blue-pale);
+      border-radius: 10px;
+      transition: all var(--transition);
+    }
+    .tool-card:hover .tool-icon {
+      background: var(--white);
+      box-shadow: 0 4px 12px rgba(0,113,206,0.15);
+    }
+    .tool-icon svg { width: 50px; height: 50px; display: block; }
+    .tool-badges {
+      flex-grow: 1;
+      display: flex; flex-direction: column; align-items: flex-end;
+      gap: 6px;
+    }
     .tool-badge {
       display: inline-flex; align-items: center;
-      font-size: 11px; font-weight: 800;
+      font-size: 10px; font-weight: 800;
       text-transform: uppercase; letter-spacing: 0.8px;
-      padding: 5px 12px; border-radius: 100px;
-      margin-bottom: 16px; align-self: flex-start;
-    }
-    .tool-badge.soon {
-      background: var(--gray-100); color: var(--gray-600);
-      border: 1px solid var(--gray-200);
+      padding: 4px 10px; border-radius: 100px;
+      white-space: nowrap;
     }
     .tool-badge.popular { background: var(--red); color: var(--white); }
-    .tool-icon {
-      width: 96px; height: 96px; border-radius: 12px;
-      background: transparent;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 14px; margin-left: -8px;
-    }
-    .tool-icon svg { width: 88px; height: 88px; display: block; }
+    .tool-badge.quick { background: var(--blue-pale); color: var(--blue); }
+    .tool-badge.investment { background: rgba(27,135,75,0.12); color: var(--green); }
+    .tool-badge.active-duty { background: rgba(201,169,97,0.18); color: #B48A3F; }
+    .tool-badge.refinance { background: rgba(77,163,232,0.18); color: var(--blue); }
     .tool-card h3 {
       font-family: 'Merriweather', Georgia, serif;
-      font-size: 22px; font-weight: 700; color: var(--navy);
-      margin-bottom: 10px; line-height: 1.25; letter-spacing: -0.2px;
+      font-size: 18px; font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+      line-height: 1.3;
+      letter-spacing: -0.1px;
     }
     .tool-card p {
-      font-size: 15px; color: var(--gray-600);
-      line-height: 1.6; margin-bottom: 20px; flex-grow: 1;
+      font-size: 14px; color: var(--gray-600);
+      line-height: 1.55;
+      margin-bottom: 16px;
+      flex-grow: 1;
     }
-    .tool-cta-soon {
-      color: var(--gray-400); font-size: 14px; font-weight: 600; font-style: italic;
+    .tool-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--blue);
+      font-size: 13px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.5px;
+      transition: color var(--transition);
+    }
+    .tool-cta svg { transition: transform var(--transition); }
+    .tool-card:hover .tool-cta { color: var(--red); }
+    .tool-card:hover .tool-cta svg { transform: translateX(4px); }
+
+    @media (max-width: 768px) {
+      .tools-section { padding: 24px 16px 56px; }
+      .tool-group { margin-top: 40px; }
+      .tool-group-header { margin-bottom: 16px; padding-bottom: 12px; }
+      .tool-group-title h2 { font-size: 19px; }
+      .tool-group-title-icon { width: 30px; height: 30px; }
+      .tool-group-title-icon svg { width: 17px; height: 17px; }
+      .tools-grid { grid-template-columns: 1fr; gap: 14px; }
+      .tool-card { padding: 22px 20px 20px; }
+      .tool-icon { width: 56px; height: 56px; }
+      .tool-icon svg { width: 44px; height: 44px; }
     }
 
     /* TRUST STRIP */
@@ -280,6 +470,7 @@
     .trust-item h4 { font-size: 15px; font-weight: 700; color: var(--navy); }
     .trust-item p { font-size: 13px; color: var(--gray-600); line-height: 1.5; }
     @media (max-width: 768px) {
+      .trust-strip { padding: 40px 16px; }
       .trust-strip-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
     }
 
@@ -337,8 +528,11 @@
     }
     .builder-cta:hover { background: var(--red-hover); transform: translateY(-1px); }
     @media (max-width: 768px) {
-      .builder-inner { grid-template-columns: 1fr; text-align: center; gap: 28px; }
-      .builder-avatar { margin: 0 auto; width: 140px; height: 140px; font-size: 40px; }
+      .builder { padding: 56px 16px; }
+      .builder-inner { grid-template-columns: 1fr; text-align: center; gap: 24px; }
+      .builder-avatar { margin: 0 auto; width: 130px; height: 130px; font-size: 40px; border-width: 3px; }
+      .builder-text h2 { font-size: 24px; }
+      .builder-message { font-size: 15px; }
     }
 
     /* BOTTOM CTA */
@@ -383,6 +577,15 @@
       transition: all var(--transition);
     }
     .btn-secondary:hover { background: rgba(255,255,255,0.15); border-color: var(--blue-light); }
+
+    @media (max-width: 768px) {
+      .bottom-cta { padding: 48px 16px; }
+      .bottom-cta h2 { font-size: 24px; }
+      .btn-primary, .btn-secondary {
+        width: 100%; justify-content: center;
+        max-width: 320px;
+      }
+    }
 
     /* COMPLIANCE */
     .compliance {
@@ -443,289 +646,347 @@
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-eyebrow">Free VA Mortgage Tools</div>
-    <h1>Real Numbers.<br><span>No Pressure.</span></h1>
-    <p class="hero-sub">Mortgage calculators built by a USMC Veteran and licensed VA Mortgage Specialist. Every tool gives you accurate answers &mdash; not generic estimates.</p>
-    <div class="hero-trust">
-      <div class="hero-trust-item">
-        <div class="hero-trust-icon">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M12 2L3 7v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V7l-9-5z" stroke="#4DA3E8" stroke-width="2"/></svg>
-        </div>
-        Built by a VA Specialist
-      </div>
-      <div class="hero-trust-item">
-        <div class="hero-trust-icon">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7" stroke="#4DA3E8" stroke-width="2" stroke-linecap="round"/></svg>
-        </div>
-        100% Free &middot; No Signup
-      </div>
-      <div class="hero-trust-item">
-        <div class="hero-trust-icon">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2 12h20" stroke="#4DA3E8" stroke-width="2"/></svg>
-        </div>
-        Veterans Helping Veterans
-      </div>
+    <h1>VA Loan Calculators.<br><span>Built for Veterans.</span></h1>
+    <p class="hero-sub">Every tool here is designed for VA loans &mdash; not generic mortgage math. Pick what you need below.</p>
+    <div class="filter-chips">
+      <a href="#group-buying" class="filter-chip">
+        <span class="filter-chip-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 10l9-7 9 7v10a2 2 0 01-2 2h-3v-7H10v7H5a2 2 0 01-2-2V10z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+        Buying a Home
+      </a>
+      <a href="#group-refi" class="filter-chip">
+        <span class="filter-chip-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M3 12a9 9 0 0115-6.7L21 8M21 3v5h-5M21 12a9 9 0 01-15 6.7L3 16M3 21v-5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        Refinancing
+      </a>
+      <a href="#group-service" class="filter-chip">
+        <span class="filter-chip-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v5c0 5 3.5 9.5 9 11 5.5-1.5 9-6 9-11V7l-9-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+        Active Duty &amp; BAH
+      </a>
     </div>
   </div>
 </section>
 
+<!-- START HERE FEATURED CARD -->
+<section class="start-here-section">
+  <div class="start-here-inner">
+    <div class="start-here-label"><span>Not sure where to start?</span></div>
+    <a href="/affordability-residual.html" class="start-here-card">
+      <div class="start-here-icon">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
+          <rect x="20" y="22" width="44" height="60" rx="4" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2.5" opacity="0.95"/>
+          <rect x="26" y="28" width="32" height="14" rx="2" fill="#001F3D"/>
+          <text x="42" y="38" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="9" font-weight="800" fill="#6EE8A4">PASS</text>
+          <rect x="26" y="48" width="8" height="8" rx="1" fill="#0071CE"/>
+          <rect x="38" y="48" width="8" height="8" rx="1" fill="#0071CE"/>
+          <rect x="50" y="48" width="8" height="8" rx="1" fill="#0071CE"/>
+          <rect x="26" y="60" width="8" height="8" rx="1" fill="#0071CE"/>
+          <rect x="38" y="60" width="8" height="8" rx="1" fill="#0071CE"/>
+          <rect x="50" y="60" width="8" height="8" rx="1" fill="#D72638"/>
+          <rect x="26" y="72" width="20" height="6" rx="1" fill="#0071CE"/>
+          <rect x="50" y="72" width="8" height="6" rx="1" fill="#D72638"/>
+          <circle cx="78" cy="40" r="5" fill="#4DA3E8" stroke="#FFFFFF" stroke-width="2"/>
+          <path d="M70 56 Q70 48 78 48 Q86 48 86 56 L86 64 L70 64 Z" fill="#4DA3E8" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="82" cy="68" r="3.5" fill="#D72638" stroke="#FFFFFF" stroke-width="1.5"/>
+          <path d="M76 82 Q76 76 82 76 Q88 76 88 82 L76 82 Z" fill="#D72638" stroke="#FFFFFF" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="start-here-content">
+        <span class="start-here-badge">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Best Place to Start
+        </span>
+        <h3>VA Affordability + Residual Income</h3>
+        <p>The most-asked question we get: "How much home can I really afford?" Answer it accurately in 60 seconds &mdash; including VA's unique residual income test that other calculators skip.</p>
+      </div>
+      <span class="start-here-cta">
+        Start Here
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </a>
+  </div>
+</section>
+
+<!-- ============ TOOLS SECTIONS ============ -->
 <section class="tools-section" id="tools">
   <div class="tools-inner">
-    <div class="section-header">
-      <h2>Calculators &amp; Tools</h2>
-      <p>Tools that actually understand VA loans &mdash; disability exemptions, residual income, IRRRL recoup periods, and the math civilian calculators get wrong.</p>
+
+    <!-- BUYING A HOME -->
+    <div class="tool-group" id="group-buying">
+      <div class="tool-group-header">
+        <div class="tool-group-title">
+          <div class="tool-group-title-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M3 10l9-7 9 7v10a2 2 0 01-2 2h-3v-7H10v7H5a2 2 0 01-2-2V10z" stroke="#0071CE" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h2>Buying a Home</h2>
+        </div>
+        <span class="tool-group-count">4 tools</span>
+      </div>
+
+      <div class="tools-grid two-col">
+
+        <a href="/va-funding-fee.html" class="tool-card">
+          <div class="tool-card-top">
+            <div class="tool-icon">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <path d="M20 75 L20 32 Q20 26 26 26 L40 26 Q46 26 46 32 L46 56 L70 56 Q76 56 76 62 L76 75 Q76 80 71 80 L25 80 Q20 80 20 75 Z" fill="#FFFFFF" stroke="#003057" stroke-width="2.5" stroke-linejoin="round"/>
+                <line x1="26" y1="38" x2="42" y2="38" stroke="#003057" stroke-width="2" stroke-linecap="round"/>
+                <line x1="26" y1="46" x2="42" y2="46" stroke="#003057" stroke-width="2" stroke-linecap="round"/>
+                <path d="M18 78 L78 78" stroke="#003057" stroke-width="3.5" stroke-linecap="round"/>
+                <circle cx="73" cy="32" r="16" fill="#D72638" stroke="#FFFFFF" stroke-width="2.5"/>
+                <text x="73" y="38" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="18" font-weight="800" fill="#FFFFFF">%</text>
+              </svg>
+            </div>
+            <div class="tool-badges">
+              <span class="tool-badge popular">Most Popular</span>
+              <span class="tool-badge quick">2 min</span>
+            </div>
+          </div>
+          <h3>VA Funding Fee Optimizer</h3>
+          <p>See your exact funding fee. First-use, subsequent-use, disability exemption, and every loan type covered.</p>
+          <span class="tool-cta">
+            Calculate my fee
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+        <a href="/buy-vs-rent.html" class="tool-card">
+          <div class="tool-card-top">
+            <div class="tool-icon">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <line x1="50" y1="20" x2="50" y2="80" stroke="#003057" stroke-width="3" stroke-linecap="round"/>
+                <line x1="36" y1="84" x2="64" y2="84" stroke="#003057" stroke-width="3" stroke-linecap="round"/>
+                <line x1="20" y1="32" x2="80" y2="32" stroke="#003057" stroke-width="3" stroke-linecap="round"/>
+                <rect x="14" y="36" width="22" height="14" rx="2" fill="#D72638" stroke="#003057" stroke-width="2"/>
+                <text x="25" y="46" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="8" font-weight="800" fill="#FFFFFF">RENT</text>
+                <line x1="20" y1="32" x2="20" y2="36" stroke="#003057" stroke-width="2"/>
+                <line x1="30" y1="32" x2="30" y2="36" stroke="#003057" stroke-width="2"/>
+                <path d="M60 50 L72 40 L84 50 L84 62 L60 62 Z" fill="#FFFFFF" stroke="#003057" stroke-width="2" stroke-linejoin="round"/>
+                <rect x="68" y="54" width="8" height="8" fill="#0071CE"/>
+                <line x1="70" y1="32" x2="70" y2="40" stroke="#003057" stroke-width="2"/>
+                <line x1="78" y1="32" x2="78" y2="44" stroke="#003057" stroke-width="2"/>
+                <circle cx="84" cy="36" r="6" fill="#1B874B"/>
+                <path d="M81 36 L83 38 L87 34" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </div>
+            <div class="tool-badges">
+              <span class="tool-badge quick">Quick Tool</span>
+            </div>
+          </div>
+          <h3>Buy vs Rent for Veterans</h3>
+          <p>$0 down, no PMI &mdash; the math civilian calculators miss when comparing your real options as a VA-eligible buyer.</p>
+          <span class="tool-cta">
+            Compare options
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+        <a href="/cost-of-waiting.html" class="tool-card">
+          <div class="tool-card-top">
+            <div class="tool-icon">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <path d="M28 18 L72 18 L72 30 L52 50 L72 70 L72 82 L28 82 L28 70 L48 50 L28 30 Z" fill="#FFFFFF" stroke="#003057" stroke-width="2.5" stroke-linejoin="round"/>
+                <line x1="26" y1="18" x2="74" y2="18" stroke="#003057" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="26" y1="82" x2="74" y2="82" stroke="#003057" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M36 24 L50 24 L50 28 Z" fill="#D72638"/>
+                <path d="M40 24 L46 22" stroke="#003057" stroke-width="1.5" stroke-linecap="round"/>
+                <line x1="50" y1="46" x2="50" y2="54" stroke="#D72638" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="50" cy="58" r="1.5" fill="#D72638"/>
+                <path d="M34 76 Q50 64 66 76 Z" fill="#D72638"/>
+                <text x="50" y="74" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="10" font-weight="800" fill="#FFFFFF">$</text>
+              </svg>
+            </div>
+            <div class="tool-badges">
+              <span class="tool-badge quick">Quick Tool</span>
+            </div>
+          </div>
+          <h3>Cost of Waiting to Buy</h3>
+          <p>Honest math on waiting for better rates. Includes scenarios where waiting actually wins &mdash; not one-sided sales math.</p>
+          <span class="tool-cta">
+            See the math
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+        <a href="/discount-points.html" class="tool-card">
+          <div class="tool-card-top">
+            <div class="tool-icon">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <ellipse cx="36" cy="76" rx="22" ry="6" fill="#0071CE" stroke="#003057" stroke-width="2"/>
+                <ellipse cx="36" cy="73" rx="22" ry="6" fill="#0071CE" stroke="#003057" stroke-width="2"/>
+                <ellipse cx="36" cy="62" rx="22" ry="6" fill="#0071CE" stroke="#003057" stroke-width="2"/>
+                <ellipse cx="36" cy="59" rx="22" ry="6" fill="#4DA3E8" stroke="#003057" stroke-width="2"/>
+                <ellipse cx="36" cy="48" rx="22" ry="6" fill="#0071CE" stroke="#003057" stroke-width="2"/>
+                <ellipse cx="36" cy="45" rx="22" ry="6" fill="#FFFFFF" stroke="#003057" stroke-width="2"/>
+                <text x="36" y="49" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="11" font-weight="800" fill="#003057">%</text>
+                <line x1="78" y1="30" x2="78" y2="68" stroke="#D72638" stroke-width="3" stroke-linecap="round"/>
+                <path d="M72 62 L78 68 L84 62" stroke="#D72638" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <text x="78" y="24" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="9" font-weight="800" fill="#003057">RATE</text>
+              </svg>
+            </div>
+            <div class="tool-badges">
+              <span class="tool-badge quick">Quick Tool</span>
+            </div>
+          </div>
+          <h3>Discount Point Break-Even</h3>
+          <p>Find out exactly how long until buying down your rate pays off &mdash; and whether the points are worth it.</p>
+          <span class="tool-cta">
+            Run break-even
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+      </div>
     </div>
-    <div class="tools-grid">
 
-      <a href="/va-funding-fee.html" class="tool-card available" style="text-decoration:none; color:inherit;">
-        <span class="tool-badge popular">Live &middot; Most Popular</span>
-        <div class="tool-icon">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
-            <!-- Boot body -->
-            <path d="M20 75 L20 32 Q20 26 26 26 L40 26 Q46 26 46 32 L46 56 L70 56 Q76 56 76 62 L76 75 Q76 80 71 80 L25 80 Q20 80 20 75 Z" fill="#FFFFFF" stroke="#003057" stroke-width="2.5" stroke-linejoin="round"/>
-            <!-- Lace holes/lines -->
-            <line x1="26" y1="38" x2="42" y2="38" stroke="#003057" stroke-width="2" stroke-linecap="round"/>
-            <line x1="26" y1="46" x2="42" y2="46" stroke="#003057" stroke-width="2" stroke-linecap="round"/>
-            <!-- Sole -->
-            <path d="M18 78 L78 78" stroke="#003057" stroke-width="3.5" stroke-linecap="round"/>
-            <!-- Coin with percent -->
-            <circle cx="73" cy="32" r="16" fill="#D72638" stroke="#FFFFFF" stroke-width="2.5"/>
-            <text x="73" y="38" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="18" font-weight="800" fill="#FFFFFF">%</text>
-          </svg>
+    <!-- REFINANCING -->
+    <div class="tool-group" id="group-refi">
+      <div class="tool-group-header">
+        <div class="tool-group-title">
+          <div class="tool-group-title-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M3 12a9 9 0 0115-6.7L21 8M21 3v5h-5M21 12a9 9 0 01-15 6.7L3 16M3 21v-5h5" stroke="#0071CE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h2>Refinancing</h2>
         </div>
-        <h3>VA Funding Fee Optimizer</h3>
-        <p>See exactly what your VA funding fee will be &mdash; including disability exemption, first-use vs subsequent-use, and every loan type the VA offers.</p>
-        <span style="color: var(--blue); font-size: 14px; font-weight: 700;">Open calculator &rarr;</span>
-      </a>
+        <span class="tool-group-count">2 tools</span>
+      </div>
 
-      <a href="/va-irrrl-recoup.html" class="tool-card available" style="text-decoration:none; color:inherit;">
-        <span class="tool-badge popular">Live</span>
-        <div class="tool-icon">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
-            <!-- House roof -->
-            <path d="M22 50 L50 28 L78 50" stroke="#003057" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" fill="#FFFFFF"/>
-            <!-- House body -->
-            <rect x="28" y="50" width="44" height="32" fill="#FFFFFF" stroke="#003057" stroke-width="2.5" stroke-linejoin="round"/>
-            <!-- Door -->
-            <rect x="44" y="62" width="12" height="20" fill="#D72638" stroke="#003057" stroke-width="2" stroke-linejoin="round"/>
-            <!-- Circular refresh arrow (around house) -->
-            <path d="M82 38 Q88 50 82 62" stroke="#0071CE" stroke-width="3" stroke-linecap="round" fill="none"/>
-            <path d="M86 56 L82 62 L76 60" stroke="#0071CE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <!-- Downward rate arrow on opposite side -->
-            <path d="M18 38 Q12 50 18 62" stroke="#0071CE" stroke-width="3" stroke-linecap="round" fill="none"/>
-            <path d="M14 44 L18 38 L24 40" stroke="#0071CE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-        </div>
-        <h3>VA IRRRL Recoup Calculator</h3>
-        <p>Calculate the true recoup period for your VA Streamline Refinance &mdash; meets VA's official MAP Rule guidelines for accurate compliance.</p>
-        <span style="color: var(--blue); font-size: 14px; font-weight: 700;">Open calculator &rarr;</span>
-      </a>
+      <div class="tools-grid">
 
-      <a href="/cash-out-refi.html" class="tool-card available" style="text-decoration:none; color:inherit;">
-        <span class="tool-badge popular">Live</span>
-        <div class="tool-icon">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
-            <!-- House roof -->
-            <path d="M14 48 L36 30 L58 48" stroke="#003057" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" fill="#FFFFFF"/>
-            <!-- House body -->
-            <rect x="18" y="48" width="36" height="30" fill="#FFFFFF" stroke="#003057" stroke-width="2.5" stroke-linejoin="round"/>
-            <!-- Door -->
-            <rect x="30" y="58" width="12" height="20" fill="#003057"/>
-            <!-- Stacked bills/cash going out to the right -->
-            <rect x="58" y="60" width="30" height="14" rx="2" fill="#1B874B" stroke="#003057" stroke-width="2"/>
-            <circle cx="73" cy="67" r="4" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
-            <text x="73" y="71" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="9" font-weight="800" fill="#FFFFFF">$</text>
-            <!-- Second bill peeking behind -->
-            <rect x="62" y="48" width="30" height="14" rx="2" fill="#1B874B" stroke="#003057" stroke-width="2"/>
-            <text x="77" y="59" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="9" font-weight="800" fill="#FFFFFF">$</text>
-            <!-- Flow arrow from house -->
-            <path d="M52 64 L58 64" stroke="#003057" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <h3>VA Cash-Out True Savings</h3>
-        <p>The honest math on a cash-out refi. Factors in debt consolidation, escrow refunds, deferred payments, and full closing cost reality.</p>
-        <span style="color: var(--blue); font-size: 14px; font-weight: 700;">Open calculator &rarr;</span>
-      </a>
+        <a href="/va-irrrl-recoup.html" class="tool-card">
+          <div class="tool-card-top">
+            <div class="tool-icon">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <path d="M22 50 L50 28 L78 50" stroke="#003057" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" fill="#FFFFFF"/>
+                <rect x="28" y="50" width="44" height="32" fill="#FFFFFF" stroke="#003057" stroke-width="2.5" stroke-linejoin="round"/>
+                <rect x="44" y="62" width="12" height="20" fill="#D72638" stroke="#003057" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M82 38 Q88 50 82 62" stroke="#0071CE" stroke-width="3" stroke-linecap="round" fill="none"/>
+                <path d="M86 56 L82 62 L76 60" stroke="#0071CE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <path d="M18 38 Q12 50 18 62" stroke="#0071CE" stroke-width="3" stroke-linecap="round" fill="none"/>
+                <path d="M14 44 L18 38 L24 40" stroke="#0071CE" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+            </div>
+            <div class="tool-badges">
+              <span class="tool-badge refinance">VA MAP Rule</span>
+            </div>
+          </div>
+          <h3>VA IRRRL Recoup Calculator</h3>
+          <p>True recoup period for your VA Streamline Refi. Built around VA's official MAP Rule for accurate compliance.</p>
+          <span class="tool-cta">
+            Check my recoup
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
 
-      <a href="/buy-vs-rent.html" class="tool-card available" style="text-decoration:none; color:inherit;">
-        <span class="tool-badge popular">Live</span>
-        <div class="tool-icon">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
-            <!-- Center pole -->
-            <line x1="50" y1="20" x2="50" y2="80" stroke="#003057" stroke-width="3" stroke-linecap="round"/>
-            <!-- Base -->
-            <line x1="36" y1="84" x2="64" y2="84" stroke="#003057" stroke-width="3" stroke-linecap="round"/>
-            <!-- Balance beam -->
-            <line x1="20" y1="32" x2="80" y2="32" stroke="#003057" stroke-width="3" stroke-linecap="round"/>
-            <!-- Left side: RENT sign (red) -->
-            <rect x="14" y="36" width="22" height="14" rx="2" fill="#D72638" stroke="#003057" stroke-width="2"/>
-            <text x="25" y="46" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="8" font-weight="800" fill="#FFFFFF">RENT</text>
-            <!-- Left support lines -->
-            <line x1="20" y1="32" x2="20" y2="36" stroke="#003057" stroke-width="2"/>
-            <line x1="30" y1="32" x2="30" y2="36" stroke="#003057" stroke-width="2"/>
-            <!-- Right side: small house (BUY) -->
-            <path d="M60 50 L72 40 L84 50 L84 62 L60 62 Z" fill="#FFFFFF" stroke="#003057" stroke-width="2" stroke-linejoin="round"/>
-            <rect x="68" y="54" width="8" height="8" fill="#0071CE"/>
-            <!-- Right support lines -->
-            <line x1="70" y1="32" x2="70" y2="40" stroke="#003057" stroke-width="2"/>
-            <line x1="78" y1="32" x2="78" y2="44" stroke="#003057" stroke-width="2"/>
-            <!-- Check on house (BUY wins) -->
-            <circle cx="84" cy="36" r="6" fill="#1B874B"/>
-            <path d="M81 36 L83 38 L87 34" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-        </div>
-        <h3>Buy vs Rent for Veterans</h3>
-        <p>Built specifically for VA-eligible buyers. $0 down, no PMI &mdash; the math civilian calculators miss when comparing your real options.</p>
-        <span style="color: var(--blue); font-size: 14px; font-weight: 700;">Open calculator &rarr;</span>
-      </a>
+        <a href="/cash-out-refi.html" class="tool-card">
+          <div class="tool-card-top">
+            <div class="tool-icon">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <path d="M14 48 L36 30 L58 48" stroke="#003057" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" fill="#FFFFFF"/>
+                <rect x="18" y="48" width="36" height="30" fill="#FFFFFF" stroke="#003057" stroke-width="2.5" stroke-linejoin="round"/>
+                <rect x="30" y="58" width="12" height="20" fill="#003057"/>
+                <rect x="58" y="60" width="30" height="14" rx="2" fill="#1B874B" stroke="#003057" stroke-width="2"/>
+                <circle cx="73" cy="67" r="4" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+                <text x="73" y="71" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="9" font-weight="800" fill="#FFFFFF">$</text>
+                <rect x="62" y="48" width="30" height="14" rx="2" fill="#1B874B" stroke="#003057" stroke-width="2"/>
+                <text x="77" y="59" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="9" font-weight="800" fill="#FFFFFF">$</text>
+                <path d="M52 64 L58 64" stroke="#003057" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="tool-badges">
+              <span class="tool-badge refinance">Debt Consolidation</span>
+            </div>
+          </div>
+          <h3>VA Cash-Out True Savings</h3>
+          <p>The honest cash-out math. Factors in debt consolidation, escrow refunds, deferred payments, full closing costs.</p>
+          <span class="tool-cta">
+            Run the numbers
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
 
-      <a href="/cost-of-waiting.html" class="tool-card available" style="text-decoration:none; color:inherit;">
-        <span class="tool-badge popular">Live</span>
-        <div class="tool-icon">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
-            <!-- Hourglass outline -->
-            <path d="M28 18 L72 18 L72 30 L52 50 L72 70 L72 82 L28 82 L28 70 L48 50 L28 30 Z" fill="#FFFFFF" stroke="#003057" stroke-width="2.5" stroke-linejoin="round"/>
-            <!-- Top and bottom caps -->
-            <line x1="26" y1="18" x2="74" y2="18" stroke="#003057" stroke-width="3.5" stroke-linecap="round"/>
-            <line x1="26" y1="82" x2="74" y2="82" stroke="#003057" stroke-width="3.5" stroke-linecap="round"/>
-            <!-- Top: home prices going UP (sand falling) -->
-            <path d="M36 24 L50 24 L50 28 Z" fill="#D72638"/>
-            <!-- Tiny rising arrow icon at top -->
-            <path d="M40 24 L46 22" stroke="#003057" stroke-width="1.5" stroke-linecap="round"/>
-            <!-- Falling sand stream -->
-            <line x1="50" y1="46" x2="50" y2="54" stroke="#D72638" stroke-width="2.5" stroke-linecap="round"/>
-            <circle cx="50" cy="58" r="1.5" fill="#D72638"/>
-            <!-- Bottom: pile of sand growing -->
-            <path d="M34 76 Q50 64 66 76 Z" fill="#D72638"/>
-            <!-- Dollar sign on top of pile -->
-            <text x="50" y="74" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="10" font-weight="800" fill="#FFFFFF">$</text>
-          </svg>
-        </div>
-        <h3>Cost of Waiting to Buy</h3>
-        <p>The honest math on waiting for better rates. Adjustable home price growth, rate forecasts, rent paid, and equity built &mdash; includes scenarios where waiting wins.</p>
-        <span style="color: var(--blue); font-size: 14px; font-weight: 700;">Open calculator &rarr;</span>
-      </a>
-
-      <a href="/discount-points.html" class="tool-card available" style="text-decoration:none; color:inherit;">
-        <span class="tool-badge popular">Live</span>
-        <div class="tool-icon">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
-            <!-- Bottom coin (largest, widest) -->
-            <ellipse cx="36" cy="76" rx="22" ry="6" fill="#0071CE" stroke="#003057" stroke-width="2"/>
-            <ellipse cx="36" cy="73" rx="22" ry="6" fill="#0071CE" stroke="#003057" stroke-width="2"/>
-            <!-- Middle coin -->
-            <ellipse cx="36" cy="62" rx="22" ry="6" fill="#0071CE" stroke="#003057" stroke-width="2"/>
-            <ellipse cx="36" cy="59" rx="22" ry="6" fill="#4DA3E8" stroke="#003057" stroke-width="2"/>
-            <!-- Top coin with % -->
-            <ellipse cx="36" cy="48" rx="22" ry="6" fill="#0071CE" stroke="#003057" stroke-width="2"/>
-            <ellipse cx="36" cy="45" rx="22" ry="6" fill="#FFFFFF" stroke="#003057" stroke-width="2"/>
-            <text x="36" y="49" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="11" font-weight="800" fill="#003057">%</text>
-            <!-- Downward arrow on right showing rate cut -->
-            <line x1="78" y1="30" x2="78" y2="68" stroke="#D72638" stroke-width="3" stroke-linecap="round"/>
-            <path d="M72 62 L78 68 L84 62" stroke="#D72638" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <!-- Rate label -->
-            <text x="78" y="24" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="9" font-weight="800" fill="#003057">RATE</text>
-          </svg>
-        </div>
-        <h3>Discount Point Break-Even</h3>
-        <p>Find out exactly how long it takes for buying down your rate to pay off &mdash; and whether the points are worth it for your specific situation.</p>
-        <span style="color: var(--blue); font-size: 14px; font-weight: 700;">Open calculator &rarr;</span>
-      </a>
-
-      <a href="/house-hack.html" class="tool-card available" style="text-decoration:none; color:inherit;">
-        <span class="tool-badge popular">Live</span>
-        <div class="tool-icon">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
-            <!-- Roof -->
-            <path d="M10 38 L50 18 L90 38" stroke="#003057" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" fill="#FFFFFF"/>
-            <!-- Main building body -->
-            <rect x="14" y="38" width="72" height="44" fill="#FFFFFF" stroke="#003057" stroke-width="2.5" stroke-linejoin="round"/>
-            <!-- Vertical dividers (3 dividers = 4 units) -->
-            <line x1="32" y1="38" x2="32" y2="82" stroke="#003057" stroke-width="2"/>
-            <line x1="50" y1="38" x2="50" y2="82" stroke="#003057" stroke-width="2"/>
-            <line x1="68" y1="38" x2="68" y2="82" stroke="#003057" stroke-width="2"/>
-            <!-- Unit 1 (YOU - blue) -->
-            <rect x="14" y="56" width="18" height="26" fill="#0071CE"/>
-            <text x="23" y="74" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="7" font-weight="800" fill="#FFFFFF">YOU</text>
-            <rect x="20" y="46" width="6" height="6" fill="#003057"/>
-            <!-- Unit 2 (RENTED - white with $) -->
-            <rect x="36" y="58" width="4" height="10" fill="#003057"/>
-            <text x="41" y="50" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="9" font-weight="800" fill="#D72638">$</text>
-            <!-- Unit 3 (RENTED) -->
-            <rect x="54" y="58" width="4" height="10" fill="#003057"/>
-            <text x="59" y="50" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="9" font-weight="800" fill="#D72638">$</text>
-            <!-- Unit 4 (RENTED) -->
-            <rect x="72" y="58" width="4" height="10" fill="#003057"/>
-            <text x="77" y="50" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="9" font-weight="800" fill="#D72638">$</text>
-          </svg>
-        </div>
-        <h3>Veteran House Hack ROI</h3>
-        <p>Use your VA loan to buy a 2-4 unit property, live in one, rent the others. See your real cash-on-cash return with VA-specific rules baked in.</p>
-        <span style="color: var(--blue); font-size: 14px; font-weight: 700;">Open calculator &rarr;</span>
-      </a>
-
-      <a href="/bah-mortgage.html" class="tool-card available" style="text-decoration:none; color:inherit;">
-        <span class="tool-badge popular">Live</span>
-        <div class="tool-icon">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
-            <!-- Dog tag chain -->
-            <path d="M30 14 Q50 10 70 14" stroke="#003057" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <!-- Dog tag - back (red, peeking) -->
-            <path d="M58 22 L82 22 L82 70 Q82 76 76 76 L58 76 Z" fill="#D72638" stroke="#003057" stroke-width="2" stroke-linejoin="round"/>
-            <!-- Dog tag - front (white with house) -->
-            <path d="M22 22 L62 22 L62 70 Q62 76 56 76 L22 76 Q16 76 16 70 L16 28 Q16 22 22 22 Z" fill="#FFFFFF" stroke="#003057" stroke-width="2.5" stroke-linejoin="round"/>
-            <!-- Chain hole -->
-            <circle cx="39" cy="22" r="3" fill="#003057"/>
-            <!-- House icon on tag -->
-            <path d="M24 50 L39 38 L54 50" stroke="#003057" stroke-width="2" stroke-linejoin="round" fill="none"/>
-            <rect x="28" y="50" width="22" height="18" fill="#0071CE" stroke="#003057" stroke-width="2"/>
-            <!-- Dollar inside house -->
-            <text x="39" y="64" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">$</text>
-            <!-- BAH text at top -->
-            <text x="39" y="32" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="7" font-weight="800" fill="#003057">BAH</text>
-          </svg>
-        </div>
-        <h3>BAH to Mortgage Calculator</h3>
-        <p>Turn your tax-free BAH into real equity. See what home price your housing allowance can support with $0 down VA financing &mdash; and why it beats renting.</p>
-        <span style="color: var(--blue); font-size: 14px; font-weight: 700;">Open calculator &rarr;</span>
-      </a>
-
-      <a href="/affordability-residual.html" class="tool-card available" style="text-decoration:none; color:inherit;">
-        <span class="tool-badge popular">Live</span>
-        <div class="tool-icon">
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
-            <!-- Calculator body -->
-            <rect x="20" y="22" width="44" height="60" rx="4" fill="#FFFFFF" stroke="#003057" stroke-width="2.5"/>
-            <!-- Screen -->
-            <rect x="26" y="28" width="32" height="14" rx="2" fill="#003057"/>
-            <text x="42" y="38" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="9" font-weight="800" fill="#6EE8A4">PASS</text>
-            <!-- Calculator buttons row 1 -->
-            <rect x="26" y="48" width="8" height="8" rx="1" fill="#0071CE"/>
-            <rect x="38" y="48" width="8" height="8" rx="1" fill="#0071CE"/>
-            <rect x="50" y="48" width="8" height="8" rx="1" fill="#0071CE"/>
-            <!-- Row 2 -->
-            <rect x="26" y="60" width="8" height="8" rx="1" fill="#0071CE"/>
-            <rect x="38" y="60" width="8" height="8" rx="1" fill="#0071CE"/>
-            <rect x="50" y="60" width="8" height="8" rx="1" fill="#D72638"/>
-            <!-- Row 3 (= button red) -->
-            <rect x="26" y="72" width="20" height="6" rx="1" fill="#0071CE"/>
-            <rect x="50" y="72" width="8" height="6" rx="1" fill="#D72638"/>
-            <!-- Family figures next to calculator -->
-            <!-- Adult head -->
-            <circle cx="78" cy="40" r="5" fill="#0071CE" stroke="#003057" stroke-width="2"/>
-            <!-- Adult body -->
-            <path d="M70 56 Q70 48 78 48 Q86 48 86 56 L86 64 L70 64 Z" fill="#0071CE" stroke="#003057" stroke-width="2" stroke-linejoin="round"/>
-            <!-- Child head -->
-            <circle cx="82" cy="68" r="3.5" fill="#D72638" stroke="#003057" stroke-width="1.5"/>
-            <!-- Child body -->
-            <path d="M76 82 Q76 76 82 76 Q88 76 88 82 L76 82 Z" fill="#D72638" stroke="#003057" stroke-width="1.5" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h3>VA Affordability + Residual Income</h3>
-        <p>How much home can you really afford on a VA loan? Includes VA's unique residual income test &mdash; what other calculators don't even check.</p>
-        <span style="color: var(--blue); font-size: 14px; font-weight: 700;">Open calculator &rarr;</span>
-      </a>
-
+      </div>
     </div>
+
+    <!-- ACTIVE DUTY & INVESTMENT -->
+    <div class="tool-group" id="group-service">
+      <div class="tool-group-header">
+        <div class="tool-group-title">
+          <div class="tool-group-title-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L3 7v5c0 5 3.5 9.5 9 11 5.5-1.5 9-6 9-11V7l-9-5z" stroke="#0071CE" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h2>Active Duty &amp; Investment</h2>
+        </div>
+        <span class="tool-group-count">2 tools</span>
+      </div>
+
+      <div class="tools-grid">
+
+        <a href="/bah-mortgage.html" class="tool-card">
+          <div class="tool-card-top">
+            <div class="tool-icon">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <path d="M30 14 Q50 10 70 14" stroke="#003057" stroke-width="2" fill="none" stroke-linecap="round"/>
+                <path d="M58 22 L82 22 L82 70 Q82 76 76 76 L58 76 Z" fill="#D72638" stroke="#003057" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M22 22 L62 22 L62 70 Q62 76 56 76 L22 76 Q16 76 16 70 L16 28 Q16 22 22 22 Z" fill="#FFFFFF" stroke="#003057" stroke-width="2.5" stroke-linejoin="round"/>
+                <circle cx="39" cy="22" r="3" fill="#003057"/>
+                <path d="M24 50 L39 38 L54 50" stroke="#003057" stroke-width="2" stroke-linejoin="round" fill="none"/>
+                <rect x="28" y="50" width="22" height="18" fill="#0071CE" stroke="#003057" stroke-width="2"/>
+                <text x="39" y="64" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="13" font-weight="800" fill="#FFFFFF">$</text>
+                <text x="39" y="32" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="7" font-weight="800" fill="#003057">BAH</text>
+              </svg>
+            </div>
+            <div class="tool-badges">
+              <span class="tool-badge active-duty">Active Duty</span>
+            </div>
+          </div>
+          <h3>BAH to Mortgage Calculator</h3>
+          <p>Turn your tax-free BAH into real equity. See the home price your housing allowance supports with $0 down.</p>
+          <span class="tool-cta">
+            See my buying power
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+        <a href="/house-hack.html" class="tool-card">
+          <div class="tool-card-top">
+            <div class="tool-icon">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" fill="none">
+                <path d="M10 38 L50 18 L90 38" stroke="#003057" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" fill="#FFFFFF"/>
+                <rect x="14" y="38" width="72" height="44" fill="#FFFFFF" stroke="#003057" stroke-width="2.5" stroke-linejoin="round"/>
+                <line x1="32" y1="38" x2="32" y2="82" stroke="#003057" stroke-width="2"/>
+                <line x1="50" y1="38" x2="50" y2="82" stroke="#003057" stroke-width="2"/>
+                <line x1="68" y1="38" x2="68" y2="82" stroke="#003057" stroke-width="2"/>
+                <rect x="14" y="56" width="18" height="26" fill="#0071CE"/>
+                <text x="23" y="74" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="7" font-weight="800" fill="#FFFFFF">YOU</text>
+                <rect x="20" y="46" width="6" height="6" fill="#003057"/>
+                <rect x="36" y="58" width="4" height="10" fill="#003057"/>
+                <text x="41" y="50" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="9" font-weight="800" fill="#D72638">$</text>
+                <rect x="54" y="58" width="4" height="10" fill="#003057"/>
+                <text x="59" y="50" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="9" font-weight="800" fill="#D72638">$</text>
+                <rect x="72" y="58" width="4" height="10" fill="#003057"/>
+                <text x="77" y="50" text-anchor="middle" font-family="Source Sans 3, Arial, sans-serif" font-size="9" font-weight="800" fill="#D72638">$</text>
+              </svg>
+            </div>
+            <div class="tool-badges">
+              <span class="tool-badge investment">Investment</span>
+            </div>
+          </div>
+          <h3>Veteran House Hack ROI</h3>
+          <p>Use your VA loan on a 2&ndash;4 unit property. Live in one, rent the others, see real cash-on-cash return.</p>
+          <span class="tool-cta">
+            Run the numbers
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </a>
+
+      </div>
+    </div>
+
   </div>
 </section>
 
