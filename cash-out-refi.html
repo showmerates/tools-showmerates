@@ -1176,6 +1176,8 @@
     newTerm: 30,
     closingCosts: 6500,
     appraisedValue: 425000,
+    newLoanAmount: 318500,
+    newLoanAmountIsAuto: true,  // when true, recalc automatically; when false, user has overridden
     subsequentUse: false,
     exempt: false,
     debts: [
@@ -1264,15 +1266,30 @@
     });
   }
 
+  function computeAutoLoanAmount() {
+    // The "natural" loan amount: payoff everything + roll in closing costs + funding fee
+    // Funding fee is calculated on the base amount before it's added
+    var debtsBalance = totalDebtBalance();
+    var baseNewLoan = state.currentBalance + debtsBalance + state.closingCosts;
+    var fundingFeeRate = state.exempt ? 0 : (state.subsequentUse ? VA_FUNDING_FEE_SUBSEQUENT : VA_FUNDING_FEE_FIRST);
+    var fundingFee = baseNewLoan * fundingFeeRate / (1 - fundingFeeRate);
+    // The /(1-rate) accounts for the fact that the funding fee is calculated on the gross loan including itself
+    return Math.round(baseNewLoan + fundingFee);
+  }
+
   function calculate() {
     var debtsBalance = totalDebtBalance();
     var debtsPayment = totalDebtPayment();
 
-    // New loan amount: payoff old mortgage + debts + closing costs (financed)
-    var baseNewLoan = state.currentBalance + debtsBalance + state.closingCosts;
+    // Use the user-controlled new loan amount (capped at appraised value)
+    var newLoanAmount = state.newLoanAmount;
+    if (state.appraisedValue > 0 && newLoanAmount > state.appraisedValue) {
+      newLoanAmount = state.appraisedValue;
+    }
+
+    // Funding fee is calculated on the new loan amount
     var fundingFeeRate = state.exempt ? 0 : (state.subsequentUse ? VA_FUNDING_FEE_SUBSEQUENT : VA_FUNDING_FEE_FIRST);
-    var fundingFee = baseNewLoan * fundingFeeRate;
-    var newLoanAmount = baseNewLoan + fundingFee;
+    var fundingFee = newLoanAmount * fundingFeeRate;
 
     var ltv = state.appraisedValue > 0 ? (newLoanAmount / state.appraisedValue) * 100 : 0;
 
@@ -1300,12 +1317,10 @@
     // Skipped payment estimate — current P&I (one month of P&I avoided in cash flow)
     var skippedPayment = state.currentPI;
 
-    // Net cash from closing = appraised value - new loan amount, but bounded
-    // For now we'll show the structural cash mechanics
-    // True cash to borrower: max LTV proceeds - payoffs
-    // Simpler: cash to borrower = newLoanAmount - currentBalance - debtsBalance - closingCosts - fundingFee
+    // Cash to borrower = what's left over after the new loan pays off everything
+    // newLoan must cover: current mortgage payoff, debt payoffs, closing costs, funding fee
+    // Anything beyond that is cash in the borrower's pocket
     var cashToBorrower = newLoanAmount - state.currentBalance - debtsBalance - state.closingCosts - fundingFee;
-    // This will typically be 0 or near-zero since we set newLoan to cover exactly those, but a user can adjust
 
     // Total cash benefit at/after closing
     var totalCashBenefit = cashToBorrower + escrowRefund + skippedPayment;
@@ -1330,6 +1345,42 @@
   }
 
   function render() {
+    // Sync the newLoanAmount field if in auto mode
+    var loanAmountInput = document.getElementById('newLoanAmount');
+    if (state.newLoanAmountIsAuto) {
+      var autoAmount = computeAutoLoanAmount();
+      // Cap at appraised value if needed
+      if (state.appraisedValue > 0 && autoAmount > state.appraisedValue) {
+        autoAmount = state.appraisedValue;
+      }
+      state.newLoanAmount = autoAmount;
+      if (loanAmountInput && document.activeElement !== loanAmountInput) {
+        loanAmountInput.value = autoAmount;
+      }
+    }
+    // Set the max attribute dynamically
+    if (loanAmountInput && state.appraisedValue > 0) {
+      loanAmountInput.max = state.appraisedValue;
+    }
+
+    // Update hint text
+    var hintEl = document.getElementById('newLoanAmountHint');
+    if (hintEl) {
+      if (state.newLoanAmountIsAuto) {
+        hintEl.innerHTML = 'Defaults to current balance + debts to consolidate + closing costs + funding fee. Capped at home appraised value (' + formatCurrency(state.appraisedValue) + '). <a href="#" id="resetLoanAmount" style="color: var(--blue); font-weight: 700;">Edit manually</a>';
+      } else {
+        hintEl.innerHTML = '<strong style="color: var(--navy);">Manual override active.</strong> <a href="#" id="resetLoanAmount" style="color: var(--blue); font-weight: 700;">Reset to auto-calculated</a> &nbsp;&middot;&nbsp; Capped at home appraised value (' + formatCurrency(state.appraisedValue) + ')';
+      }
+      var resetBtn = document.getElementById('resetLoanAmount');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          state.newLoanAmountIsAuto = !state.newLoanAmountIsAuto;
+          render();
+        });
+      }
+    }
+
     var c = calculate();
 
     // Headline
@@ -1430,6 +1481,20 @@
       });
     }
 
+    // Cap-hit warning: auto-calc wants more than appraised value
+    var rawAutoAmount = state.currentBalance + c.debtsBalance + state.closingCosts;
+    var fundingFeeRate = state.exempt ? 0 : (state.subsequentUse ? VA_FUNDING_FEE_SUBSEQUENT : VA_FUNDING_FEE_FIRST);
+    if (fundingFeeRate < 1) {
+      rawAutoAmount = rawAutoAmount / (1 - fundingFeeRate);
+    }
+    if (rawAutoAmount > state.appraisedValue && state.appraisedValue > 0) {
+      var shortfall = rawAutoAmount - state.appraisedValue;
+      warnings.push({
+        type: 'error',
+        html: '<strong>You may not have enough equity for this refinance.</strong> Paying off your mortgage + debts + closing costs + funding fee would require a loan of ' + formatCurrency(rawAutoAmount) + ', but your home only appraises for ' + formatCurrency(state.appraisedValue) + '. You\'d need to bring ' + formatCurrency(shortfall) + ' in cash to close OR remove some debts from the consolidation list.'
+      });
+    }
+
     // Rate not actually lower
     if (state.newRate >= state.currentRate) {
       warnings.push({
@@ -1482,6 +1547,27 @@
       state[id] = parseFloat(e.target.value) || 0;
       render();
     });
+  });
+
+  // New Loan Amount has special handling — manual override + cap at appraised value
+  document.getElementById('newLoanAmount').addEventListener('input', function(e) {
+    var val = parseFloat(e.target.value) || 0;
+    // Cap at appraised value
+    if (state.appraisedValue > 0 && val > state.appraisedValue) {
+      val = state.appraisedValue;
+      e.target.value = val;
+    }
+    state.newLoanAmount = val;
+    state.newLoanAmountIsAuto = false;  // User has taken manual control
+    render();
+  });
+
+  // On blur, if user cleared the field, restore auto mode
+  document.getElementById('newLoanAmount').addEventListener('blur', function(e) {
+    if (!e.target.value || parseFloat(e.target.value) === 0) {
+      state.newLoanAmountIsAuto = true;
+      render();
+    }
   });
 
   document.getElementById('subsequentUse').addEventListener('change', function(e) {
@@ -1538,7 +1624,7 @@
       'Appraised Value: ' + formatCurrency(state.appraisedValue) + '\n' +
       'Subsequent Use: ' + (state.subsequentUse ? 'YES (3.30%)' : 'No (2.15%)') + '\n' +
       'Funding Fee Exempt: ' + (state.exempt ? 'YES' : 'No') + '\n' +
-      'New Loan Amount: ' + formatCurrency(c.newLoanAmount) + '\n' +
+      'New Loan Amount: ' + formatCurrency(c.newLoanAmount) + (state.newLoanAmountIsAuto ? ' (auto-calculated)' : ' (user override)') + '\n' +
       'LTV: ' + c.ltv.toFixed(1) + '%\n\n' +
       '=== DEBTS BEING CONSOLIDATED ===\n' +
       (debtList || '  (none)\n') +
