@@ -17,6 +17,8 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Free VA Loan Calculators - Built by a Marine, for Veterans">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:secure_url" content="https://tools.showmerates.com/og-image.jpg">
   <meta property="og:url" content="https://tools.showmerates.com/buy-vs-rent.html">
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
@@ -28,6 +30,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700;800&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+
+  <!-- EmailJS SDK for silent lead delivery -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function() {
+      if (typeof emailjs !== 'undefined') {
+        emailjs.init({ publicKey: 'HO3i3eS7N94c6o1LA' });
+      }
+    })();
+  </script>
   <style>
     :root {
       --navy: #003057; --navy-dark: #001F3D; --navy-deeper: #00152B;
@@ -858,7 +870,7 @@
             <input type="email" class="calc-lead-input" id="leadEmail" placeholder="Email address">
           </div>
           <div class="calc-lead-row single">
-            <input type="tel" class="calc-lead-input" id="leadPhone" placeholder="Phone (optional)">
+            <input type="tel" class="calc-lead-input" id="leadPhone" placeholder="Phone">
           </div>
           <button class="calc-lead-btn" id="leadSubmit">Email Me My Report &rarr;</button>
           <p class="calc-lead-disclaimer">
@@ -1251,11 +1263,19 @@
       return;
     }
 
+    // Validate email format
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert('Please enter a valid email address (example: john@example.com).');
+      return;
+    }
+
     var years = simulate();
     var horizon = Math.min(state.timeHorizon, 30);
     var result = years[horizon - 1];
     var diff = result.buyWealth - result.rentWealth;
     var breakeven = findBreakeven(years);
+    var buyingWins = diff > 0;
 
     var subject = 'Buy vs Rent Report Request — ' + firstName + ' ' + lastName;
     var body =
@@ -1264,36 +1284,86 @@
       'Name: ' + firstName + ' ' + lastName + '\n' +
       'Email: ' + email + '\n' +
       'Phone: ' + (phone || '(not provided)') + '\n\n' +
-      '=== BUYING SCENARIO ===\n' +
+      '=== IF YOU BUY ===\n' +
       'Home Price: ' + formatCurrency(state.homePrice) + '\n' +
       'Down Payment: ' + formatCurrency(state.downPayment) + '\n' +
-      'Interest Rate: ' + state.interestRate + '%\n' +
+      'Mortgage Rate: ' + state.interestRate + '%\n' +
       'Loan Term: ' + state.loanTerm + ' years\n' +
       'Funding Fee Exempt: ' + (state.exempt ? 'YES' : 'No') + '\n\n' +
-      '=== RENTING SCENARIO ===\n' +
+      '=== IF YOU RENT ===\n' +
       'Monthly Rent: ' + formatCurrency(state.monthlyRent) + '\n' +
-      'Annual Rent Inflation: ' + state.rentInflation + '%\n' +
-      'Investment Return: ' + state.investReturn + '%\n' +
-      'Time Horizon: ' + state.timeHorizon + ' years\n\n' +
-      '=== ASSUMPTIONS ===\n' +
-      'Home Appreciation: ' + state.appreciation + '%\n' +
+      'Renters Insurance: ' + formatCurrency(state.rentersInsurance) + '/mo\n' +
+      'Annual Rent Increase: ' + state.rentInflation + '%\n' +
+      'Investment Return (saved cash): ' + state.investReturn + '%\n' +
+      'Years You\'d Stay: ' + state.timeHorizon + ' years\n\n' +
+      '=== ADVANCED ASSUMPTIONS ===\n' +
+      'Home Appreciation: ' + state.appreciation + '%/yr\n' +
       'Property Tax: ' + state.propertyTax + '%\n' +
       'Home Insurance: ' + formatCurrency(state.homeInsurance) + '/yr\n' +
-      'Maintenance: ' + state.maintenance + '%\n' +
-      'Closing Costs: ' + formatCurrency(state.closingCosts) + '\n' +
-      'Selling Costs: ' + state.sellingCosts + '%\n\n' +
+      'Maintenance: ' + state.maintenance + '% of home value\n' +
+      'Buyer Closing Costs: ' + formatCurrency(state.closingCosts) + '\n' +
+      'Selling Costs at Exit: ' + state.sellingCosts + '% of sale\n\n' +
       '=== RESULT (at ' + horizon + ' years) ===\n' +
       'Buying Net Wealth: ' + formatCurrency(result.buyWealth) + '\n' +
       'Renting Net Wealth: ' + formatCurrency(result.rentWealth) + '\n' +
-      'Difference: ' + formatCurrency(diff) + ' (' + (diff > 0 ? 'BUYING wins' : 'RENTING wins') + ')\n' +
-      'Breakeven Year: ' + (breakeven ? 'Year ' + breakeven : 'Not within 30 years') + '\n\n' +
+      'Difference: ' + formatCurrency(Math.abs(diff)) + ' (' + (buyingWins ? 'BUYING wins' : 'RENTING wins') + ')\n' +
+      'Breakeven Year: ' + (breakeven ? 'Year ' + breakeven : 'Not within ' + horizon + ' years') + '\n\n' +
       'Submitted: ' + new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CST';
 
+    // === STEP 1: Fire EmailJS silently to capture the lead immediately ===
+    // (This ensures Terry gets the lead even if user closes the mailto popup)
+    if (typeof emailjs !== 'undefined') {
+      var emailJsParams = {
+        // Standard contact fields (most common EmailJS template variable names)
+        first_name: firstName,
+        last_name: lastName,
+        full_name: firstName + ' ' + lastName,
+        email: email,
+        from_email: email,
+        reply_to: email,
+        phone: phone || '(not provided)',
+        // Source identification
+        source: 'tools.showmerates.com / Buy vs Rent Calculator',
+        calculator: 'Buy vs Rent (VA Loan Wealth Comparison)',
+        submitted_at: new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + ' CST',
+        // Subject + full message body (universal template uses {{message}})
+        subject: subject,
+        message: body,
+        // Calculator-specific summary for quick scanning
+        home_price: formatCurrency(state.homePrice),
+        down_payment: formatCurrency(state.downPayment),
+        interest_rate: state.interestRate + '%',
+        loan_term: state.loanTerm + ' years',
+        funding_fee_exempt: state.exempt ? 'YES' : 'No',
+        monthly_rent: formatCurrency(state.monthlyRent),
+        rent_inflation: state.rentInflation + '%',
+        investment_return: state.investReturn + '%',
+        time_horizon: state.timeHorizon + ' years',
+        buy_net_wealth: formatCurrency(result.buyWealth),
+        rent_net_wealth: formatCurrency(result.rentWealth),
+        difference: formatCurrency(Math.abs(diff)),
+        winner: buyingWins ? 'BUYING wins' : 'RENTING wins',
+        breakeven_year: breakeven ? 'Year ' + breakeven : 'Not within ' + horizon + ' years'
+      };
+
+      emailjs.send('service_wcnn8r3', 'template_42rakfk', emailJsParams)
+        .then(function(response) {
+          console.log('Lead sent via EmailJS:', response.status, response.text);
+        })
+        .catch(function(error) {
+          console.error('EmailJS error (lead may have been lost):', error);
+        });
+    } else {
+      console.warn('EmailJS SDK not loaded — lead capture relies on mailto only');
+    }
+
+    // === STEP 2: Open mailto popup so user can email themselves a copy ===
     var mailtoLink = 'mailto:troberts@emortgagecapital.com?subject=' +
                      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 
     window.location.href = mailtoLink;
 
+    // === STEP 3: Show thank you state ===
     document.getElementById('leadForm').style.display = 'none';
     document.getElementById('leadThanks').classList.add('active');
   });
