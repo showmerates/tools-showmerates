@@ -953,31 +953,158 @@
   </div>
 </section>
 
-<!-- BOTTOM CTA -->
-<section class="bottom-cta">
-  <div class="bottom-cta-inner">
-    <h2>Want To See What Your Actual BAH Can Buy?</h2>
-    <p>Get a no-obligation VA quote using your actual BAH amount as qualifying income. We'll show you exactly what home price you can support at your duty station.</p>
-    <a href="https://showmerates.com/#smrFormCard" class="btn-primary">Get My VA Quote &rarr;</a>
-  </div>
-</section>
+<!-- ===== Show Me Rates — Global Site Footer (adapted for tools.showmerates.com) ===== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- COMPLIANCE -->
-<section class="compliance">
-  <div class="compliance-inner">
-    <p>
-      ShowMeRates.com is operated by E Mortgage Capital, Inc., NMLS# 1416824, 3750 S Susan Street, Santa Ana, California 92704.<br>
-      <a href="https://nmlsconsumeraccess.org" target="_blank" rel="noopener">nmlsconsumeraccess.org</a> &middot; Equal Housing Lender &middot; Licensed in 48 states<br>
-      This calculator is for informational and educational purposes only and does not constitute a loan estimate, commitment to lend, or offer of credit. BAH amounts shown are user-entered estimates. Official BAH rates are determined by the Department of Defense, vary by ZIP code, pay grade, and dependent status, and may change annually. Tax-free equivalent calculations use simplified federal tax assumptions. Consult a tax professional for individual situations.<br>
-      Not endorsed or sponsored by the Dept. of Veterans Affairs or any government agency. BAH lookup external link directs to defensetravel.dod.mil, an official DOD resource.<br>
-      <a href="https://showmerates.com/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a> &middot; <a href="https://showmerates.com/privacy-policy" target="_blank" rel="noopener">Terms of Use</a> &middot; <a href="https://showmerates.com/licenses" target="_blank" rel="noopener">Licensing</a>
-    </p>
-    <div class="compliance-ehl">
-      <svg width="20" height="18" viewBox="0 0 20 18" fill="none"><path d="M10 0L0 8h3v10h14V8h3L10 0zM7 14v-4h6v4H7z" fill="rgba(255,255,255,0.4)"/></svg>
-      Equal Housing Lender
+<style>
+  .smrf{
+    --navy:#0C2340; --navy2:#142d4f; --navy3:#26405f;
+    --red:#E31E24; --gold:#e2b257; --mut:#9aa8bb;
+    position:relative;
+    width:auto; margin-left:calc(50% - 50vw); margin-right:calc(50% - 50vw);
+    font-family:'Hanken Grotesk',system-ui,sans-serif;
+    background:linear-gradient(
+      to bottom,
+      #142d4f 0%,
+      #0C2340 35%,
+      #0C2340 70%,
+      #081B33 100%
+    );
+    color:#c6d0de;
+    border-top:none;
+    -webkit-font-smoothing:antialiased;
+  }
+  .smrf *{box-sizing:border-box;margin:0;padding:0;}
+  .smrf a{text-decoration:none;color:inherit;}
+  .smrf-in{max-width:1200px;margin:0 auto;padding:48px 22px 30px;}
+
+  .smrf-top{display:grid;grid-template-columns:1.25fr 2fr;gap:44px;}
+  @media(max-width:760px){.smrf-top{grid-template-columns:1fr;gap:34px;}}
+
+  .smrf-brand{display:flex;align-items:center;gap:11px;}
+  .smrf-mark{height:34px;width:auto;display:block;}
+  .smrf-tag{font-size:14px;line-height:1.6;color:var(--mut);margin-top:13px;max-width:38ch;}
+  .smrf-tel{display:inline-block;margin-top:15px;font-family:'Archivo',sans-serif;font-weight:700;font-size:16px;color:var(--gold) !important;}
+  .smrf-tel:hover{color:#f3d089 !important;}
+
+  .smrf-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  @media(max-width:520px){.smrf-cols{grid-template-columns:1fr 1fr;}}
+  .smrf-h{font-family:'Archivo',sans-serif;font-weight:700;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
+  .smrf-col a{display:block;font-size:14.5px;font-weight:500;color:#c6d0de;padding:5px 0;}
+  .smrf-col a:hover{color:#fff;}
+
+  .smrf-legal{margin-top:42px;padding-top:24px;border-top:1px solid var(--navy3);
+    font-size:12px;line-height:1.7;color:#7e8aa0;}
+  .smrf-legal strong{color:#c6d0de;font-weight:600;}
+  .smrf-legal p + p{margin-top:10px;}
+  .smrf-legal a{color:var(--gold);}
+  .smrf-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;
+    flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--mut);}
+  .smrf-eho{display:inline-flex;align-items:center;gap:8px;}
+  .smrf-eho svg{width:17px;height:17px;flex:none;}
+
+  /* ---- CTA banner above the footer ---- */
+  .smrf-cta{max-width:1200px;margin:0 auto;padding:54px 22px 40px;text-align:center;position:relative;}
+  .smrf-cta::after{
+    content:'';
+    position:absolute;
+    left:50%; transform:translateX(-50%);
+    bottom:0;
+    width:min(85%, 900px);
+    height:1px;
+    background:linear-gradient(to right,
+      transparent 0%,
+      rgba(226,178,87,0.25) 20%,
+      rgba(226,178,87,0.55) 50%,
+      rgba(226,178,87,0.25) 80%,
+      transparent 100%);
+  }
+  .smrf-cta-h{font-family:'Archivo',sans-serif;font-weight:800;font-size:32px;line-height:1.15;
+    color:#fff;letter-spacing:-.01em;}
+  @media(max-width:560px){.smrf-cta-h{font-size:24px;}}
+  .smrf-cta-sub{font-size:15px;color:var(--mut);margin-top:12px;}
+  .smrf-cta-btn{display:inline-block;margin-top:26px;background:var(--red);color:#fff !important;
+    font-family:'Archivo',sans-serif;font-weight:700;font-size:16px;letter-spacing:.01em;
+    padding:16px 38px;border-radius:10px;transition:filter .2s,transform .2s;}
+  .smrf-cta-btn:hover{filter:brightness(1.08);transform:translateY(-1px);}
+  .smrf-cta-or{font-size:14px;color:var(--mut);margin-top:26px;}
+  .smrf-cta-phone{display:inline-flex;align-items:center;gap:9px;margin-top:14px;
+    background:var(--navy2);border:1px solid var(--navy3);border-radius:10px;
+    padding:13px 26px;color:#fff !important;font-family:'Archivo',sans-serif;font-weight:700;font-size:16px;
+    transition:background .2s;}
+  .smrf-cta-phone:hover{background:var(--navy3);}
+</style>
+
+<footer class="smrf">
+  <div class="smrf-cta">
+    <h2 class="smrf-cta-h">Ready to See Your VA Loan Rate Today?</h2>
+    <p class="smrf-cta-sub">No hard credit check. No obligation. Real numbers in seconds.</p>
+    <a class="smrf-cta-btn" href="https://showmerates.com/#smrFormCard">GET STARTED FREE &rarr;</a>
+    <p class="smrf-cta-or">Or speak with a VA loan specialist directly:</p>
+    <a class="smrf-cta-phone" href="tel:+18558068881">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.81.36 1.6.68 2.35a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.75.32 1.54.55 2.35.68A2 2 0 0122 16.92z" stroke="#fff" stroke-width="2"/></svg>
+      (855) 806-8881
+    </a>
+  </div>
+  <div class="smrf-in">
+    <div class="smrf-top">
+      <div class="smrf-brand-col">
+        <div class="smrf-brand">
+          <img class="smrf-mark" src="https://showmerates.com/wp-content/uploads/2026/04/vghgsRk-selected.webp" alt="Show Me Rates">
+        </div>
+        <p class="smrf-tag">VA mortgage rates and tools for the veterans who earned them. $0 down, no PMI, real numbers in seconds.</p>
+        <a class="smrf-tel" href="tel:+18558068881">(855)&nbsp;806-8881</a>
+      </div>
+
+      <div class="smrf-cols">
+        <div class="smrf-col">
+          <div class="smrf-h">Rates &amp; Tools</div>
+          <a href="https://showmerates.com/#smrFormCard">Get a Quote</a>
+          <a href="https://showmerates.com/#smr-rates-section">Today's Rates</a>
+          <a href="/">Calculators</a>
+        </div>
+        <div class="smrf-col">
+          <div class="smrf-h">Learn</div>
+          <a href="https://showmerates.com/va-loan-resources">VA Loan Resources</a>
+          <a href="https://showmerates.com/#smr-testimonials-section">Reviews</a>
+        </div>
+        <div class="smrf-col">
+          <div class="smrf-h">Get Started</div>
+          <a href="https://showmerates.com/#smrFormCard">Get My Rate</a>
+          <a href="https://showmerates.com/">Home</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="smrf-legal">
+      <p><strong>ShowMeRates.com</strong> &mdash; Operated by E Mortgage Capital, Inc., NMLS #1416824. 3750 S. Susan Street, Santa Ana, California 92704.</p>
+      <p>Sample rates shown are for illustration only and subject to change without notice. Not a commitment to lend. Terms and conditions apply, subject to credit approval. Information provided does not constitute an approval or a rate lock; actual terms depend on full underwriting, appraisal, property type, credit, and program guidelines. Not endorsed or sponsored by the U.S. Dept. of Veterans Affairs or any government agency.</p>
+      <p><a href="https://www.nmlsconsumeraccess.org">NMLS Consumer Access</a> &nbsp;&middot;&nbsp; <a href="https://showmerates.com/privacy-policy">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="https://showmerates.com/terms-of-use">Terms of Use</a> &nbsp;&middot;&nbsp; <a href="https://showmerates.com/licensing">Licensing</a></p>
+      <div class="smrf-bottom">
+        <span>&copy; <span id="smrf-year">2026</span> ShowMeRates.com. All rights reserved.</span>
+        <span class="smrf-eho">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3 11 L12 4 L21 11" stroke="#9aa8bb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5 10 V20 H19 V10" stroke="#9aa8bb" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M9 13.5 H15 M9 16.5 H15" stroke="#9aa8bb" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          Equal Housing / Equal Opportunity Lender
+        </span>
+      </div>
     </div>
   </div>
-</section>
+</footer>
+
+<script>
+(function(){
+  var y = document.getElementById('smrf-year');
+  if(y) y.textContent = new Date().getFullYear();
+})();
+</script>
+<!-- ===== /Show Me Rates Global Footer ===== -->
 
 <script>
 (function() {
