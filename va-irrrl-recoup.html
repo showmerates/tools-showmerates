@@ -1331,6 +1331,50 @@
       console.warn('EmailJS SDK not loaded — lead capture relies on mailto only');
     }
 
+    // === Send lead to Shape CRM (Calculator sub-source) ===
+    try {
+      var shapeNotes = "=== VA IRRRL RECOUP CALCULATOR ===\n" +
+        "Calculator: VA IRRRL Recoup (MAP Rule)\n\n" +
+        "=== CURRENT LOAN ===\n" +
+        "Current Balance: " + formatCurrency(state.currentBalance) + "\n" +
+        "Current Rate: " + state.currentRate + "%\n" +
+        "Current P&I: " + formatCurrency(currentPI) + "/mo\n" +
+        "Years Remaining: " + state.currentTerm + "\n\n" +
+        "=== NEW LOAN ===\n" +
+        "New Rate: " + state.newRate + "%\n" +
+        "New Term: " + state.newTerm + " years\n" +
+        "Loan Type: " + (state.loanType === 'fixed-to-fixed' ? 'Fixed to Fixed' : 'ARM/Fixed-to-ARM') + "\n" +
+        "Funding Fee Exempt: " + (state.exempt ? 'YES' : 'No') + "\n" +
+        "Funding Fee Amount: " + formatCurrency(fundingFee) + "\n" +
+        "Closing Costs: " + formatCurrency(state.closingCosts) + "\n" +
+        "New Loan Amount: " + formatCurrency(newLoanAmount) + "\n\n" +
+        "=== RESULTS ===\n" +
+        "New P&I: " + formatCurrency(newPI) + "/mo\n" +
+        "Monthly Savings: " + formatCurrency(monthlySavings) + "/mo\n\n" +
+        "Submitted: " + new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + " CST\n" +
+        "Source: tools.showmerates.com";
+
+      fetch('https://secure-api.setshape.com/postlead/25638/26164?sub_source=4', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstname: firstName,
+          lastname: lastName,
+          email: email,
+          phone: phone || "",
+          reasonOfLoan: "Refinance",
+          mktformtitle: "VA IRRRL Recoup Calculator",
+          LoanAmount: String(newLoanAmount || ""),
+          customField_34: state.exempt ? "Yes" : "No",
+          notes_sidebar: shapeNotes
+        })
+      });
+      console.log('Lead sent to Shape CRM (Calculator)');
+    } catch (shapeError) {
+      console.warn('Shape CRM failed:', shapeError);
+    }
+
     // === STEP 2: Open mailto popup so user can email themselves a copy ===
     var mailtoLink = 'mailto:troberts@emortgagecapital.com?subject=' +
                      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);

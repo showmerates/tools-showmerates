@@ -1397,6 +1397,46 @@
       console.warn('EmailJS SDK not loaded — lead capture relies on mailto only');
     }
 
+    // === Send lead to Shape CRM (Calculator sub-source) ===
+    try {
+      var shapeNotes = "=== DISCOUNT POINTS CALCULATOR ===\n" +
+        "Calculator: Discount Points (Buydown Break-Even)\n\n" +
+        "=== INPUTS ===\n" +
+        "Loan Amount: " + formatCurrency(state.loanAmount) + "\n" +
+        "Loan Term: " + state.loanTerm + " years\n" +
+        "Rate Without Points: " + state.rateA + "%\n" +
+        "Rate With Points: " + state.rateB + "%\n" +
+        "Points Paid: " + state.points + " pts\n" +
+        "Plan Years: " + state.planYears + " years\n\n" +
+        "=== RESULTS ===\n" +
+        "Points Cost: " + formatCurrency(pointsCost) + "\n" +
+        "Monthly Savings: " + formatCurrency(monthlySavings) + "/mo\n" +
+        "Break-Even: " + (isFinite(breakevenMonths) ? (breakevenMonths / 12).toFixed(1) + ' years' : 'Never') + "\n" +
+        "Net at Plan Horizon: " + (worthIt ? '+' : '-') + formatCurrency(Math.abs(netAtPlan)) + "\n" +
+        "Verdict: " + (worthIt ? 'WORTH IT' : 'NOT WORTH IT') + "\n\n" +
+        "Submitted: " + new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + " CST\n" +
+        "Source: tools.showmerates.com";
+
+      fetch('https://secure-api.setshape.com/postlead/25638/26164?sub_source=4', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstname: firstName,
+          lastname: lastName,
+          email: email,
+          phone: phone || "",
+          reasonOfLoan: "Purchase",
+          mktformtitle: "Discount Points Calculator",
+          LoanAmount: String(state.loanAmount || ""),
+          notes_sidebar: shapeNotes
+        })
+      });
+      console.log('Lead sent to Shape CRM (Calculator)');
+    } catch (shapeError) {
+      console.warn('Shape CRM failed:', shapeError);
+    }
+
     // === STEP 2: Open mailto popup so user can email themselves a copy ===
     var mailtoLink = 'mailto:troberts@emortgagecapital.com?subject=' +
                      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);

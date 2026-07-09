@@ -1612,6 +1612,48 @@
       console.warn('EmailJS SDK not loaded — lead capture relies on mailto only');
     }
 
+    // === Send lead to Shape CRM (Calculator sub-source) ===
+    try {
+      var shapeNotes = "=== COST OF WAITING CALCULATOR ===\n" +
+        "Calculator: Cost of Waiting (Buy Now vs Wait)\n\n" +
+        "=== INPUTS ===\n" +
+        "Home Price Today: " + formatCurrency(state.homePrice) + "\n" +
+        "Current Rate: " + state.currentRate + "%\n" +
+        "Wait Duration: " + state.waitMonths + " months\n" +
+        "Appreciation Rate: " + state.appreciationRate + "%/yr\n" +
+        "Rate Change Assumption: " + (state.rateChange >= 0 ? '+' : '') + state.rateChange + "%\n" +
+        "Monthly Rent: " + formatCurrency(state.monthlyRent) + "\n" +
+        "Rent Inflation: " + state.rentInflation + "%/yr\n\n" +
+        "=== RESULTS ===\n" +
+        "Future Home Price: " + formatCurrency(c.futurePrice) + "\n" +
+        "Future Rate: " + c.futureRate.toFixed(3) + "%\n" +
+        "Rent Paid During Wait: " + formatCurrency(c.rentPaidDuringWait) + "\n" +
+        "Cost of Waiting: " + formatCurrency(Math.abs(c.costOfWaiting)) + "\n" +
+        "Verdict: " + verdictShort + "\n" +
+        "Detail: " + verdict + "\n\n" +
+        "Submitted: " + new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + " CST\n" +
+        "Source: tools.showmerates.com";
+
+      fetch('https://secure-api.setshape.com/postlead/25638/26164?sub_source=4', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstname: firstName,
+          lastname: lastName,
+          email: email,
+          phone: phone || "",
+          reasonOfLoan: "Purchase",
+          mktformtitle: "Cost of Waiting Calculator",
+          borpurchasePrice: String(state.homePrice || ""),
+          notes_sidebar: shapeNotes
+        })
+      });
+      console.log('Lead sent to Shape CRM (Calculator)');
+    } catch (shapeError) {
+      console.warn('Shape CRM failed:', shapeError);
+    }
+
     // === STEP 2: Open mailto popup so user can email themselves a copy ===
     var mailtoLink = 'mailto:troberts@emortgagecapital.com?subject=' +
                      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);

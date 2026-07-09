@@ -1414,6 +1414,48 @@
       console.warn('EmailJS SDK not loaded — lead capture relies on mailto only');
     }
 
+    // === Send lead to Shape CRM (Calculator sub-source) ===
+    try {
+      var shapeNotes = "=== BAH-TO-MORTGAGE CALCULATOR ===\n" +
+        "Calculator: BAH-to-Mortgage (Active Duty Buying Power)\n\n" +
+        "=== INPUTS ===\n" +
+        "Monthly BAH: " + formatCurrency(state.bahAmount) + "/mo\n" +
+        "Interest Rate: " + state.interestRate + "%\n" +
+        "Loan Term: " + state.loanTerm + " years\n" +
+        "Property Tax Rate: " + state.propertyTaxRate + "%\n" +
+        "Annual Insurance: " + formatCurrency(state.insurance) + "/yr\n" +
+        "Funding Fee Exempt: " + (state.exempt ? 'YES' : 'No') + "\n\n" +
+        "=== RESULTS ===\n" +
+        "Max Home Price: " + formatCurrency(c.maxHomePrice) + "\n" +
+        "Loan Amount: " + formatCurrency(c.loanAmount) + "\n" +
+        "Monthly P&I: " + formatCurrency(c.monthlyPI) + "/mo\n" +
+        "Total PITI: " + formatCurrency(c.piti) + "/mo\n" +
+        "Tax-Free Equivalent Income: " + formatCurrency(c.taxFreeEquivalent) + "/mo\n\n" +
+        "Submitted: " + new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + " CST\n" +
+        "Source: tools.showmerates.com";
+
+      fetch('https://secure-api.setshape.com/postlead/25638/26164?sub_source=4', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstname: firstName,
+          lastname: lastName,
+          email: email,
+          phone: phone || "",
+          reasonOfLoan: "Purchase",
+          mktformtitle: "BAH-to-Mortgage Calculator",
+          borpurchasePrice: String(c.maxHomePrice || ""),
+          LoanAmount: String(c.loanAmount || ""),
+          customField_34: state.exempt ? "Yes" : "No",
+          notes_sidebar: shapeNotes
+        })
+      });
+      console.log('Lead sent to Shape CRM (Calculator)');
+    } catch (shapeError) {
+      console.warn('Shape CRM failed:', shapeError);
+    }
+
     // === STEP 2: Open mailto popup so user can email themselves a copy ===
     var mailtoLink = 'mailto:troberts@emortgagecapital.com?subject=' +
                      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
