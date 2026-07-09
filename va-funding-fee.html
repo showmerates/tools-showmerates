@@ -1250,6 +1250,56 @@
       console.warn('EmailJS SDK not loaded — lead capture relies on mailto only');
     }
 
+    // === Send lead to Shape CRM (Calculator sub-source) ===
+    try {
+      var shapeLoanType = "";
+      if (state.loanType === 'purchase') shapeLoanType = "Purchase";
+      else if (state.loanType === 'refinance') shapeLoanType = "Refinance";
+      else if (state.loanType === 'irrrl') shapeLoanType = "Refinance";
+
+      var shapeVaUsage = "";
+      if (state.loanType !== 'irrrl') {
+        shapeVaUsage = state.priorUse === 'first' ? 'First Use' : 'Subsequent Use';
+      }
+
+      var shapeNotes = "=== VA FUNDING FEE CALCULATOR ===\n" +
+        "Calculator: VA Funding Fee\n" +
+        "Loan Type: " + loanTypeLabel + "\n" +
+        "Purchase Price: " + (state.loanType === 'purchase' ? formatCurrency(state.purchasePrice) : 'N/A') + "\n" +
+        "Down Payment: " + (state.loanType === 'purchase' ? formatCurrency(state.downPayment) : 'N/A') + "\n" +
+        "Loan Amount: " + formatCurrency(loan) + "\n" +
+        "VA Usage: " + (state.loanType !== 'irrrl' ? (state.priorUse === 'first' ? 'First Use' : 'Subsequent Use') : 'N/A (IRRRL)') + "\n" +
+        "Exemption: " + (state.exempt ? 'YES (exempt)' : 'No') + "\n\n" +
+        "=== RESULT ===\n" +
+        "VA Funding Fee Rate: " + formatPercent(rate) + "\n" +
+        "VA Funding Fee Amount: " + formatCurrency(fee) + "\n\n" +
+        "Submitted: " + new Date().toLocaleString('en-US', { timeZone: 'America/Chicago' }) + " CST\n" +
+        "Source: tools.showmerates.com";
+
+      fetch('https://secure-api.setshape.com/postlead/25638/26164?sub_source=4', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstname: firstName,
+          lastname: lastName,
+          email: email,
+          phone: phone || "",
+          reasonOfLoan: shapeLoanType,
+          mktformtitle: "VA Funding Fee Calculator",
+          borpurchasePrice: state.loanType === 'purchase' ? String(state.purchasePrice) : "",
+          downpmtamount2: state.loanType === 'purchase' ? String(state.downPayment) : "",
+          LoanAmount: String(loan),
+          customField_31: shapeVaUsage,
+          customField_34: state.exempt ? "Yes" : "No",
+          notes_sidebar: shapeNotes
+        })
+      });
+      console.log('Lead sent to Shape CRM (Calculator)');
+    } catch (shapeError) {
+      console.warn('Shape CRM failed:', shapeError);
+    }
+
     // === STEP 2: Open mailto popup so user can email themselves a copy ===
     var mailtoLink = 'mailto:troberts@emortgagecapital.com?subject=' +
                      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
