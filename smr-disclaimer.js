@@ -3,14 +3,24 @@
    Repo: github.com/showmerates/tools-showmerates
    File: smr-disclaimer.js  (repo root)
 
-   INSTALL: add this ONE line inside <head> of every calculator:
+   INSTALL: one line inside <head> of every calculator:
      <script src="/smr-disclaimer.js" defer></script>
 
-   Pins a disclaimer bar to the top of the viewport, then
-   automatically detects any fixed header sitting at top:0 and
-   shifts it down so nothing overlaps. Also bumps body padding
-   so page content clears both. No per-page tweaks needed.
-   Edit TEXT once here and every calculator updates.
+   What it does:
+   1. Pins the compliance disclaimer to the top of the viewport.
+   2. Finds the page's fixed header and shifts it down so the
+      disclaimer is never covered.
+   3. Hides the breadcrumb bar (.breadcrumb).
+   4. Rebuilds the top spacing. IMPORTANT: on the calculator
+      pages the breadcrumb's 92px top padding was the only thing
+      clearing the fixed header - no page sets body padding-top.
+      So when we hide it we add (disclaimer + header) height to
+      the body instead. index.html has no breadcrumb (its hero
+      carries 120px of its own padding), so it only gets the
+      disclaimer height.
+
+   All measurements are live, so mobile header heights (60px)
+   and a two-line disclaimer both self-correct on resize.
    ============================================================ */
 (function () {
   var TEXT = 'Not a government agency. Private lender. E Mortgage Capital, Inc. | NMLS# 1416824';
@@ -27,13 +37,17 @@
     '}',
     '@media (max-width:480px){',
     '  .smr-disclaimer{font-size:9.5px;letter-spacing:0;padding:6px 10px;}',
-    '}'
+    '}',
+    /* breadcrumb removed sitewide */
+    '.breadcrumb{display:none !important;}'
   ].join('\n');
 
   var bar, origBodyPad = null;
 
-  function shiftFixedHeaders(h) {
+  function measureAndShiftHeader(h) {
+    var headerH = 0;
     var els = document.body.getElementsByTagName('*');
+
     for (var i = 0; i < els.length; i++) {
       var el = els[i];
       if (el === bar) { continue; }
@@ -41,33 +55,44 @@
       var cs = window.getComputedStyle(el);
       if (cs.position !== 'fixed') { continue; }
 
-      // only elements pinned to the very top
+      var isOurs = el.getAttribute('data-smr-shifted') === '1';
       var top = parseFloat(cs.top);
-      if (isNaN(top) || top > 1) {
-        // already shifted by us? keep it in sync
-        if (el.getAttribute('data-smr-shifted') === '1') { el.style.top = h + 'px'; }
+
+      // already shifted by us - keep in sync and record height
+      if (isOurs) {
+        el.style.top = h + 'px';
+        if (el.offsetHeight > headerH) { headerH = el.offsetHeight; }
         continue;
       }
 
-      // only full-width bars (headers) - skip modals, badges, popups
+      if (isNaN(top) || top > 1) { continue; }
+
+      // full-width top bars only - skip modals, badges, popups
       if (el.offsetWidth < window.innerWidth * 0.6) { continue; }
       if (el.offsetHeight > window.innerHeight * 0.5) { continue; }
 
       el.style.top = h + 'px';
       el.setAttribute('data-smr-shifted', '1');
+      if (el.offsetHeight > headerH) { headerH = el.offsetHeight; }
     }
+    return headerH;
   }
 
   function apply() {
     if (!bar) { return; }
+
     var h = bar.offsetHeight || 28;
+    var headerH = measureAndShiftHeader(h);
+
+    // did this page have a breadcrumb providing the header clearance?
+    var hadBreadcrumb = !!document.querySelector('.breadcrumb');
 
     if (origBodyPad === null) {
       origBodyPad = parseFloat(window.getComputedStyle(document.body).paddingTop) || 0;
     }
-    document.body.style.paddingTop = (origBodyPad + h) + 'px';
 
-    shiftFixedHeaders(h);
+    var pad = origBodyPad + h + (hadBreadcrumb ? headerH : 0);
+    document.body.style.paddingTop = pad + 'px';
   }
 
   function init() {
@@ -89,7 +114,6 @@
       document.body.appendChild(bar);
     }
 
-    // run after layout settles, then again after fonts/images load
     if (window.requestAnimationFrame) {
       window.requestAnimationFrame(apply);
     } else {
