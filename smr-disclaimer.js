@@ -327,3 +327,54 @@
     initDisclaimer();
   }
 })();
+
+/* ============================================================
+   SMR lead routing control - added 2026-09-01
+   1) Shape CRM feed is OFF: calculator lead posts to Shape are blocked.
+   2) Google Sheet forwarding: set SHEET_ENDPOINT to the Apps Script
+      web app /exec URL to log calculator leads to the ShowMeRates
+      Lead Database sheet. EmailJS notifications are never affected.
+   To resume Shape: set BLOCK_SHAPE_CRM to false.
+   ============================================================ */
+(function () {
+  var BLOCK_SHAPE_CRM = true;
+  var SHEET_ENDPOINT  = '';
+  var SHAPE_HOSTS     = /setshape|shapecrm/i;
+
+  var nativeFetch = window.fetch;
+  if (!nativeFetch) { return; }
+
+  window.fetch = function (input, init) {
+    var url = (typeof input === 'string') ? input : (input && input.url) || '';
+    if (BLOCK_SHAPE_CRM && SHAPE_HOSTS.test(url)) {
+      console.log('[SMR] Shape CRM post blocked');
+      try { forwardToSheet(init && init.body); } catch (e) {}
+      try { return Promise.resolve(new Response('', { status: 204 })); }
+      catch (e) { return Promise.resolve(); }
+    }
+    return nativeFetch.apply(this, arguments);
+  };
+
+  function forwardToSheet(body) {
+    if (!SHEET_ENDPOINT || !body) { return; }
+    var d;
+    try { d = JSON.parse(body); } catch (e) { return; }
+    var name = [d.firstname, d.lastname].filter(Boolean).join(' ').trim();
+    var lead = {
+      name:       name,
+      email:      d.email || '',
+      phone:      d.phone || '',
+      loanType:   d.reasonOfLoan || '',
+      loanAmount: d.LoanAmount || '',
+      source:     d.mktformtitle || 'Tools Calculator',
+      campaign:   'tools.showmerates.com',
+      notes:      d.notes_sidebar || ''
+    };
+    nativeFetch(SHEET_ENDPOINT, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(lead)
+    });
+  }
+})();
