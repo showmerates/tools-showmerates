@@ -338,7 +338,7 @@
    ============================================================ */
 (function () {
   var BLOCK_SHAPE_CRM = true;
-  var SHEET_ENDPOINT  = '';
+  var SHEET_ENDPOINT  = 'https://script.google.com/macros/s/AKfycbwl5KZOJK8YEkipQYbDg1ROddDl4xTsrUW1hGs4QxsZXUeOP1EtwSa9-LgClh-neMGT/exec';
   var SHAPE_HOSTS     = /setshape|shapecrm/i;
 
   var nativeFetch = window.fetch;
