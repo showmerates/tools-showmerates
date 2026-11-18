@@ -32,7 +32,7 @@
   /* ==========================================================
      PART 1 - COMPLIANCE DISCLAIMER
      ========================================================== */
-  var TEXT = 'Not a government agency. Private lender. E Mortgage Capital, Inc. | NMLS# 1416824';
+  var TEXT = 'Not a government agency. Not a lender. ShowMeRates, LLC';
 
   var CSS = [
     '.smr-disclaimer{',
